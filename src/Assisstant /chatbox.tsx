@@ -23,6 +23,7 @@ const StyledChatBox = styled.div<{ color: string; size: string; isOpen: boolean 
 
   background-color: ${(props) => props.color};
   width: ${(props) => props.size};
+  z-index: 1001;
 
   .drag-handle {
     background-color: #FFCF9D;
