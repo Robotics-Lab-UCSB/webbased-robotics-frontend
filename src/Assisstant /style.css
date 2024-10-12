@@ -1,0 +1,81 @@
+.chat-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s;
+    display: none; /* Hidden by default */
+    z-index: 1001;
+  }
+  
+  .chat-box.open {
+    display: block; /* Show the chatbox when open */
+  }
+  
+  .chat-box .drag-handle {
+    background-color: #FFCF9D;
+    padding: 8px;
+    color: #000;
+    user-select: none;
+  }
+  
+  .chat-box .content {
+    padding: 16px;
+  }
+  
+  .chat-box .toggle-btn {
+    background-color: #ffffff;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    width: 100%;
+    z-index: 1001;
+  }
+  
+  .chat-box .close-btn {
+    display: inline-block;
+    color: red;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+
+  .circle-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #FFCF9D;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    z-index: 1000; /* High z-index to stay on top */
+  }
+  
+  .circle-button:hover,
+  .circle-button:focus {
+    background-color: #FFCF9D;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .message-bubble {
+    color: #333;
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin: 8px 0;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+  }
+  
+  .message-bubble.clickable {
+    cursor: pointer;
+  }
+  
+  .message-bubble:hover {
+    opacity: 0.9; /* Slight opacity change on hover */
+  }
