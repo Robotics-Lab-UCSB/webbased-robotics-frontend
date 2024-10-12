@@ -3,10 +3,10 @@ import CircleButton from './assiantIcon';
 import ChatBox from './chatbox';
 
 interface ChatComponentProps {
-    onMessageClicked: () => void; // Function to call on button click
-  }
+  onMessageClicked: () => void; // Function to call on button click
+}
 
-const ChatComponent: React.FC<ChatComponentProps> = ({onMessageClicked}) => {
+const ChatComponent: React.FC<ChatComponentProps> = ({ onMessageClicked }) => {
   const [chatBoxOpen, setChatBoxOpen] = useState(false);
 
   const toggleChatBox = () => {
@@ -15,8 +15,17 @@ const ChatComponent: React.FC<ChatComponentProps> = ({onMessageClicked}) => {
 
   return (
     <div>
+      {/* CircleButton can be used to open or close the chatbox */}
       <CircleButton onClick={toggleChatBox} />
-      <ChatBox color="#F5F5DC" size="300px" isOpen={chatBoxOpen} toggleChatBox={toggleChatBox} onMessageClick={onMessageClicked} />
+      
+      {/* The ChatBox component receives the `isOpen` state */}
+      <ChatBox
+        color="#F5F5DC"
+        size="300px"
+        isOpen={chatBoxOpen}
+        toggleChatBox={toggleChatBox}
+        onMessageClick={onMessageClicked}
+      />
     </div>
   );
 };
