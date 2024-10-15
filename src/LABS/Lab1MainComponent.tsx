@@ -5,6 +5,9 @@ import * as THREE from 'three';
 import CornerText from '../shared/2dText';
 import ChatComponent from '../Assisstant /alltogether';
 import CircularTherm from '../labComponents/circularTherm/ThermometerMainComponent';
+import SmallKnob from '../labComponents/SmallKnob/smallKnob';
+import Button1 from '../labComponents/Buttons/button1';
+import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
 
@@ -61,6 +64,15 @@ const GraphPaperComponent: React.FC = () => {
         {/* Thermometer and Regulator Components */}
         <CircularTherm wiperAngle={fetchWiperAngleFromBackend} position={[0, 8, 0]} />
         <VVR position={[10, 8, 0]} />
+        
+        {/* Small Knob Component */}
+        <SmallKnob position={[-10, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></SmallKnob>
+        <SmallKnob position={[-22, 5, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => console.log('i am clicked')}></SmallKnob>
+
+        {/* Button Components */}
+        <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button1>
+        <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button2>
+
       </Canvas>
     </div>
   );
