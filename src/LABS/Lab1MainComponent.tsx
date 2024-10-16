@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import CornerText from '../shared/2dText';
-import ChatComponent from '../Assisstant /alltogether';
+import ChatComponent from '../Assisstant/alltogether';
 import CircularTherm from '../labComponents/circularTherm/ThermometerMainComponent';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
