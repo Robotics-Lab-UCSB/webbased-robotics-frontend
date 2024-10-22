@@ -9,8 +9,6 @@ const Grid: React.FC = () => {
 
   return (
     <>
-       {/* Set a background color for the scene */}
-       <color attach="background" args={['#CCCCFF']} /> 
 
       {/* Grid Helper */}
       <gridHelper args={[100, 100, 0xFFCF9D, 0xFFCF9D]} rotation={[Math.PI, 0, 0]} position={[0, 0, 0]} />
