@@ -9,6 +9,7 @@ const Grid: React.FC = () => {
 
   return (
     <>
+
       {/* Grid Helper */}
       <gridHelper args={[100, 100, 0xFFCF9D, 0xFFCF9D]} rotation={[Math.PI, 0, 0]} position={[0, 0, 0]} />
       

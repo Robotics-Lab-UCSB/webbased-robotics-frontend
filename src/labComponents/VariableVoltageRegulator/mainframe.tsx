@@ -55,7 +55,7 @@ const VVR: React.FC<VVRProps> = ({ position }) => {
       )}
 
       {/* Knob Component */}
-      <KnobOven position={nobPosition} />
+      <KnobOven type="lab1smallknob" position={nobPosition} />
     </group>
   );
 };
