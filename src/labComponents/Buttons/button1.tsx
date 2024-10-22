@@ -1,83 +1,73 @@
-import React, { useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { PLYLoader } from 'three-stdlib';
 
-interface SmallKnobProps {
+interface buttonProps {
   position: [number, number, number]; // Position prop for placement in the scene
-  rotation :[number, number, number];
+  rotation: [number, number, number];
   onClick?: () => void;
 }
 
+const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
+  const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
+  const groupRef = useRef<THREE.Group | null>(null);
+  const rubberTexture = useLoader(THREE.TextureLoader, '/redRubber.png');
+  const buttonMaterial = new THREE.MeshStandardMaterial({ map: rubberTexture, side: THREE.DoubleSide });
+  const [currentPosition] = useState<[number, number, number]>(position);
+  const [isMovingForward, setIsMovingForward] = useState(false);
+  const [isMovingBack, setIsMovingBack] = useState(false);
 
+  useEffect(() => {
+    const loader1 = new PLYLoader();
+    loader1.load('/Button1.ply', (geometry) => {
+      geometry.computeVertexNormals();
+      if (dialRef.current) {
+        dialRef.current.geometry = geometry; // Set the loaded geometry for the needle
+      }
+    });
+  }, []);
 
-const Button1: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
-    const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
-    const groupRef = useRef<THREE.Group | null>(null);
-    const [currentPosition] = useState<[number, number, number]>(position);
-    const [isMovingForward, setIsMovingForward] = useState(false);
-    const [isMovingBack, setIsMovingBack] = useState(false);  
-    
-    
-    useEffect(() => {
-        const loader1 = new PLYLoader();
-        loader1.load('/Button1.ply', (geometry) => {
-          geometry.computeVertexNormals();
-          if (dialRef.current) {
-            dialRef.current.geometry = geometry; // Set the loaded geometry for the needle
-          }
-        });
-      }, []);  
+  useFrame(() => {
+    if (isMovingForward && groupRef.current) {
+      // Move forward by 5 units on the Z-axis
+      const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2] + 0.5, 0.1);
+      groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
 
-      useFrame(() => {
-        if (isMovingForward && groupRef.current) {
-          // Move forward by 5 units on the Z-axis
-          const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2] + 0.5, 0.1); 
-          groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
-    
-          // Stop moving forward once it reaches the target position
-          if (Math.abs(newPosZ - (currentPosition[2] + 0.5)) < 0.01) {
-            setIsMovingForward(false);
-            setTimeout(() => {
-              setIsMovingBack(true); // Trigger moving back after 1 second
-            }, 300);
-          }
-        }
-    
-        if (isMovingBack && groupRef.current) {
-          // Move back to the original position
-          const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2], 0.1); 
-          groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
-    
-          // Stop moving back once it reaches the original position
-          if (Math.abs(newPosZ - currentPosition[2]) < 0.01) {
-            setIsMovingBack(false); // Stop moving
-          }
-        }
-      });
+      // Stop moving forward once it reaches the target position
+      if (Math.abs(newPosZ - (currentPosition[2] + 0.5)) < 0.01) {
+        setIsMovingForward(false);
+        setTimeout(() => {
+          setIsMovingBack(true); // Trigger moving back after 1 second
+        }, 300);
+      }
+    }
 
-      const handleClick = () => {
-        if(isMovingBack == false){
-            setIsMovingForward(true); // Start moving forward on click
-        }
-        if (onClick) {
-          onClick(); // Trigger any additional onClick functionality passed as a prop
-        }
-      };
-    
-    
-    
-    
+    if (isMovingBack && groupRef.current) {
+      // Move back to the original position
+      const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2], 0.1);
+      groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
 
-    return (
-      <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
+      // Stop moving back once it reaches the original position
+      if (Math.abs(newPosZ - currentPosition[2]) < 0.01) {
+        setIsMovingBack(false); // Stop moving
+      }
+    }
+  });
 
-        <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]}>
-            
-            <meshStandardMaterial color={0xff3333} side={THREE.DoubleSide}/>
+  const handleClick = () => {
+    if (!isMovingBack) {
+      setIsMovingForward(true); // Start moving forward on click
+    }
+    if (onClick) {
+      onClick(); // Trigger any additional onClick functionality passed as a prop
+    }
+  };
 
-        </mesh>
-      
+  return (
+    <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
+
+      <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]} material={buttonMaterial} />
     </group>
   );
 };
