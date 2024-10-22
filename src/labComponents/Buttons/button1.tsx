@@ -32,11 +32,11 @@ const Button1: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
       useFrame(() => {
         if (isMovingForward && groupRef.current) {
           // Move forward by 5 units on the Z-axis
-          const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2] + 0.5, 0.1); 
+          const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2] - 0.5, 0.1); 
           groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
     
           // Stop moving forward once it reaches the target position
-          if (Math.abs(newPosZ - (currentPosition[2] + 0.5)) < 0.01) {
+          if (Math.abs(newPosZ - (currentPosition[2] - 0.5)) < 0.01) {
             setIsMovingForward(false);
             setTimeout(() => {
               setIsMovingBack(true); // Trigger moving back after 1 second
@@ -73,8 +73,12 @@ const Button1: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
       <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
 
         <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]}>
-            
-            <meshStandardMaterial color={0xff3333} side={THREE.DoubleSide}/>
+            <meshPhongMaterial
+              color={0xff3333} // Bright red color
+              shininess={100} // Higher value for shinier surface
+              specular={0xffffff} // White specular highlights
+              side={THREE.DoubleSide}
+    />
 
         </mesh>
       
