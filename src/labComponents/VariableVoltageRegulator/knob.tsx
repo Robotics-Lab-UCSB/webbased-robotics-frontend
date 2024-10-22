@@ -9,8 +9,8 @@ interface KnobOvenProps {
 
 const KnobOven: React.FC<KnobOvenProps> = ({ position }) => {
   const [needleGeometry, setNeedleGeometry] = useState<THREE.BufferGeometry | null>(null); 
-  const metalTexture = useLoader(THREE.TextureLoader, '/leather.jpg');
-  const dialMaterial = new THREE.MeshStandardMaterial({ map: metalTexture });
+  const leatherTexture = useLoader(THREE.TextureLoader, '/leather.jpg');
+  const dialMaterial = new THREE.MeshStandardMaterial({ map: leatherTexture });
 
   // Load the .ply file asynchronously using useEffect
   useEffect(() => {

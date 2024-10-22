@@ -11,8 +11,9 @@ interface SmallKnobProps {
 
 
 
-const SmallKnob: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
-    const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
+  const SmallKnob: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
+  const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
+  
     
     
     useEffect(() => {
