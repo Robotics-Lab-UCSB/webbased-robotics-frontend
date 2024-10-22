@@ -49,7 +49,10 @@ const GraphPaperComponent: React.FC = () => {
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
       <CornerText position="top-left" text="Photoelectric Effects" />
       <ChatComponent onMessageClicked={handleStubMessageClick} />
-      <Canvas gl={{ antialias: true }}>
+      <Canvas
+        gl={{ antialias: true }}
+        style={{ background: '#004225' }} // Setting background color here
+      >
         {/* Raycasting Component */}
         <RaycastingComponent />
 
