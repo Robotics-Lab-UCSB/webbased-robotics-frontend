@@ -5,6 +5,7 @@ import { STLLoader } from "three-stdlib";
 
 interface SwitchProps {
   position: [number, number, number]; // Position prop
+  scale: [number, number, number];
 }
 
 const Switch: React.FC<SwitchProps> = ({ position }) => {
@@ -27,7 +28,7 @@ const Switch: React.FC<SwitchProps> = ({ position }) => {
 
   return (
     <group ref={groupRef} position={position}>
-      <mesh geometry={geometry} rotation={rotation} onClick={handleClick}>
+      <mesh geometry={geometry} rotation={rotation} onClick={handleClick} scale= >
         <meshStandardMaterial map={bodyTexture} />
       </mesh>
     </group>
