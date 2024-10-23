@@ -6,9 +6,10 @@ import Switch from "./switch";
 
 interface SwitchCasingProps {
   position: [number, number, number]; // Position prop
+  scale: [number, number, number]; // scale prop
 }
 
-const SwitchCasing: React.FC<SwitchCasingProps> = ({ position }) => {
+const SwitchCasing: React.FC<SwitchCasingProps> = ({ position, scale }) => {
   const groupRef = useRef<THREE.Group | null>(null);
 
   const geometry = useLoader(STLLoader, "../../public/switch casing (1).stl");
@@ -17,8 +18,8 @@ const SwitchCasing: React.FC<SwitchCasingProps> = ({ position }) => {
 
   return (
     <group ref={groupRef} position={position}>
-      <mesh geometry={geometry} rotation={[Math.PI / 2, 0, 0]}>
-        <Switch position={[10.5, -2, 7.5]} />
+      <mesh geometry={geometry} rotation={[Math.PI / 2, 0, 0]} scale={scale}>
+        <Switch position={[10.5, -2, 7.5]} scale={[0.3, 0.3, 0.3]} />
         <meshStandardMaterial map={metalTexture} />
       </mesh>
     </group>
