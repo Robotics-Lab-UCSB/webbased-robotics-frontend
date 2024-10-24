@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import React, { useState } from 'react';
+import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import CornerText from '../shared/2dText';
@@ -10,7 +10,6 @@ import Button1 from '../labComponents/Buttons/button1';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
-import { ThreeEvent } from '@react-three/fiber';
 import RaycastingComponent from '../raycaster/lab1Raycaster';
 
 interface CameraProps {
