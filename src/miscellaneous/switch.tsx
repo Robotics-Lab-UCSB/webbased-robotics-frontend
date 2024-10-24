@@ -8,7 +8,7 @@ interface SwitchProps {
   scale: [number, number, number];
 }
 
-const Switch: React.FC<SwitchProps> = ({ position }) => {
+const Switch: React.FC<SwitchProps> = ({ position, scale }) => {
   const [rotation, setRotation] = useState([0, 0, 0]);
   const groupRef = useRef<THREE.Group | null>(null);
   const geometry = useLoader(STLLoader, "../../public/switch.stl");
@@ -28,7 +28,12 @@ const Switch: React.FC<SwitchProps> = ({ position }) => {
 
   return (
     <group ref={groupRef} position={position}>
-      <mesh geometry={geometry} rotation={rotation} onClick={handleClick} scale= >
+      <mesh
+        geometry={geometry}
+        rotation={rotation}
+        onClick={handleClick}
+        scale={scale}
+      >
         <meshStandardMaterial map={bodyTexture} />
       </mesh>
     </group>
