@@ -74,7 +74,7 @@ interface buttonProps {
     return (
       <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
 
-        <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]} material={buttonMaterial}>
+        <mesh ref={dialRef} scale={[0.08, 0.08, 0.08]} material={buttonMaterial}>
             
 
         </mesh>

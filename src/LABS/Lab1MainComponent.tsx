@@ -11,6 +11,7 @@ import Box from '../labComponents/Box/box';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
+import ParentComponent from '../labComponents/Buttons/parentButton';
 
 interface CameraProps {
   xN: number;
@@ -71,10 +72,10 @@ const GraphPaperComponent: React.FC = () => {
         <SmallKnob position={[-22, 5, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => console.log('i am clicked')}></SmallKnob>
 
         {/* Button Components */}
-        <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button1>
-        <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button2>
 
-        <Box position={[20, 10, 0]} rotation={[0, 0, 0]} onClick={() => console.log('i am clicked')}></Box>
+        <Box position={[-35, 10, 0]} rotation={[Math.PI/2, 0, 0]} onClick={() => console.log('i am clicked')}></Box>
+        <ParentComponent></ParentComponent>
+
 
       </Canvas>
     </div>
