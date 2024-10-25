@@ -31,7 +31,7 @@ const Box: React.FC<boxProp> = ({ position, rotation, onClick }) => {
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]} onClick={onClick} material={boxMaterial} />
+      <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]} onClick={onClick} geometry={geometry} />
     </group>
   );
 };
