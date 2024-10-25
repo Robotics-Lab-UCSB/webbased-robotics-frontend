@@ -28,32 +28,32 @@ const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
     });
   }, []);
 
-  useFrame(() => {
-    if (isMovingForward && groupRef.current) {
-      // Move forward by 5 units on the Z-axis
-      const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2] + 0.5, 0.1);
-      groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
-
-      // Stop moving forward once it reaches the target position
-      if (Math.abs(newPosZ - (currentPosition[2] + 0.5)) < 0.01) {
-        setIsMovingForward(false);
-        setTimeout(() => {
-          setIsMovingBack(true); // Trigger moving back after 1 second
-        }, 300);
-      }
-    }
-
-    if (isMovingBack && groupRef.current) {
-      // Move back to the original position
-      const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2], 0.1);
-      groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
-
-      // Stop moving back once it reaches the original position
-      if (Math.abs(newPosZ - currentPosition[2]) < 0.01) {
-        setIsMovingBack(false); // Stop moving
-      }
-    }
-  });
+      useFrame(() => {
+        if (isMovingForward && groupRef.current) {
+          // Move forward by 5 units on the Z-axis
+          const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2] - 0.5, 0.1); 
+          groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
+    
+          // Stop moving forward once it reaches the target position
+          if (Math.abs(newPosZ - (currentPosition[2] - 0.5)) < 0.01) {
+            setIsMovingForward(false);
+            setTimeout(() => {
+              setIsMovingBack(true); // Trigger moving back after 1 second
+            }, 300);
+          }
+        }
+    
+        if (isMovingBack && groupRef.current) {
+          // Move back to the original position
+          const newPosZ = THREE.MathUtils.lerp(groupRef.current.position.z, currentPosition[2], 0.1); 
+          groupRef.current.position.set(currentPosition[0], currentPosition[1], newPosZ);
+    
+          // Stop moving back once it reaches the original position
+          if (Math.abs(newPosZ - currentPosition[2]) < 0.01) {
+            setIsMovingBack(false); // Stop moving
+          }
+        }
+      });
 
   const handleClick = () => {
     if (!isMovingBack) {
@@ -67,7 +67,16 @@ const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
   return (
     <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
 
-      <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]} material={buttonMaterial} />
+        <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]}>
+            <meshPhongMaterial
+              color={0xff3333} // Bright red color
+              shininess={100} // Higher value for shinier surface
+              specular={0xffffff} // White specular highlights
+              side={THREE.DoubleSide}
+    />
+
+        </mesh>
+      
     </group>
   );
 };
