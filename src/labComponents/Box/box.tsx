@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
-import { PLYLoader } from 'three-stdlib';
+import { PLYLoader, STLLoader } from 'three-stdlib';
 import Button1 from '../Buttons/button1';
 
 interface boxProp {
@@ -12,6 +12,7 @@ interface boxProp {
 
 const Box: React.FC<boxProp> = ({ position, rotation, onClick }) => {
   const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
+  const geometry = useLoader(STLLoader, "../../public/Box.stl");
   const metalTexture = useLoader(THREE.TextureLoader, '/metal.jpg');
   const boxMaterial = new THREE.MeshStandardMaterial({ map: metalTexture, side: THREE.DoubleSide });
 
