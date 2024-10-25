@@ -29,7 +29,9 @@
   }
 
   .input-area{
-    align-self: flex-start;
+    position: absolute;
+    bottom: 0;
+    top: auto;
     display: flex;
     align-items: center;
     padding: 10px;
