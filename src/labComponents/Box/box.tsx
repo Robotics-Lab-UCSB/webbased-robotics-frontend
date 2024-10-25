@@ -12,9 +12,9 @@ interface boxProp {
 
 const Box: React.FC<boxProp> = ({ position, rotation, onClick }) => {
   const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
-  const geometry = useLoader(STLLoader, "../../public/Box.stl");
+  const geometry = useLoader(STLLoader, "Box.stl");
   const metalTexture = useLoader(THREE.TextureLoader, '/metal.jpg');
-  const boxMaterial = new THREE.MeshStandardMaterial({ map: metalTexture, side: THREE.DoubleSide });
+  
 
   useEffect(() => {
     // Loading the PLY file
@@ -32,6 +32,7 @@ const Box: React.FC<boxProp> = ({ position, rotation, onClick }) => {
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
       <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]} onClick={onClick} geometry={geometry} />
+      <meshStandardMaterial map={metalTexture}/>
     </group>
   );
 };
