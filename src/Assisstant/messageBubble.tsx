@@ -3,6 +3,7 @@ import './style.css'; // Import the external CSS
 
 interface MessageBubbleProps {
   text: string;
+  id: number;
   onClick: () => void;
   backgroundColor?: string; // Optional background color prop
 }
