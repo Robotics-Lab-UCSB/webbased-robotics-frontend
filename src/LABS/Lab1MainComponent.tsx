@@ -10,8 +10,8 @@ import Button1 from '../labComponents/Buttons/button1';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
-import { ThreeEvent } from '@react-three/fiber';
 import RaycastingComponent from '../raycaster/lab1Raycaster';
+import LightSwitch from '../miscellaneous/switchAndCasing';
 
 interface CameraProps {
   xN: number;
@@ -80,6 +80,8 @@ const GraphPaperComponent: React.FC = () => {
         {/* Button Components */}
         <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
         <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
+
+        <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
     </div>
   );
