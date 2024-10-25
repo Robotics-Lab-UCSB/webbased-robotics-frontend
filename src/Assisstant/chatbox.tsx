@@ -38,14 +38,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
         </div>
         {isOpen && (
           <div className="content">
-            <MessageBubble
-              text="Let me show you where the oven is. Click on this message to navigate to it."
+            {messages.map((message, index) => (
+              <MessageBubble
+              id={index}
+              text={message}
               onClick={onMessageClick}
-            />
-             <MessageBubble
-              text="Bruh."
-              onClick={onMessageClick}
-            />
+              />
+            ))}
             <div className="input-area">
               <input
                 type="text"
