@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { useState, useRef, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import CornerText from '../shared/2dText';
-import ChatComponent from '../Assisstant /alltogether';
+import ChatComponent from '../Assisstant/alltogether';
 import CircularTherm from '../labComponents/circularTherm/ThermometerMainComponent';
 import SmallKnob from '../labComponents/SmallKnob/smallKnob';
 import Button1 from '../labComponents/Buttons/button1';
@@ -11,6 +11,8 @@ import Box from '../labComponents/Box/box';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
+import { ThreeEvent } from '@react-three/fiber';
+import RaycastingComponent from '../raycaster/lab1Raycaster';
 import ParentComponent from '../labComponents/Buttons/parentButton';
 
 interface CameraProps {
@@ -49,7 +51,13 @@ const GraphPaperComponent: React.FC = () => {
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
       <CornerText position="top-left" text="Photoelectric Effects" />
       <ChatComponent onMessageClicked={handleStubMessageClick} />
-      <Canvas gl={{ antialias: true }}>
+      <Canvas
+        gl={{ antialias: true }}
+        style={{ background: '#004225' }} // Setting background color here
+      >
+        {/* Raycasting Component */}
+        <RaycastingComponent />
+
         {/* Camera Component */}
         <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
 
@@ -61,15 +69,15 @@ const GraphPaperComponent: React.FC = () => {
         <Grid />
 
         {/* Controls */}
-        <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.5} zoomSpeed={0.5} />
+        <OrbitControls enableDamping dampingFactor={0.1} rotateSpeed={0.4} zoomSpeed={0.5} mouseButtons={{ MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE }} />
 
         {/* Thermometer and Regulator Components */}
         <CircularTherm wiperAngle={fetchWiperAngleFromBackend} position={[0, 8, 0]} />
         <VVR position={[10, 8, 0]} />
-        
+
         {/* Small Knob Component */}
-        <SmallKnob position={[-10, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></SmallKnob>
-        <SmallKnob position={[-22, 5, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => console.log('i am clicked')}></SmallKnob>
+        <SmallKnob type="lab1smallknob" name="smallKnob" position={[-10, 5, 0]} rotation={[Math.PI, 0, 0]} />
+        <SmallKnob type="lab1smallknob" name="smallKnob" position={[-22, 5, 0]} rotation={[Math.PI / 2, 0, 0]} />
 
         {/* Button Components */}
 
