@@ -5,11 +5,11 @@ import { STLLoader } from "three-stdlib";
 
 interface SwitchProps {
   position: [number, number, number]; // Position prop
-  scale: [number, number, number];
+  scale?: [number, number, number];
 }
 
-const Switch: React.FC<SwitchProps> = ({ position, scale }) => {
-  const [rotation, setRotation] = useState([0, 0, 0]);
+const Switch: React.FC<SwitchProps> = ({ position, scale = [1, 1, 1] }) => {
+  const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0));
   const groupRef = useRef<THREE.Group | null>(null);
   const geometry = useLoader(STLLoader, "../../public/switch.stl");
   const bodyTexture = useLoader(THREE.TextureLoader, "/metal.jpg");
@@ -19,11 +19,13 @@ const Switch: React.FC<SwitchProps> = ({ position, scale }) => {
   }, [geometry]);
 
   const handleClick = () => {
-    setRotation((prevRotation) => [
-      prevRotation[0] === 0 ? Math.PI : 0,
-      prevRotation[1],
-      prevRotation[2] === 0 ? Math.PI : 0,
-    ]);
+    setRotation((prevRotation) => 
+      new THREE.Euler(
+        prevRotation.x === 0 ? Math.PI : 0,
+        prevRotation.y,  
+        prevRotation.z === 0 ? Math.PI : 0
+      )
+    );
   };
 
   return (
