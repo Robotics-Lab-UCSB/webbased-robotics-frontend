@@ -14,6 +14,7 @@ import RaycastingComponent from '../raycaster/lab1Raycaster';
 import LightSwitch from '../miscellaneous/switchAndCasing';
 import DVM from '../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx'
 
+
 interface CameraProps {
   xN: number;
   yN: number;
@@ -75,7 +76,7 @@ const GraphPaperComponent: React.FC = () => {
         <VVR position={[10, 8, 0]} />
 
         {/* Digital Voltmeters */}
-        <DVM voltage={() => 0} position={[10, 15, 0]} />
+        <DVM scale={2} rotationY={Math.PI} voltage={() => 0} position={[10, 25, 0]} />
 
         {/* Small Knob Component */}
         <SmallKnob type="lab1smallknob" name="smallKnob" position={[-10, 5, 0]} rotation={[Math.PI, 0, 0]} />
