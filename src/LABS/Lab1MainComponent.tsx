@@ -11,8 +11,8 @@ import Box from '../labComponents/Box/box';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
-import { ThreeEvent } from '@react-three/fiber';
 import RaycastingComponent from '../raycaster/lab1Raycaster';
+import LightSwitch from '../miscellaneous/switchAndCasing';
 import ParentComponent from '../labComponents/Buttons/parentButton';
 
 interface CameraProps {
@@ -85,6 +85,8 @@ const GraphPaperComponent: React.FC = () => {
         <ParentComponent></ParentComponent>
 
 
+
+        <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
     </div>
   );
