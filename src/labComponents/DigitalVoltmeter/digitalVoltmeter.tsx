@@ -5,18 +5,21 @@ import { useState, useEffect } from 'react';
 import { PLYLoader } from 'three-stdlib';
 
 interface DVMProps {
-  voltage: () => number; // Function to get the angle value from the backend
+  voltage?: () => number; // Function to get the angle value from the backend
   position: [number, number, number]; // Position prop
+  scale: number; // Scale parameter
+  rotationX?: number; 
+  rotationZ?: number;
+  rotationY?: number; 
 }
 
-const DVM: React.FC<DVMProps> = ({ voltage, position }) => {
-  const [dvmGeometry, setDVMGeometry] = useState<THREE.BufferGeometry | null>(null); 
+const DVM: React.FC<DVMProps> = ({ voltage, position, scale, rotationX = 0, rotationZ = 0, rotationY = 0}) => {
+  const [dvmGeometry, setDVMGeometry] = useState<THREE.BufferGeometry | null>(null);
 
   useEffect(() => {
     const loader = new PLYLoader();
     loader.load('/digital_voltmeter.ply', (geometry) => {
-      //geometry.computeVertexNormals();
-      setDVMGeometry(geometry); // Set loaded geometry to state
+      setDVMGeometry(geometry); 
     });
   }, []);
 
@@ -26,12 +29,18 @@ const DVM: React.FC<DVMProps> = ({ voltage, position }) => {
   const dvmMaterial = new THREE.MeshStandardMaterial({ map: dvmTexture });
 
   return (
-    <group ref={groupRef} position={position}>
-      {dvmGeometry && <mesh 
+    <group
+      ref={groupRef}
+      position={position}
+      rotation={[rotationX, rotationY, rotationZ]} 
+    >
+      {dvmGeometry && (
+        <mesh 
           geometry={dvmGeometry} 
           material={dvmMaterial} 
-          scale={[1.0, 1.0, 1.0]} 
-        />}
+          scale={[scale, scale, scale]} 
+        />
+      )}
     </group>
   );
 };
