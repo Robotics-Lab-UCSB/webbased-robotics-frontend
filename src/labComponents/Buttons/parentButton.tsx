@@ -15,9 +15,11 @@ interface ParentComponentProps {
   distanceBetweenSmallButton?: number;
   distanceBetweenBigButton?: number;
   rot?: [number, number, number];
+  position?: [number, number, number];
+  scale?: [number, number, number];
 }
 
-const ParentComponent: React.FC<ParentComponentProps> = ({xPos = 15, yPos = 10, zPos = -2.7, distanceBetweenSmallButton = 2, distanceBetweenBigButton = 4, rot = [0, 0, 0]}) => {
+const ParentComponent: React.FC<ParentComponentProps> = ({xPos = 15, yPos = 10, zPos = -2.7, distanceBetweenSmallButton = 2, distanceBetweenBigButton = 4, rot = [0, 0, 0], position = [0, 0, 0], scale = [1,1,1]}) => {
   const [buttons, setButtons] = useState<Button[]>([]);
   
   useEffect(() => {
@@ -48,7 +50,11 @@ const ParentComponent: React.FC<ParentComponentProps> = ({xPos = 15, yPos = 10, 
     setButtons([...smallButtons, ...bigButtonsRow1, ...bigButtonsRow2]);
   }, [xPos, yPos, zPos, distanceBetweenSmallButton, distanceBetweenBigButton, rot]);
 
-  return <ButtonComponent buttons={buttons} />;
+  return (
+    <mesh position={position} scale={scale}>
+      <ButtonComponent buttons={buttons} />
+    </mesh>
+  );
 };
 
 export default ParentComponent;
