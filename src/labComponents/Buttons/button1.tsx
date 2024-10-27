@@ -1,33 +1,32 @@
-import React, { useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { PLYLoader } from 'three-stdlib';
 
-interface SmallKnobProps {
+interface buttonProps {
   position: [number, number, number]; // Position prop for placement in the scene
-  rotation :[number, number, number];
+  rotation: [number, number, number];
   onClick?: () => void;
 }
 
+const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
+  const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
+  const groupRef = useRef<THREE.Group | null>(null);
+  const rubberTexture = useLoader(THREE.TextureLoader, '/redRubber.png');
+  const buttonMaterial = new THREE.MeshStandardMaterial({ map: rubberTexture, side: THREE.DoubleSide });
+  const [currentPosition] = useState<[number, number, number]>(position);
+  const [isMovingForward, setIsMovingForward] = useState(false);
+  const [isMovingBack, setIsMovingBack] = useState(false);
 
-
-const Button1: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
-    const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
-    const groupRef = useRef<THREE.Group | null>(null);
-    const [currentPosition] = useState<[number, number, number]>(position);
-    const [isMovingForward, setIsMovingForward] = useState(false);
-    const [isMovingBack, setIsMovingBack] = useState(false);  
-    
-    
-    useEffect(() => {
-        const loader1 = new PLYLoader();
-        loader1.load('/Button1.ply', (geometry) => {
-          geometry.computeVertexNormals();
-          if (dialRef.current) {
-            dialRef.current.geometry = geometry; // Set the loaded geometry for the needle
-          }
-        });
-      }, []);  
+  useEffect(() => {
+    const loader1 = new PLYLoader();
+    loader1.load('/Button1.ply', (geometry) => {
+      geometry.computeVertexNormals();
+      if (dialRef.current) {
+        dialRef.current.geometry = geometry; // Set the loaded geometry for the needle
+      }
+    });
+  }, []);
 
       useFrame(() => {
         if (isMovingForward && groupRef.current) {
@@ -56,23 +55,19 @@ const Button1: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
         }
       });
 
-      const handleClick = () => {
-        if(isMovingBack == false){
-            setIsMovingForward(true); // Start moving forward on click
-        }
-        if (onClick) {
-          onClick(); // Trigger any additional onClick functionality passed as a prop
-        }
-      };
-    
-    
-    
-    
+  const handleClick = () => {
+    if (!isMovingBack) {
+      setIsMovingForward(true); // Start moving forward on click
+    }
+    if (onClick) {
+      onClick(); // Trigger any additional onClick functionality passed as a prop
+    }
+  };
 
-    return (
-      <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
+  return (
+    <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
 
-        <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]}>
+        <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]}>
             <meshPhongMaterial
               color={0xff3333} // Bright red color
               shininess={100} // Higher value for shinier surface

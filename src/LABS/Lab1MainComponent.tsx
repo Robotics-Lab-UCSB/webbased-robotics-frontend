@@ -7,10 +7,14 @@ import ChatComponent from '../Assisstant/alltogether';
 import CircularTherm from '../labComponents/circularTherm/ThermometerMainComponent';
 import SmallKnob from '../labComponents/SmallKnob/smallKnob';
 import Button1 from '../labComponents/Buttons/button1';
+import Box from '../labComponents/Box/box';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
 import Grid from './grid';
 import RaycastingComponent from '../raycaster/lab1Raycaster';
+import LightSwitch from '../miscellaneous/switchAndCasing';
+import DVM from '../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx'
+import ParentComponent from '../labComponents/Buttons/parentButton';
 
 interface CameraProps {
   xN: number;
@@ -72,6 +76,9 @@ const GraphPaperComponent: React.FC = () => {
         <CircularTherm wiperAngle={fetchWiperAngleFromBackend} position={[0, 8, 0]} />
         <VVR position={[10, 8, 0]} />
 
+        {/* Digital Voltmeters */}
+        <DVM scale={2} rotationY={Math.PI} voltage={() => 0} position={[10, 25, 0]} />
+
         {/* Small Knob Component */}
         <SmallKnob type="lab1smallknob" name="smallKnob" position={[-10, 5, 0]} rotation={[Math.PI, 0, 0]} />
         <SmallKnob type="lab1smallknob" name="smallKnob" position={[-22, 5, 0]} rotation={[Math.PI / 2, 0, 0]} />
@@ -79,6 +86,13 @@ const GraphPaperComponent: React.FC = () => {
         {/* Button Components */}
         <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
         <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
+
+        <Box position={[-35, 10, 0]} rotation={[Math.PI/2, 0, 0]} onClick={() => console.log('i am clicked')}></Box>
+        <ParentComponent></ParentComponent>
+
+
+
+        <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
     </div>
   );
