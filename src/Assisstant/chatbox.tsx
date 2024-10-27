@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useState, useRef} from 'react';
 import Draggable from 'react-draggable';
 import './style.css'; // Import the external CSS
 import MessageBubble from './messageBubble';
@@ -14,16 +14,25 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, toggleChatBox, onMessageClick }) => {
-  const [inputText, setInputText] = useState('');
+  const contentRef = useRef<HTMLDivElement>(null)
+  const theInput = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<string[]>([]); // State to store messages
 
-  const SendMessage = () => {
-    if (inputText.trim() !== '') {
-      setMessages([...messages, inputText]); // Add the new message to the list
-      setInputText(''); // Clear the input field
-      
+  const SendMessage = (event: React.FormEvent) => {
+    event.preventDefault();
+    const message = theInput.current?.value.trim(); // Get the input value directly
+    if (message) {
+      setMessages([...messages, message]); // Add the new message to the list
+      if(theInput.current) theInput.current.value = ''; // Clear the input field
     }
   };
+
+  useEffect(()=>{
+    if (contentRef.current) {
+      contentRef.current.scrollTop = contentRef.current.scrollHeight; // Scroll to bottom
+    }
+  }, [messages]
+  );
 
   return (
       <Draggable handle=".drag-handle">
@@ -38,7 +47,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
             </div>
             {isOpen && (
               <div className='contentAndInput'>
-                <div className="content">
+                <div className="content" ref={contentRef}>
                   {messages.map((message, index) => (
                     <MessageBubble
                     id={index}
@@ -46,19 +55,18 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
                     onClick={onMessageClick}
                     />
                   ))}
-                  </div>
-                <div className="input-area">
-                <input
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Type a message..."
-                  className="chat-input"
-                />
-                <button onClick={SendMessage} className="send-btn">
-                  Send
-                </button>
-              </div>
+                </div>
+                <form className="input-area" onSubmit={SendMessage}>
+                  <input
+                    className="chat-input"
+                    type="text"
+                    ref={theInput}                  
+                    placeholder="Type a message..."
+                  />
+                  <button type="submit" className="send-btn">
+                    Send
+                  </button>
+                </form>
               </div>
             )}
           </div>
