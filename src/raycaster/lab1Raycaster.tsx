@@ -8,8 +8,8 @@ const RaycastingComponent: React.FC = () => {
   const { camera, scene, gl } = useThree();
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [selectedObject, setSelectedObject] = useState<THREE.Object3D | null>(null);
-  const currentAngleRef = useRef<number>(0);
-  const previousAngleRef = useRef<number>(-1);
+  const currentAngleRef = useRef<number>(0); // Track current angle
+  const previousAngleRef = useRef<number>(-1); // Initialize with -1 for first-time tracking
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -37,68 +37,78 @@ const RaycastingComponent: React.FC = () => {
     };
   }, [gl]);
 
-  function calculateAngle(localPoint: THREE.Vector3, isYAxis: boolean = true): number {
-    return isYAxis ? Math.atan2(localPoint.x, localPoint.z) : Math.atan2(localPoint.x, localPoint.y);
-  }
-  
-  function handleRotation(localPoint: THREE.Vector3, rotationAxis: 'x' | 'y' | 'z' = 'y'): void {
-    const angle = calculateAngle(localPoint, rotationAxis === 'y');
+  useFrame(() => {
+    if (isMouseDown) {
+      raycasterRef.current.setFromCamera(mouseRef.current, camera);
+      const intersects = raycasterRef.current.intersectObjects(scene.children, true);
+      if (intersects.length > 0) {
+        const intersectedObject = intersects[0].object;
+        if (intersectedObject.userData.type === "lab1smallknob") {
+          setSelectedObject(intersectedObject);
+          const intersectionPoint = intersects[0].point;
+          const localPoint = intersectedObject.worldToLocal(intersectionPoint.clone());
+          const angle = Math.atan2(localPoint.x, localPoint.z);
 
-    if (previousAngleRef.current === -1) {
-      previousAngleRef.current = angle;
-      currentAngleRef.current = angle;
-      return;
+          if (previousAngleRef.current === -1) {
+            previousAngleRef.current = angle;
+            currentAngleRef.current = angle;
+            return;
+          }
+
+          currentAngleRef.current = angle;
+          let deltaAngle = previousAngleRef.current - currentAngleRef.current;
+
+          if (deltaAngle > Math.PI) {
+            deltaAngle -= 2 * Math.PI;
+          } else if (deltaAngle < -Math.PI) {
+            deltaAngle += 2 * Math.PI;
+          }
+
+          if (selectedObject) {
+            selectedObject.rotation.y -= deltaAngle * 0.4;
+          }
+
+          previousAngleRef.current = currentAngleRef.current;
+        } else if (intersectedObject.userData.type === "VVRKnob") {
+          setSelectedObject(intersectedObject);
+          const intersectionPoint = intersects[0].point;
+          const localPoint = intersectedObject.worldToLocal(intersectionPoint.clone());
+          console.log(`Mouse relative coordinates on VVRKnob: x=${localPoint.x}, y=${localPoint.y}, z=${localPoint.z}`);
+          const angle = Math.atan2(localPoint.x, localPoint.y);
+
+          if (previousAngleRef.current === -1) {
+            previousAngleRef.current = angle;
+            currentAngleRef.current = angle;
+            return;
+          }
+
+          currentAngleRef.current = angle;
+          let deltaAngle = previousAngleRef.current - currentAngleRef.current;
+
+          if (deltaAngle > Math.PI) {
+            deltaAngle -= 2 * Math.PI;
+          } else if (deltaAngle < -Math.PI) {
+            deltaAngle += 2 * Math.PI;
+          }
+
+          if (selectedObject) {
+            selectedObject.rotation.z += deltaAngle * 0.4;
+          }
+
+          previousAngleRef.current = currentAngleRef.current;
+        } else {
+          resetAngles();
+        }
+      }
+    } else {
+      resetAngles();
     }
-
-    currentAngleRef.current = angle;
-    let deltaAngle = previousAngleRef.current - currentAngleRef.current;
-
-    if (deltaAngle > Math.PI) {
-      deltaAngle -= 2 * Math.PI;
-    } else if (deltaAngle < -Math.PI) {
-      deltaAngle += 2 * Math.PI;
-    }
-
-    if (selectedObject) {
-      selectedObject.rotation[rotationAxis] += deltaAngle * 0.4;
-    }
-
-    previousAngleRef.current = currentAngleRef.current;
-  }
+  });
 
   const resetAngles = () => {
     previousAngleRef.current = -1;
     setSelectedObject(null);
   };
-
-  useFrame(() => {
-    if (isMouseDown) {
-      raycasterRef.current.setFromCamera(mouseRef.current, camera);
-      const intersects = raycasterRef.current.intersectObjects(scene.children, true);
-
-      if (intersects.length > 0) {
-        const intersectedObject = intersects[0].object;
-        const objectType = intersectedObject.userData.type;
-
-        if (objectType === "lab1smallknob" || objectType === "VVRKnob") {
-          setSelectedObject(intersectedObject);
-          const intersectionPoint = intersects[0].point;
-          const localPoint = intersectedObject.worldToLocal(intersectionPoint.clone());
-
-          if (objectType === "VVRKnob") {
-            console.log(`Mouse relative coordinates on VVRKnob: x=${localPoint.x}, y=${localPoint.y}, z=${localPoint.z}`);
-          }
-
-          const rotationAxis = objectType === "lab1smallknob" ? 'y' : 'z';
-          handleRotation(localPoint, rotationAxis);
-        } else {
-          resetAngles();
-        }
-      } else {
-        resetAngles();
-      }
-    }
-  });
 
   return null;
 };
