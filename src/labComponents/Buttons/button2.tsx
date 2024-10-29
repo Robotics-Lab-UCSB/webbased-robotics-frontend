@@ -72,12 +72,12 @@ const Button2: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
       <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
 
         <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]}>
-                        <meshPhongMaterial
-              color={0xff3333} // Bright red color
-              shininess={100} // Higher value for shinier surface
-              specular={0xffffff} // White specular highlights
-              side={THREE.DoubleSide}
-    />
+            
+            <meshPhongMaterial 
+            color={0xff3333} // Bright red color
+            shininess={100} // Higher value for shinier surface
+            specular={0xffffff} // White specular highlights
+            side={THREE.DoubleSide}/>
 
         </mesh>
       
