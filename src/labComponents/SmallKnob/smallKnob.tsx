@@ -9,8 +9,6 @@ interface SmallKnobProps {
   onClick?: () => void;
 }
 
-
-
 const SmallKnob: React.FC<SmallKnobProps> = ({position, rotation, onClick}) => {
     const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
     
