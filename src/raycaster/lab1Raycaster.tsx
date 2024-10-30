@@ -7,9 +7,11 @@ const RaycastingComponent: React.FC = () => {
   const mouseRef = useRef(new THREE.Vector2());
   const { camera, scene, gl } = useThree();
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const [selectedObject, setSelectedObject] = useState<THREE.Object3D | null>(null);
-  const currentAngleRef = useRef<number>(0); // Track current angle
-  const previousAngleRef = useRef<number>(-1); // Initialize with -1 for first-time tracking
+  
+  const spinningObject = useRef<THREE.Object3D | null>(null);
+  const currentAngleRef = useRef<number>(0); 
+  const previousAngleRef = useRef<number>(-1); 
+  const previousSpinning = useRef<THREE.Object3D | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -43,72 +45,48 @@ const RaycastingComponent: React.FC = () => {
       const intersects = raycasterRef.current.intersectObjects(scene.children, true);
       if (intersects.length > 0) {
         const intersectedObject = intersects[0].object;
-        if (intersectedObject.userData.type === "lab1smallknob") {
-          setSelectedObject(intersectedObject);
-          const intersectionPoint = intersects[0].point;
-          const localPoint = intersectedObject.worldToLocal(intersectionPoint.clone());
-          const angle = Math.atan2(localPoint.x, localPoint.z);
-
-          if (previousAngleRef.current === -1) {
-            previousAngleRef.current = angle;
-            currentAngleRef.current = angle;
-            return;
+        const intersectionPoint = intersects[0].point;
+        const localPoint = intersectedObject.worldToLocal(intersectionPoint.clone());
+        let angle = 0; 
+          if (intersectedObject.userData.type === "VVRKnob") { // KEEP ADDING HERE FOR NEW COMPONENTS
+            angle = Math.atan2(localPoint.x, localPoint.y);
+          } else if (intersectedObject.userData.type === "lab1smallknob") {
+            angle = Math.atan2(localPoint.x, localPoint.z);
           }
 
-          currentAngleRef.current = angle;
-          let deltaAngle = previousAngleRef.current - currentAngleRef.current;
+          let deltaAngle; 
+          if (previousSpinning.current !== intersectedObject) {
+            previousAngleRef.current = angle; 
+            deltaAngle = 0; 
+            previousSpinning.current = intersectedObject;
+          } else {
+            currentAngleRef.current = angle;
+            deltaAngle = previousAngleRef.current - currentAngleRef.current;
+            previousAngleRef.current = currentAngleRef.current;
+          }
 
           if (deltaAngle > Math.PI) {
             deltaAngle -= 2 * Math.PI;
           } else if (deltaAngle < -Math.PI) {
             deltaAngle += 2 * Math.PI;
           }
-
-          if (selectedObject) {
-            selectedObject.rotation.y -= deltaAngle * 0.4;
+        if (intersectedObject.userData.type === "lab1smallknob") { // CHECK FOR DIFFERENT ADDING ANGLE IMPLEMENTATIONS 
+          if (intersectedObject) {
+            intersectedObject.rotation.y -= deltaAngle * 0.34;
           }
-
-          previousAngleRef.current = currentAngleRef.current;
         } else if (intersectedObject.userData.type === "VVRKnob") {
-          setSelectedObject(intersectedObject);
-          const intersectionPoint = intersects[0].point;
-          const localPoint = intersectedObject.worldToLocal(intersectionPoint.clone());
-          console.log(`Mouse relative coordinates on VVRKnob: x=${localPoint.x}, y=${localPoint.y}, z=${localPoint.z}`);
-          const angle = Math.atan2(localPoint.x, localPoint.y);
-
-          if (previousAngleRef.current === -1) {
-            previousAngleRef.current = angle;
-            currentAngleRef.current = angle;
-            return;
+          if (spinningObject) {
+            intersectedObject.rotation.z += deltaAngle * 0.4;
           }
-
-          currentAngleRef.current = angle;
-          let deltaAngle = previousAngleRef.current - currentAngleRef.current;
-
-          if (deltaAngle > Math.PI) {
-            deltaAngle -= 2 * Math.PI;
-          } else if (deltaAngle < -Math.PI) {
-            deltaAngle += 2 * Math.PI;
-          }
-
-          if (selectedObject) {
-            selectedObject.rotation.z += deltaAngle * 0.4;
-          }
-
-          previousAngleRef.current = currentAngleRef.current;
         } else {
-          resetAngles();
+          previousSpinning.current = null;
         }
       }
     } else {
-      resetAngles();
+      previousSpinning.current = null;
     }
   });
 
-  const resetAngles = () => {
-    previousAngleRef.current = -1;
-    setSelectedObject(null);
-  };
 
   return null;
 };
