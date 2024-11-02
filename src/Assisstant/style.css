@@ -25,29 +25,30 @@
   .contentAndInput{
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 5px;
   }
   
   .chat-box .content {
-    height: 150px;
+    height: 175px;
     padding: 5px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     overflow-y: scroll;
     border: 3px;
-    border-style: solid;
-    border-radius: 8px;
-    border-color: #000000; 
     margin-bottom: 5px;
   }
 
   .input-area{
     display: flex;
     flex-direction:row;
-    padding: 10px;
     border-radius: 8px;
-    background-color: #ff0000;  
+  }
+
+  .input-area:focus-within{
+    outline: 5px;
+    outline-style: solid;
+    outline-color: #FFCF9D;
   }
 
   .chat-input {
@@ -55,18 +56,23 @@
     padding: 10px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
-    border:none;
+    border: none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
-    background-color: #000;
+    background-color: #000000;
   }
 
+  .chat-input:focus{
+    outline: none;
+  }
+  
   .send-btn{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    background-color: #000;
+    outline: none !important;
+    background-color: #000000;
   }
-  
+
   .chat-box .toggle-btn {
     background-color: #ffffff;
     border: none;
