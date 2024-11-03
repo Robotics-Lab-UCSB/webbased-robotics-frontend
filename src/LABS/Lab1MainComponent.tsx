@@ -63,7 +63,7 @@ const GraphPaperComponent: React.FC = () => {
         <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
 
         {/* Lights */}
-        <ambientLight intensity={0.5} />
+        <ambientLight intensity={1.2} />
         <directionalLight position={[0, 10, 0]} intensity={1} />
 
         {/* Grid and Ground */}
@@ -88,9 +88,6 @@ const GraphPaperComponent: React.FC = () => {
         <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
 
         <Box position={[-35, 10, 0]} rotation={[Math.PI/2, 0, 0]} onClick={() => console.log('i am clicked')}></Box>
-        <ParentComponent></ParentComponent>
-
-
 
         <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
       </Canvas>
