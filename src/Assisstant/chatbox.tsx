@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState, useRef} from 'react';
-import Draggable from 'react-draggable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp,faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { Rnd } from 'react-rnd';
 import './style.css'; // Import the external CSS
 import MessageBubble from './messageBubble';
 
@@ -31,46 +33,48 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
     if (contentRef.current) {
       contentRef.current.scrollTop = contentRef.current.scrollHeight; // Scroll to bottom
     }
-  }, [messages]
-  );
+  }, [messages]);
 
   return (
-      <Draggable handle=".drag-handle">
-          <div
-            className={`chat-box ${isOpen ? 'open' : ''}`}
-            style={{ backgroundColor: color, width: t_width, height: t_height}}
-          >
-            <div className="drag-handle">
-              <div className="close-btn" onClick={toggleChatBox}>
-                X
-              </div>
-            </div>
-            {isOpen && (
-              <div className='contentAndInput'>
-                <div className="content" ref={contentRef}>
-                  {messages.map((message, index) => (
-                    <MessageBubble
-                    id={index}
-                    text={message}
-                    onClick={onMessageClick}
-                    />
-                  ))}
-                </div>
-                <form className="input-area" onSubmit={SendMessage}>
-                  <input
-                    className="chat-input"
-                    type="text"
-                    ref={theInput}                  
-                    placeholder="Type a message..."
-                  />
-                  <button type="submit" className="send-btn">
-                    Send
-                  </button>
-                </form>
-              </div>
-            )}
+    <Rnd
+    className="resize-container"
+    minWidth={t_width}
+    minHeight={t_height}
+    default={{ x : 100, y: 100, width: t_width, height: t_height}}
+    dragHandleClassName='drag-handle'
+    >
+      <div className={`chat-box ${isOpen ? 'open' : ''}`} style={{ backgroundColor: color, width: t_width, height: t_height}}>
+        <div className="drag-handle">
+          <div className="close-btn" onClick={toggleChatBox}>
+            <FontAwesomeIcon icon={faCircleXmark} />
           </div>
-      </Draggable>
+        </div>
+        {isOpen && (
+          <div className='contentAndInput'>
+            <div className="content" ref={contentRef}>
+              {messages.map((message, index) => (
+                <MessageBubble
+                id={index}
+                text={message}
+                onClick={onMessageClick}
+                />
+              ))}
+            </div>
+            <form className="input-area" onSubmit={SendMessage}>
+              <input
+                className="chat-input"
+                type="text"
+                ref={theInput}                  
+                placeholder="Type a message..."
+              />
+              <button type="submit" className="send-btn">
+                <FontAwesomeIcon icon={faArrowUp} />
+              </button>
+            </form>
+          </div>
+          )}
+        </div>
+    </Rnd>
   );
 };
 
