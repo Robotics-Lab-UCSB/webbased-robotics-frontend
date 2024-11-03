@@ -22,7 +22,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onMessageClicked }) => {
       <ChatBox
         color="#F5F5DC"
         t_width="500px"
-        t_height='300px'
+        t_height='500px'
         isOpen={chatBoxOpen}
         toggleChatBox={toggleChatBox}
         onMessageClick={onMessageClicked}

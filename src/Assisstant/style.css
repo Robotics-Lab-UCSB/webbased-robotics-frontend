@@ -1,7 +1,8 @@
+.resize-container{
+  z-index: 1;
+}
+
 .chat-box {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
