@@ -4,14 +4,15 @@ import './style.css'; // Import the external CSS
 interface MessageBubbleProps {
   text: string;
   id: number;
+  isUser: boolean
   onClick: () => void;
   backgroundColor?: string; // Optional background color prop
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ text, onClick, backgroundColor = '#FFB000' }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = ({ text, onClick, isUser, backgroundColor = '#FFB000' }) => {
   return (
     <div
-      className="message-bubble clickable"
+      className={isUser ? 'message-bubble' : 'message-bubble response'}
       onClick={onClick}
       style={{ backgroundColor }}
     >
