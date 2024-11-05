@@ -15,6 +15,7 @@ import RaycastingComponent from '../raycaster/lab1Raycaster';
 import LightSwitch from '../miscellaneous/switchAndCasing';
 import DVM from '../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx'
 import ParentComponent from '../labComponents/Buttons/parentButton';
+import TriangleButton from '../labComponents/Buttons/triangleButton.tsx';
 
 interface CameraProps {
   xN: number;
@@ -90,6 +91,7 @@ const GraphPaperComponent: React.FC = () => {
         <Box position={[-35, 10, 0]} rotation={[Math.PI/2, 0, 0]} onClick={() => console.log('i am clicked')}></Box>
 
         <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
+        <TriangleButton position={[-30, 20, 0]} />
       </Canvas>
     </div>
   );

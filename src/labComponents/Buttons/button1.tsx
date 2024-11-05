@@ -56,8 +56,8 @@ const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
       });
 
   const handleClick = () => {
-    if (!isMovingBack) {
-      setIsMovingForward(true); // Start moving forward on click
+    if (!isMovingForward) {
+      setIsMovingBack(true); // Start moving forward on click
     }
     if (onClick) {
       onClick(); // Trigger any additional onClick functionality passed as a prop
