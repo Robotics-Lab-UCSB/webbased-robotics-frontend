@@ -12,7 +12,7 @@ interface lightSwitchProps {
 const LightSwitch: React.FC<lightSwitchProps> = ({ position, scale }) => {
   const groupRef = useRef<THREE.Group | null>(null);
 
-  const geometry = useLoader(STLLoader, "../../public/switch casing (1).stl");
+  const geometry = useLoader(STLLoader, "../../switch casing (1).stl");
   const metalTexture = useLoader(THREE.TextureLoader, "/leather.jpg");
 
   return (
