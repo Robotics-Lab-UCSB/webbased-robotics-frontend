@@ -38,6 +38,7 @@ const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
 const GraphPaperComponent: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 50, z: 80 });
   const [key, setKey] = useState(0);
+  const [reversedString, setReversedString] = useState<string | null>(null);
 
   const handleStubMessageClick = () => {
     setPosition({ x: 10, y: 10, z: 10 });
@@ -52,6 +53,7 @@ const GraphPaperComponent: React.FC = () => {
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
       <CornerText position="top-left" text="Photoelectric Effects" />
       <ChatComponent onMessageClicked={handleStubMessageClick} />
+      {reversedString && <div style={{ position: 'absolute', top: 0, left: 0, color: 'white' }}>{`Reversed: ${reversedString}`}</div>}
       <Canvas
         gl={{ antialias: true }}
         style={{ background: '#004225' }} // Setting background color here

@@ -9,9 +9,9 @@ interface SwitchProps {
 }
 
 const Switch: React.FC<SwitchProps> = ({ position, scale = [1, 1, 1] }) => {
-  const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0));
+  const [rotation, setRotation] = useState(new THREE.Euler(0, 0, 0)); // need to fix this, put this as a prop
   const groupRef = useRef<THREE.Group | null>(null);
-  const geometry = useLoader(STLLoader, "../../public/switch.stl");
+  const geometry = useLoader(STLLoader, "/switch.stl");
   const bodyTexture = useLoader(THREE.TextureLoader, "/metal.jpg");
 
   useEffect(() => {
