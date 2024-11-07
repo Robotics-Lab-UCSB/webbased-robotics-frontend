@@ -10,6 +10,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onMessageClicked }) => {
   const [chatBoxOpen, setChatBoxOpen] = useState(false);
 
   const toggleChatBox = () => {
+    console.log("AAA")
     setChatBoxOpen((prev) => !prev);
   };
 

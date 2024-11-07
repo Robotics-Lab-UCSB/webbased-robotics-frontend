@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { useState, useRef} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp,faCircleXmark } from '@fortawesome/free-solid-svg-icons';
-import { Rnd } from 'react-rnd';
-import './style.css'; // Import the external CSS
+import { faArrowUp, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import './style.css';
 import MessageBubble from './messageBubble';
 
 interface Message {
@@ -17,81 +15,138 @@ interface ChatBoxProps {
   t_height: string;
   isOpen: boolean;
   toggleChatBox: () => void;
-  onMessageClick: () => void; // New function prop for handling message click
+  onMessageClick: () => void;
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, toggleChatBox, onMessageClick }) => {
-  const contentRef = useRef<HTMLDivElement>(null) // For the content box displayed
-  const theInput = useRef<HTMLInputElement>(null); // For the input content
-  const [theHeight, setHeight] = useState<string>((parseInt(t_height)-50).toString()+"px");
-  const [messages, setMessages] = useState<Message[]>([]); // State to store messages
+  const contentRef = useRef<HTMLDivElement>(null);
+  const theInput = useRef<HTMLInputElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  
+  // Store previous position as a ref so it persists without re-rendering
+  const previousPosition = useRef({ x: 0, y: 0 });
+  const objectcenterPosition = useRef({ x: 0, y: 0 });
+  // const [position, setPosition] = useState(previousPosition.current);
 
-  const SendMessage = (event: React.FormEvent) => {
+  const sendMessage = (event: React.FormEvent) => {
     event.preventDefault();
-    const message = theInput.current?.value.trim(); // Get the input value directly
+    const message = theInput.current?.value.trim();
     if (message) {
-      setMessages((prevMessages) => [...messages, {text: message, isUser: true}]); // Add the new message to the list
-      if(theInput.current) theInput.current.value = ''; // Clear the input field
+      setMessages((prevMessages) => [...prevMessages, { text: message, isUser: true }]);
+      if (theInput.current) theInput.current.value = '';
     }
   };
 
-  useEffect(()=>{
-    if (contentRef.current) {
-      contentRef.current.scrollTop = contentRef.current.scrollHeight; // Scroll to bottom
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].isUser) {
+      const timer = setTimeout(() => {
+        setMessages((prevMessages) => [...prevMessages, { text: "Response", isUser: false }]);
+      }, 500);
+      return () => clearTimeout(timer);
     }
   }, [messages]);
 
-  useEffect(()=>{
-    if (messages.length > 0 && messages[messages.length - 1].isUser) {
-        setMessages((prevMessages) => [...prevMessages, { text: "Response", isUser: false }]);
-     } 
-  }, [messages]);
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    console.log("Center X:", centerX, "Center Y:", centerY);
+
+    previousPosition.current = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging || !chatBoxRef.current) return;
+  
+    const changeX = e.clientX - previousPosition.current.x;
+    const changeY = e.clientY - previousPosition.current.y;
+  
+    // Update the current position of the chat box with the new calculated changes
+    objectcenterPosition.current.x = objectcenterPosition.current.x + changeX;
+    objectcenterPosition.current.y = objectcenterPosition.current.y + changeY;    
+
+    // Apply the transformation
+    chatBoxRef.current.style.transform = `translate(${objectcenterPosition.current.x}px, ${objectcenterPosition.current.y}px)`;
+
+    // Update the position state and set previousPosition to the new mouse coordinates
+    previousPosition.current = { x: e.clientX, y: e.clientY };
+};
+
+  
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+  
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    } else {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
 
   return (
-    <Rnd
-    className="resize-container"
-    minWidth={t_width}
-    minHeight={t_height}
-    default={{ x : window.innerWidth - parseInt(t_width, 10) - 20, y: 600, width: t_width, height: t_height}}
-    enableResizing={{ top: true, bottom: true, left: false, right: false, topLeft: false, topRight: false, bottomLeft: false, bottomRight: false }}
-    onResize={(e, direction, ref) => {
-      setHeight((parseInt(ref.style.height)-50).toString()+"px")
-    }}
-    dragHandleClassName='drag-handle'
+    <div
+      ref={chatBoxRef}
+      className={`chat-box ${isOpen ? 'open' : ''}`}
+      style={{
+        backgroundColor: color,
+        width: t_width,
+        height: t_height,
+        position: 'absolute',
+        // top: position.y,
+        // left: position.x,
+      }}
     >
-      <div className={`chat-box ${isOpen ? 'open' : ''}`} style={{ backgroundColor: color, width: t_width, height: "100%"}}>
-        <div className="drag-handle">
-          <div className="close-btn" onClick={toggleChatBox}>
-            <FontAwesomeIcon icon={faCircleXmark} /> Ask Questions
-          </div>
+      <div className="drag-handle" onMouseDown={handleMouseDown}>
+        <div className="close-btn" onClick={toggleChatBox}>
+          <FontAwesomeIcon icon={faCircleXmark} /> Ask Questions
         </div>
-        {isOpen && (
-          <div className='contentAndInput' style={{height:theHeight}}>
-            <div className="content" ref={contentRef}>
-              {messages.map((message, index) => (
-                <MessageBubble
+      </div>
+      {isOpen && (
+        <div className="contentAndInput" style={{ height: `calc(100% - 50px)` }}>
+          <div className="content" ref={contentRef}>
+            {messages.map((message, index) => (
+              <MessageBubble
+                key={index}
                 id={index}
                 text={message.text}
                 onClick={onMessageClick}
                 isUser={message.isUser}
-                />
-              ))}
-            </div>
-            <form className="input-area" onSubmit={SendMessage}>
-              <input
-                className="chat-input"
-                type="text"
-                ref={theInput}                  
-                placeholder="Type a message..."
               />
-              <button type="submit" className="send-btn">
-                <FontAwesomeIcon icon={faArrowUp} />
-              </button>
-            </form>
+            ))}
           </div>
-          )}
+          <form className="input-area" onSubmit={sendMessage}>
+            <input
+              className="chat-input"
+              type="text"
+              ref={theInput}
+              placeholder="Type a message..."
+            />
+            <button type="submit" className="send-btn">
+              <FontAwesomeIcon icon={faArrowUp} />
+            </button>
+          </form>
         </div>
-    </Rnd>
+      )}
+    </div>
   );
 };
 
