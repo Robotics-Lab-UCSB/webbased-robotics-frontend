@@ -55,30 +55,28 @@ const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
         }
       });
 
-  const handleClick = () => {
-    if (!isMovingForward) {
-      setIsMovingBack(true); // Start moving forward on click
-    }
-    if (onClick) {
-      onClick(); // Trigger any additional onClick functionality passed as a prop
-    }
-  };
-
-  return (
-    <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
-
-        <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]}>
-            <meshPhongMaterial
-              color={0xff3333} // Bright red color
-              shininess={100} // Higher value for shinier surface
-              specular={0xffffff} // White specular highlights
-              side={THREE.DoubleSide}
-    />
-
-        </mesh>
+      const handleClick = () => {
+        if (!isMovingForward) {
+          setIsMovingForward(true); // Start moving forward on click
+        }
+        if (onClick) {
+          onClick();
+        }
+      };
       
-    </group>
-  );
+      return (
+        <group ref={groupRef} position={position} rotation={rotation}>
+          <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]} onClick={handleClick}>
+            <meshPhongMaterial
+              color={0xff3333}
+              shininess={100}
+              specular={0xffffff}
+              side={THREE.DoubleSide}
+            />
+          </mesh>
+        </group>
+      );
+      
 };
 
 export default Button1;

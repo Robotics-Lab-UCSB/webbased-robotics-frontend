@@ -19,14 +19,13 @@ interface ParentComponentProps {
   scale?: [number, number, number];
 }
 
-const ParentComponent: React.FC<ParentComponentProps> = ({xPos = 15, yPos = 10, zPos = -2.7, distanceBetweenSmallButton = 2, distanceBetweenBigButton = 4, rot = [0, 0, 0], position = [0, 0, 0], scale = [1,1,1]}) => {
+const ParentComponent: React.FC<ParentComponentProps> = ({distanceBetweenSmallButton = 1.7, distanceBetweenBigButton = 3.5, rot = [0, 0, 0], position = [33.08, -1.3, 2.5], scale = [0.8,0.8,0.8]}) => {
   const [buttons, setButtons] = useState<Button[]>([]);
-  
   useEffect(() => {
     // Create small buttons
     const smallButtons = Array.from({ length: 8 }, (_, i) => ({
       id: `smallButton${i + 1}`,
-      position: [xPos + distanceBetweenSmallButton * (i + 1), yPos + 5, zPos] as [number, number, number],
+      position: [position[0] + distanceBetweenSmallButton * (i + 1) + 1, position[1] + 1.5, position[2]] as [number, number, number],
       rotation: rot,
       type: 'type1'
     }));
@@ -34,27 +33,28 @@ const ParentComponent: React.FC<ParentComponentProps> = ({xPos = 15, yPos = 10, 
     // Create big buttons in two rows (yPos and yPos - 5)
     const bigButtonsRow1 = Array.from({ length: 4 }, (_, i) => ({
       id: `bigButton${i + 1}`,
-      position: [xPos + distanceBetweenBigButton * (i + 1), yPos, zPos] as [number, number, number],
+      position: [position[0] + distanceBetweenBigButton * (i + 1), position[1], position[2]] as [number, number, number],
       rotation: rot,
       type: 'type2'
     }));
 
     const bigButtonsRow2 = Array.from({ length: 4 }, (_, i) => ({
       id: `bigButton${i + 5}`,
-      position: [xPos + distanceBetweenBigButton * (i + 1), yPos - 5, zPos] as [number, number, number],
+      position: [position[0] + distanceBetweenBigButton * (i + 1), position[1] - 1.2, position[2]] as [number, number, number],
       rotation: rot,
       type: 'type2'
     }));
 
     // Combine all buttons
     setButtons([...smallButtons, ...bigButtonsRow1, ...bigButtonsRow2]);
-  }, [xPos, yPos, zPos, distanceBetweenSmallButton, distanceBetweenBigButton, rot]);
+  }, []);
 
   return (
-    <mesh position={position} scale={scale}>
+    <mesh position={position} scale={scale} rotation={[Math.PI / 2, 0, 0]}>
       <ButtonComponent buttons={buttons} />
     </mesh>
   );
+  
 };
 
 export default ParentComponent;
