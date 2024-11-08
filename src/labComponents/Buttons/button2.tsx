@@ -10,8 +10,6 @@ interface buttonProps {
   
 }
 
-
-
     const Button2: React.FC<buttonProps> = ({position, rotation, onClick}) => {
     const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
     const groupRef = useRef<THREE.Group | null>(null);
@@ -74,7 +72,7 @@ interface buttonProps {
     return (
       <group ref={groupRef} position={position} rotation={rotation} onClick={handleClick}>
 
-        <mesh ref={dialRef} scale={[0.1, 0.1, 0.1]}>
+        <mesh ref={dialRef} scale={[0.07, 0.07, 0.1]}>
                         <meshPhongMaterial
               color={0xff3333} // Bright red color
               shininess={100} // Higher value for shinier surface
