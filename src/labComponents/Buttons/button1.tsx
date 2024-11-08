@@ -7,9 +7,11 @@ interface buttonProps {
   position: [number, number, number]; // Position prop for placement in the scene
   rotation: [number, number, number];
   onClick?: () => void;
+  unique_id: string; 
+
 }
 
-const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
+const Button1: React.FC<buttonProps> = ({ position, rotation, onClick, unique_id }) => {
   const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
   const groupRef = useRef<THREE.Group | null>(null);
   const rubberTexture = useLoader(THREE.TextureLoader, '/redRubber.png');
@@ -24,6 +26,7 @@ const Button1: React.FC<buttonProps> = ({ position, rotation, onClick }) => {
       geometry.computeVertexNormals();
       if (dialRef.current) {
         dialRef.current.geometry = geometry; // Set the loaded geometry for the needle
+        dialRef.current.userData.unique_id = unique_id;
       }
     });
   }, []);

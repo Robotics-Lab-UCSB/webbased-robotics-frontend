@@ -43,6 +43,12 @@ const RaycastingComponent: React.FC = () => {
     if (isMouseDown) {
       raycasterRef.current.setFromCamera(mouseRef.current, camera);
       const intersects = raycasterRef.current.intersectObjects(scene.children, true);
+      // const intersectedObject = intersects[0].object; 
+      // if (intersectedObject.userData && intersectedObject.userData.unique_id) {
+      //   console.log("Unique ID:", intersectedObject.userData.unique_id);
+      // } else {
+      //   console.log("No unique_id found on this object.");
+      // }
       if (intersects.length > 0) {
         const intersectedObject = intersects[0].object;
         const intersectionPoint = intersects[0].point;

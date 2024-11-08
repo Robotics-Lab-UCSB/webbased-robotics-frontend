@@ -7,7 +7,6 @@ interface buttonProps {
   position: [number, number, number]; // Position prop for placement in the scene
   rotation :[number, number, number];
   onClick?: () => void;
-  
 }
 
     const Button2: React.FC<buttonProps> = ({position, rotation, onClick}) => {
