@@ -3,6 +3,7 @@ import ButtonComponent from './buttonsMain';
 
 interface Button {
   id: string;
+  unique_id: string; 
   position: [number, number, number];
   rotation: [number, number, number];
   type: string;
@@ -24,6 +25,7 @@ const ParentComponent: React.FC<ParentComponentProps> = ({distanceBetweenSmallBu
   useEffect(() => {
     // Create small buttons
     const smallButtons = Array.from({ length: 8 }, (_, i) => ({
+      unique_id: `eletrometer_circlebutton_${i + 1}`,
       id: `smallButton${i + 1}`,
       position: [position[0] + distanceBetweenSmallButton * (i + 1) + 1, position[1] + 1.5, position[2]] as [number, number, number],
       rotation: rot,
@@ -32,6 +34,7 @@ const ParentComponent: React.FC<ParentComponentProps> = ({distanceBetweenSmallBu
 
     // Create big buttons in two rows (yPos and yPos - 5)
     const bigButtonsRow1 = Array.from({ length: 4 }, (_, i) => ({
+      unique_id: `eletrometer_longButton_${i + 1}`,
       id: `bigButton${i + 1}`,
       position: [position[0] + distanceBetweenBigButton * (i + 1), position[1], position[2]] as [number, number, number],
       rotation: rot,
@@ -39,6 +42,7 @@ const ParentComponent: React.FC<ParentComponentProps> = ({distanceBetweenSmallBu
     }));
 
     const bigButtonsRow2 = Array.from({ length: 4 }, (_, i) => ({
+      unique_id: `eletrometer_longButton_${5 + i}`,
       id: `bigButton${i + 5}`,
       position: [position[0] + distanceBetweenBigButton * (i + 1), position[1] - 1.2, position[2]] as [number, number, number],
       rotation: rot,
