@@ -9,6 +9,7 @@ import SmallKnob from '../labComponents/SmallKnob/smallKnob';
 import Button1 from '../labComponents/Buttons/button1';
 import Button2 from '../labComponents/Buttons/button2';
 import VVR from '../labComponents/VariableVoltageRegulator/mainframe';
+import BigKnob from '../labComponents/BigKnob/bigKnob';
 import Grid from './grid';
 
 interface CameraProps {
@@ -72,6 +73,9 @@ const GraphPaperComponent: React.FC = () => {
         {/* Button Components */}
         <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button1>
         <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button2>
+
+        {/* Big Knob Component*/}
+        <BigKnob position = {[-40, 5, 0]} rotation = {[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></BigKnob>
 
       </Canvas>
     </div>
