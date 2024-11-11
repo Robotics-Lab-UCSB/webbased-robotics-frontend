@@ -75,7 +75,7 @@ const GraphPaperComponent: React.FC = () => {
         <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></Button2>
 
         {/* Big Knob Component*/}
-        <BigKnob position = {[-40, 5, 0]} rotation = {[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></BigKnob>
+        <BigKnob position={[-40, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')}></BigKnob>
 
       </Canvas>
     </div>

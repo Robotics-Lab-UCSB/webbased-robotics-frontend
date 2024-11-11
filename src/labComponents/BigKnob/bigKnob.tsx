@@ -8,11 +8,10 @@ import { useEffect } from "react";
 interface BigKnobProps {
     position: [number, number, number];
     rotation: [number, number, number];
-    scale: [number, number, number];
     onClick?: () => void;
 }
 
-const BigKnob: React.FC<BigKnobProps> = ({position, rotation, scale = [1,1,1]}) => {
+const BigKnob: React.FC<BigKnobProps> = ({position, rotation}) => {
     const geometry = useLoader(STLLoader, "/bigknob.stl");
     const groupRef = useRef<THREE.Group | null > (null);
     const bodyTexture = useLoader(THREE.TextureLoader, "/metal.jpg"); 
@@ -23,7 +22,7 @@ const BigKnob: React.FC<BigKnobProps> = ({position, rotation, scale = [1,1,1]}) 
 
     return (
         < group ref = {groupRef} position = {position} rotation = {rotation}>
-            <mesh geometry={geometry} scale={scale} >
+            <mesh geometry={geometry} scale={[0.01, 0.01, 0.01]} >
                 <meshStandardMaterial map={bodyTexture} />
 
             </mesh>
