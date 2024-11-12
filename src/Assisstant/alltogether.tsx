@@ -10,6 +10,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onMessageClicked }) => {
   const [chatBoxOpen, setChatBoxOpen] = useState(false);
 
   const toggleChatBox = () => {
+    console.log("AAA")
     setChatBoxOpen((prev) => !prev);
   };
 
@@ -21,7 +22,8 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ onMessageClicked }) => {
       {/* The ChatBox component receives the `isOpen` state */}
       <ChatBox
         color="#F5F5DC"
-        size="300px"
+        t_height = "500px"
+        t_width="500px"
         isOpen={chatBoxOpen}
         toggleChatBox={toggleChatBox}
         onMessageClick={onMessageClicked}
