@@ -87,7 +87,7 @@ const GraphPaperComponent: React.FC = () => {
         <SmallKnob type="lab1smallknob" name="smallKnob" position={[-22, 5, 0]} rotation={[Math.PI / 2, 0, 0]} />
 
         {/* Button Components */}
-        <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
+        <Button1 position={[-30, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} /> 
         <Button2 position={[-35, 5, 0]} rotation={[Math.PI, 0, 0]} onClick={() => console.log('i am clicked')} />
 
         <Box position={[-35, 10, 0]} rotation={[Math.PI/2, 0, 0]}></Box>

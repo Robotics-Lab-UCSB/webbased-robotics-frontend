@@ -49,6 +49,10 @@ const RaycastingComponent: React.FC = () => {
       // } else {
       //   console.log("No unique_id found on this object.");
       // }
+
+      // When mouse down: 
+      // Get the object, and then just call a unique function in that object to do the animation (for example moving back and forth), 
+      // and also call a new function that connects to back end that takes in the unique_id of the object being clicked. 
       if (intersects.length > 0) {
         const intersectedObject = intersects[0].object;
         const intersectionPoint = intersects[0].point;
