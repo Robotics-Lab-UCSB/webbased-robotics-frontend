@@ -5,12 +5,13 @@ import { PLYLoader } from 'three-stdlib';
 
 interface KnobOvenProps {
   position: [number, number, number]; // Position prop
+  type: string; // Type prop
 }
 
-const KnobOven: React.FC<KnobOvenProps> = ({ position }) => {
+const KnobOven: React.FC<KnobOvenProps> = ({ position, type }) => {
   const [needleGeometry, setNeedleGeometry] = useState<THREE.BufferGeometry | null>(null); 
-  const metalTexture = useLoader(THREE.TextureLoader, '/leather.jpg');
-  const dialMaterial = new THREE.MeshStandardMaterial({ map: metalTexture });
+  const leatherTexture = useLoader(THREE.TextureLoader, '/leather.jpg');
+  const dialMaterial = new THREE.MeshStandardMaterial({ map: leatherTexture });
 
   // Load the .ply file asynchronously using useEffect
   useEffect(() => {
@@ -24,7 +25,13 @@ const KnobOven: React.FC<KnobOvenProps> = ({ position }) => {
   return (
     <group position={position}>
       {needleGeometry && (
-        <mesh geometry={needleGeometry} material={dialMaterial} scale={[4.2, 4.2, 4.2]} rotation={[-Math.PI / 2, 0, 0]} />
+        <mesh 
+          geometry={needleGeometry} 
+          material={dialMaterial} 
+          scale={[4.2, 4.2, 4.2]} 
+          rotation={[-Math.PI / 2, 0, 0]} 
+          userData={{ type }} // Add the type to userData for raycasting
+        />
       )}
     </group>
   );

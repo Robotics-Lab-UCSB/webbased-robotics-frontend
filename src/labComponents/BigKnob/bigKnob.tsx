@@ -12,9 +12,9 @@ interface BigKnobProps {
 }
 
 const BigKnob: React.FC<BigKnobProps> = ({position, rotation}) => {
-    const geometry = useLoader(STLLoader, "/bigknob.stl");
+    const geometry = useLoader(STLLoader, "/bigKnob1.stl");
     const groupRef = useRef<THREE.Group | null > (null);
-    const bodyTexture = useLoader(THREE.TextureLoader, "/metal.jpg"); 
+    const bodyTexture = useLoader(THREE.TextureLoader, "/aquametal.jpg"); 
 
     useEffect(() => {
     geometry.center();
@@ -22,9 +22,8 @@ const BigKnob: React.FC<BigKnobProps> = ({position, rotation}) => {
 
     return (
         < group ref = {groupRef} position = {position} rotation = {rotation}>
-            <mesh geometry={geometry} scale={[0.01, 0.01, 0.01]} >
+            <mesh geometry={geometry} scale={[0.3, 0.3, 0.3]} >
                 <meshStandardMaterial map={bodyTexture} />
-
             </mesh>
         </group>
     
