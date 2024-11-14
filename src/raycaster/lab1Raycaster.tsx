@@ -12,6 +12,7 @@ const RaycastingComponent: React.FC = () => {
   const currentAngleRef = useRef<number>(0);
   const previousAngleRef = useRef<number>(-1);
   const previousSpinning = useRef<THREE.Object3D | null>(null);
+  const lastIntersectedObjectUpdateTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -41,58 +42,64 @@ const RaycastingComponent: React.FC = () => {
 
   useFrame(() => {
     if (isMouseDown) {
-      raycasterRef.current.setFromCamera(mouseRef.current, camera);
-      const intersects = raycasterRef.current.intersectObjects(
-        scene.children,
-        true
-      );
-      const intersectedObject = intersects[0].object;
-      if (intersectedObject.userData && intersectedObject.userData.unique_id) {
-        console.log("Unique ID:", intersectedObject.userData.unique_id);
-      } else {
-        console.log("No unique_id found on this object.");
-      }
-      if (intersects.length > 0) {
-        const intersectedObject = intersects[0].object;
-        const intersectionPoint = intersects[0].point;
-        const localPoint = intersectedObject.worldToLocal(
-          intersectionPoint.clone()
+      // only update raycaster every 0.5s so it doesn't update when buttons are still animating
+      const currentTime = Date.now();
+      if (currentTime - lastIntersectedObjectUpdateTimeRef.current >= 500) {
+        lastIntersectedObjectUpdateTimeRef.current = currentTime;
+        raycasterRef.current.setFromCamera(mouseRef.current, camera);
+        const intersects = raycasterRef.current.intersectObjects(
+          scene.children,
+          true
         );
-        let angle = 0;
-        if (intersectedObject.userData.type === "VVRKnob") {
-          // KEEP ADDING HERE FOR NEW COMPONENTS
-          angle = Math.atan2(localPoint.x, localPoint.y);
-        } else if (intersectedObject.userData.type === "lab1smallknob") {
-          angle = Math.atan2(localPoint.x, localPoint.z);
-        }
-
-        let deltaAngle;
-        if (previousSpinning.current !== intersectedObject) {
-          previousAngleRef.current = angle;
-          deltaAngle = 0;
-          previousSpinning.current = intersectedObject;
+        const intersectedObject = intersects[0].object;
+        if (intersectedObject.userData.unique_id) {
+          // console.log("Unique ID:", intersectedObject.userData.unique_id);
+          intersectedObject.userData.handleIntersect();
         } else {
-          currentAngleRef.current = angle;
-          deltaAngle = previousAngleRef.current - currentAngleRef.current;
-          previousAngleRef.current = currentAngleRef.current;
+          // console.log("No unique_id found on this object.");
         }
+        if (intersects.length > 0) {
+          const intersectedObject = intersects[0].object;
+          const intersectionPoint = intersects[0].point;
+          const localPoint = intersectedObject.worldToLocal(
+            intersectionPoint.clone()
+          );
+          let angle = 0;
+          if (intersectedObject.userData.type === "VVRKnob") {
+            // KEEP ADDING HERE FOR NEW COMPONENTS
+            angle = Math.atan2(localPoint.x, localPoint.y);
+          } else if (intersectedObject.userData.type === "lab1smallknob") {
+            angle = Math.atan2(localPoint.x, localPoint.z);
+          }
 
-        if (deltaAngle > Math.PI) {
-          deltaAngle -= 2 * Math.PI;
-        } else if (deltaAngle < -Math.PI) {
-          deltaAngle += 2 * Math.PI;
-        }
-        if (intersectedObject.userData.type === "lab1smallknob") {
-          // CHECK FOR DIFFERENT ADDING ANGLE IMPLEMENTATIONS
-          if (intersectedObject) {
-            intersectedObject.rotation.y -= deltaAngle * 0.34;
+          let deltaAngle;
+          if (previousSpinning.current !== intersectedObject) {
+            previousAngleRef.current = angle;
+            deltaAngle = 0;
+            previousSpinning.current = intersectedObject;
+          } else {
+            currentAngleRef.current = angle;
+            deltaAngle = previousAngleRef.current - currentAngleRef.current;
+            previousAngleRef.current = currentAngleRef.current;
           }
-        } else if (intersectedObject.userData.type === "VVRKnob") {
-          if (spinningObject) {
-            intersectedObject.rotation.z += deltaAngle * 0.4;
+
+          if (deltaAngle > Math.PI) {
+            deltaAngle -= 2 * Math.PI;
+          } else if (deltaAngle < -Math.PI) {
+            deltaAngle += 2 * Math.PI;
           }
-        } else {
-          previousSpinning.current = null;
+          if (intersectedObject.userData.type === "lab1smallknob") {
+            // CHECK FOR DIFFERENT ADDING ANGLE IMPLEMENTATIONS
+            if (intersectedObject) {
+              intersectedObject.rotation.y -= deltaAngle * 0.34;
+            }
+          } else if (intersectedObject.userData.type === "VVRKnob") {
+            if (spinningObject) {
+              intersectedObject.rotation.z += deltaAngle * 0.4;
+            }
+          } else {
+            previousSpinning.current = null;
+          }
         }
       }
     } else {
