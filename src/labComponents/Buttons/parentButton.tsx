@@ -49,6 +49,8 @@ const ParentComponent: React.FC<ParentComponentProps> = ({distanceBetweenSmallBu
       type: 'type2'
     }));
 
+    // Add triangle buttons here 
+
     // Combine all buttons
     setButtons([...smallButtons, ...bigButtonsRow1, ...bigButtonsRow2]);
   }, []);

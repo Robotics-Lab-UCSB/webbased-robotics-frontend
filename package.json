@@ -18,7 +18,7 @@
     "@grpc/proto-loader": "^0.7.13",
     "@loaders.gl/ply": "^4.2.1",
     "@react-three/drei": "^9.105.6",
-    "@react-three/fiber": "^8.16.8",
+    "@react-three/fiber": "^8.17.10",
     "draggable": "^4.2.0",
     "grpc-web": "^1.5.0",
     "react": "^18.2.0",
