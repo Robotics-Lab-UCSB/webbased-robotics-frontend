@@ -34,9 +34,14 @@ const Button1: React.FC<buttonProps> = ({
       if (dialRef.current) {
         dialRef.current.geometry = geometry; // Set the loaded geometry for the needle
         dialRef.current.userData.unique_id = unique_id;
+        dialRef.current.userData.handleIntersect = handleIntersect;
       }
     });
   }, []);
+
+  const handleIntersect = () => {
+    handleClick();
+  };
 
   useFrame(() => {
     if (isMovingForward && groupRef.current) {
@@ -92,7 +97,7 @@ const Button1: React.FC<buttonProps> = ({
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]} onClick={handleClick}>
+      <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]}>
         <meshPhongMaterial
           color={0xff3333}
           shininess={100}
