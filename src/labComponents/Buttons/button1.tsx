@@ -18,11 +18,6 @@ const Button1: React.FC<buttonProps> = ({
 }) => {
   const dialRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
   const groupRef = useRef<THREE.Group | null>(null);
-  const rubberTexture = useLoader(THREE.TextureLoader, "/redRubber.png");
-  const buttonMaterial = new THREE.MeshStandardMaterial({
-    map: rubberTexture,
-    side: THREE.DoubleSide,
-  });
   const [currentPosition] = useState<[number, number, number]>(position);
   const [isMovingForward, setIsMovingForward] = useState(false);
   const [isMovingBack, setIsMovingBack] = useState(false);
@@ -89,9 +84,6 @@ const Button1: React.FC<buttonProps> = ({
   const handleClick = () => {
     if (!isMovingForward) {
       setIsMovingForward(true); // Start moving forward on click
-    }
-    if (onClick) {
-      onClick();
     }
   };
 
