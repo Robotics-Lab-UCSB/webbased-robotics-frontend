@@ -8,11 +8,11 @@ const RaycastingComponent: React.FC = () => {
   const { camera, scene, gl } = useThree();
   const [isMouseDown, setIsMouseDown] = useState(false);
 
-  const spinningObject = useRef<THREE.Object3D | null>(null);
   const currentAngleRef = useRef<number>(0);
   const previousAngleRef = useRef<number>(-1);
   const previousSpinning = useRef<THREE.Object3D | null>(null);
-  const lastIntersectedObjectUpdateTimeRef = useRef<number>(0);
+  const intersectsRef = useRef<THREE.Intersection[]>([]);
+  // const lastIntersectedObjectUpdateTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -22,8 +22,17 @@ const RaycastingComponent: React.FC = () => {
     };
 
     const handleMouseDown = (event: MouseEvent) => {
-      if (event.button === 0) setIsMouseDown(true);
-    };
+      if (event.button === 0) {
+        setIsMouseDown(true);
+        if (intersectsRef.current.length > 0) {
+          const intersectedObject = intersectsRef.current[0].object;
+          console.log(intersectedObject.userData.unique_id)
+          if (intersectedObject.userData.unique_id) {
+            intersectedObject.userData.handleIntersect();
+          }
+        }
+      }
+    };    
 
     const handleMouseUp = (event: MouseEvent) => {
       if (event.button === 0) setIsMouseDown(false);
@@ -41,39 +50,29 @@ const RaycastingComponent: React.FC = () => {
   }, [gl]);
 
   useFrame(() => {
+    raycasterRef.current.setFromCamera(mouseRef.current, camera);
+    raycasterRef.current.params.Points.threshold = 0.1;
+    intersectsRef.current = raycasterRef.current.intersectObjects(scene.children, true);
+    // console.log(intersectsRef.current[0].object)
+
     if (isMouseDown) {
-      // only update raycaster every 0.5s so it doesn't update when buttons are still animating
-      const currentTime = Date.now();
-      if (currentTime - lastIntersectedObjectUpdateTimeRef.current >= 500) {
-        lastIntersectedObjectUpdateTimeRef.current = currentTime;
-        raycasterRef.current.setFromCamera(mouseRef.current, camera);
-        const intersects = raycasterRef.current.intersectObjects(
-          scene.children,
-          true
-        );
-        const intersectedObject = intersects[0].object;
-        if (intersectedObject.userData.unique_id) {
-          // console.log("Unique ID:", intersectedObject.userData.unique_id);
-          intersectedObject.userData.handleIntersect();
-        } else {
-          // console.log("No unique_id found on this object.");
-        }
-        if (intersects.length > 0) {
-          const intersectedObject = intersects[0].object;
-          const intersectionPoint = intersects[0].point;
+        if (intersectsRef.current.length > 0) {
+          const intersectedObject = intersectsRef.current[0].object;
+          const intersectionPoint = intersectsRef.current[0].point;
           const localPoint = intersectedObject.worldToLocal(
             intersectionPoint.clone()
           );
           let angle = 0;
           if (intersectedObject.userData.type === "VVRKnob") {
-            // KEEP ADDING HERE FOR NEW COMPONENTS
             angle = Math.atan2(localPoint.x, localPoint.y);
           } else if (intersectedObject.userData.type === "lab1smallknob") {
             angle = Math.atan2(localPoint.x, localPoint.z);
+          } else if (intersectedObject.userData.type === "topKnob") {
+            angle = Math.atan2(localPoint.x, localPoint.y);
           }
 
           let deltaAngle;
-          if (previousSpinning.current !== intersectedObject) {
+          if (previousSpinning.current !== intersectedObject) { // THIS PART IF USER STARTS DRAGGING ACROSS 
             previousAngleRef.current = angle;
             deltaAngle = 0;
             previousSpinning.current = intersectedObject;
@@ -92,19 +91,23 @@ const RaycastingComponent: React.FC = () => {
             // CHECK FOR DIFFERENT ADDING ANGLE IMPLEMENTATIONS
             if (intersectedObject) {
               intersectedObject.rotation.y -= deltaAngle * 0.34;
+              intersectedObject.userData.backendUpdate();
             }
           } else if (intersectedObject.userData.type === "VVRKnob") {
-            if (spinningObject) {
+            if (intersectedObject) {
               intersectedObject.rotation.z += deltaAngle * 0.4;
+            }
+          } else if (intersectedObject.userData.type === "topKnob"){
+            if (intersectedObject) {
+              intersectedObject.rotation.z += deltaAngle * 0.34;
             }
           } else {
             previousSpinning.current = null;
           }
         }
+      } else {
+        previousSpinning.current = null;
       }
-    } else {
-      previousSpinning.current = null;
-    }
   });
 
   return null;
