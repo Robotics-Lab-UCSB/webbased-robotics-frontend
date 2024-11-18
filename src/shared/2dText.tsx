@@ -1,10 +1,10 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlask } from '@fortawesome/free-solid-svg-icons';
+import React from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faFlask } from "@fortawesome/free-solid-svg-icons"
 
 interface CornerTextProps {
-  position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-  text: string;
+  position: "top-left" | "top-right" | "bottom-left" | "bottom-right"
+  text: string
 }
 
 const CornerText: React.FC<CornerTextProps> = ({ position, text }) => {
@@ -51,7 +51,7 @@ const CornerText: React.FC<CornerTextProps> = ({ position, text }) => {
         {" " + text}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CornerText;
+export default CornerText
