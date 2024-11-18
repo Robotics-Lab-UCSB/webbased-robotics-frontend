@@ -62,6 +62,8 @@
 
             processes = {
               dev.exec = "npm run dev";
+              fmt.exec = "npm run format";
+              lint.exec = "npm run lint";
             };
 
             languages = {
