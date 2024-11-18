@@ -44,3 +44,21 @@ Open your browser and navigate to:
 ```
 http://localhost:3000
 ```
+
+## Devenv instructions
+
+Alternatively, `devenv` + [Nix](https://nixos.org/) can be used to
+automatically bring up a working environment. Install Nix and enable the
+experimental flakes feature. Enter the project directory and type
+
+```bash
+nix develop --impure
+```
+
+All dependencies will be fetched automatically. Once the commadn finishes, run
+
+```bash
+devenv up
+```
+
+A development server will be started at `localhost:5173`
