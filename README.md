@@ -55,7 +55,7 @@ experimental flakes feature. Enter the project directory and type
 nix develop --impure
 ```
 
-All dependencies will be fetched automatically. Once the commadn finishes, run
+All dependencies will be fetched automatically. Once the command finishes, run
 
 ```bash
 devenv up
