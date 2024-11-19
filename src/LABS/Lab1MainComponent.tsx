@@ -24,27 +24,31 @@ interface CameraProps {
 }
 
 const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
-  const frameCounter = useRef(0);  // Counter for frames
-  const interval = 60; // Frames per second (FPS), assuming 60 FPS target for efficiency
-  // const {isFrontFaceVisible, setFrontFaceVisibility} = useFrontFaceContext();
-  const {isFrontFaceVisible, setFrontFaceVisibility} = useFrontFaceContext();
+  const frameCounter = useRef(0); // Counter for frames
+  const interval = 60; // Check visibility every 60 frames (~1 second at 60 FPS)
+
+  // Access context for front face visibility
+  const { isFrontFaceVisible, setFrontFaceVisibility } = useFrontFaceContext();
+
   useFrame(({ camera }) => {
     frameCounter.current += 1;
+
     if (frameCounter.current >= interval) {
-      // Log camera position every second
-      // console.log('z',camera.position.z)
-      // if (camera.position.z < 0) {
-      //   setFrontFaceVisibility(true);
-      //   if (!isFrontFaceVisible) {
-          console.log("dial is updating", isFrontFaceVisible);
-      //   }
-      // } else if (isFrontFaceVisible) {
-      //   setFrontFaceVisibility(false);
-      //   console.log("dial is not updating", isFrontFaceVisible);
-      // }
-      frameCounter.current = 0;  // Reset the frame counter after 1 second
+      // Determine if the front face should be visible
+      const isCameraBehind = camera.position.z < 0;
+
+      if (isCameraBehind && !isFrontFaceVisible) {
+        setFrontFaceVisibility(true); // Set front face as visible
+        console.log("Camera is behind: Dial is updating", isFrontFaceVisible);
+      } else if (!isCameraBehind && isFrontFaceVisible) {
+        setFrontFaceVisibility(false); // Set front face as not visible
+        console.log("Camera is in front: Dial is not updating", isFrontFaceVisible);
+      }
+
+      frameCounter.current = 0; // Reset the frame counter after 1 second
     }
   });
+
   return (
     <PerspectiveCamera
       makeDefault
@@ -54,8 +58,9 @@ const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
       near={0.1}
       far={1000}
     />
-  )
-}
+  );
+};
+
 
 const GraphPaperComponent: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 50, z: 80 })
