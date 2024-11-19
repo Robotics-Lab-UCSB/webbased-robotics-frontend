@@ -1,33 +1,37 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { useLoader } from '@react-three/fiber';
-import { PLYLoader } from 'three-stdlib';
-import KnobOven from './knob';
+import React, { useEffect, useRef, useState } from "react"
+import * as THREE from "three"
+import { useLoader } from "@react-three/fiber"
+import { PLYLoader } from "three-stdlib"
+import KnobOven from "./knob"
 
 interface VVRProps {
-  position: [number, number, number]; // Position prop
+  position: [number, number, number] // Position prop
 }
 
 const VVR: React.FC<VVRProps> = ({ position }) => {
-  const groupRef = useRef<THREE.Group | null>(null);
-  const [nobGeoemtry, setNobGeometry] = useState<THREE.BufferGeometry | null>(null);
-  const [nobPosition, setNobPosition] = useState<[number, number, number]>([0, 0, 0]);
+  const groupRef = useRef<THREE.Group | null>(null)
+  const [nobGeoemtry, setNobGeometry] = useState<THREE.BufferGeometry | null>(
+    null,
+  )
+  const [nobPosition, setNobPosition] = useState<[number, number, number]>([
+    0, 0, 0,
+  ])
 
-  const topTexture = useLoader(THREE.TextureLoader, '/tkm.png');
-  const bodyTexture = useLoader(THREE.TextureLoader, '/metal.jpg');
-  const dialMaterial = new THREE.MeshStandardMaterial({ map: bodyTexture });
-
-  useEffect(() => {
-    const loader = new PLYLoader();
-    loader.load('/labknob_base.ply', (geometry) => {
-      geometry.computeVertexNormals();
-      setNobGeometry(geometry); 
-    });
-  }, []); 
+  const topTexture = useLoader(THREE.TextureLoader, "/tkm.png")
+  const bodyTexture = useLoader(THREE.TextureLoader, "/metal.jpg")
+  const dialMaterial = new THREE.MeshStandardMaterial({ map: bodyTexture })
 
   useEffect(() => {
-    setNobPosition([position[0]-7.3, position[1] - 8, position[2] - 0]);
-  }, [position]); 
+    const loader = new PLYLoader()
+    loader.load("/labknob_base.ply", (geometry) => {
+      geometry.computeVertexNormals()
+      setNobGeometry(geometry)
+    })
+  }, [])
+
+  useEffect(() => {
+    setNobPosition([position[0] - 7.3, position[1] - 8, position[2] - 0])
+  }, [position])
 
   return (
     <group ref={groupRef} position={position}>
@@ -57,7 +61,7 @@ const VVR: React.FC<VVRProps> = ({ position }) => {
       {/* Knob Component */}
       <KnobOven type="VVRKnob" position={nobPosition} />
     </group>
-  );
-};
+  )
+}
 
-export default VVR;
+export default VVR

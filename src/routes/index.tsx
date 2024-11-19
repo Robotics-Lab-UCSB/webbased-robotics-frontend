@@ -1,16 +1,16 @@
-import { createBrowserRouter } from "react-router-dom";
-import GraphPaperComponent from "../LABS/Lab1MainComponent";
-import WebSocketComponent from "../Websocket/experiments/websocketTest";
+import { createBrowserRouter } from "react-router-dom"
+import GraphPaperComponent from "../LABS/Lab1MainComponent"
+import WebSocketComponent from "../Websocket/experiments/websocketTest"
 
 const routers = createBrowserRouter([
   {
     path: "/",
-    element: <GraphPaperComponent /> , // Changed element to display "Test Test Test"
+    element: <GraphPaperComponent />, // Changed element to display "Test Test Test"
   },
   {
     path: "/websocketTest",
-    element: <WebSocketComponent /> ,
+    element: <WebSocketComponent />,
   },
-]);
+])
 
-export default routers;
+export default routers
