@@ -1,4 +1,4 @@
-import { createContext, useRef, ReactNode } from "react";
+import { createContext, useState, ReactNode } from "react";
 type RenderState = {
     isFrontFaceVisible: boolean;
     setFrontFaceVisibility: (visible: boolean) => void;
@@ -8,15 +8,10 @@ export const FrontFaceContext = createContext<RenderState | undefined>(undefined
 
 export const FrontFaceContextProvider = ({ children }: { children: ReactNode }) => {
 
-    const isFrontFaceVisible = useRef(false);
-
-  // Function to update the value in the ref
-  const setFrontFaceVisibility = (visible: boolean) => {
-    isFrontFaceVisible.current = visible;
-  };
+    const [isFrontFaceVisible, setFrontFaceVisibility] = useState(true);
 
   return (
-    <FrontFaceContext.Provider value={{ isFrontFaceVisible: isFrontFaceVisible.current, setFrontFaceVisibility }}>
+    <FrontFaceContext.Provider value={{isFrontFaceVisible, setFrontFaceVisibility}}>
       {children}
     </FrontFaceContext.Provider>
   );
