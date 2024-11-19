@@ -1,7 +1,8 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useContext } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { PLYLoader } from "three-stdlib"
+import { useFrontFaceContext } from "../../hooks/useFrontFaceContext"
 
 interface RadioDialProps {
   wiperAngle: () => number
@@ -9,6 +10,7 @@ interface RadioDialProps {
 }
 
 const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
+  const {isFrontFaceVisible} = useFrontFaceContext();
   const needleRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group>(null!) // Using a ref for the group
 
@@ -24,7 +26,9 @@ const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
 
   useFrame(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.z = wiperAngle() // Rotate the group based on wiperAngle
+      if (isFrontFaceVisible) {
+        groupRef.current.rotation.z = wiperAngle() // Rotate the group based on wiperAngle
+      }
     }
   })
 

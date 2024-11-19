@@ -31,10 +31,10 @@ const CircularTherm: React.FC<CircularThermProps> = ({
 
   return (
     <group ref={groupRef} position={position}>
-      <mesh rotation={[Math.PI / 2, 0.85, 0]}>
+      {/* <mesh rotation={[Math.PI / 2, 0.85, 0]}>
         <cylinderGeometry args={[2.5, 4.5, 2, 64]} />
         <meshBasicMaterial map={sideTexture} />
-      </mesh>
+      </mesh> */}
       <mesh position={[-0.1, 0, -1.01]} rotation={[Math.PI, 0, 2.38]}>
         <circleGeometry args={[4.5, 64]} />
         <meshBasicMaterial map={topTexture} />
