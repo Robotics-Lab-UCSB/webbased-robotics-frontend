@@ -8,7 +8,7 @@ export const FrontFaceContext = createContext<RenderState | undefined>(undefined
 
 export const FrontFaceContextProvider = ({ children }: { children: ReactNode }) => {
 
-    const isFrontFaceVisible = useRef(true);
+    const isFrontFaceVisible = useRef(false);
 
   // Function to update the value in the ref
   const setFrontFaceVisibility = (visible: boolean) => {
