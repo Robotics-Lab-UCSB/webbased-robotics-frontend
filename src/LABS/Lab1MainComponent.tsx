@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Canvas } from "@react-three/fiber"
+import React, { useState, useRef, useContext } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
 import * as THREE from "three"
 import CornerText from "../shared/2dText"
@@ -14,6 +14,8 @@ import RaycastingComponent from "../raycaster/lab1Raycaster"
 import LightSwitch from "../miscellaneous/switchAndCasing"
 import DVM from "../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx"
 import TriangleButton from "../labComponents/Buttons/triangleButton.tsx"
+import { FrontFaceContextProvider } from "../contexts/frontFaceContext.tsx"
+import { useFrontFaceContext } from "../hooks/useFrontFaceContext.tsx"
 
 interface CameraProps {
   xN: number
@@ -22,6 +24,27 @@ interface CameraProps {
 }
 
 const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
+  const frameCounter = useRef(0);  // Counter for frames
+  const interval = 60; // Frames per second (FPS), assuming 60 FPS target for efficiency
+  // const {isFrontFaceVisible, setFrontFaceVisibility} = useFrontFaceContext();
+  const {isFrontFaceVisible, setFrontFaceVisibility} = useFrontFaceContext();
+  useFrame(({ camera }) => {
+    frameCounter.current += 1;
+    if (frameCounter.current >= interval) {
+      // Log camera position every second
+      // console.log('z',camera.position.z)
+      // if (camera.position.z < 0) {
+      //   setFrontFaceVisibility(true);
+      //   if (!isFrontFaceVisible) {
+          console.log("dial is updating", isFrontFaceVisible);
+      //   }
+      // } else if (isFrontFaceVisible) {
+      //   setFrontFaceVisibility(false);
+      //   console.log("dial is not updating", isFrontFaceVisible);
+      // }
+      frameCounter.current = 0;  // Reset the frame counter after 1 second
+    }
+  });
   return (
     <PerspectiveCamera
       makeDefault
@@ -64,8 +87,14 @@ const GraphPaperComponent: React.FC = () => {
         {/* Raycasting Component */}
         <RaycastingComponent />
 
-        {/* Camera Component */}
-        <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
+        {/* Camera Component and Therm */}
+        <FrontFaceContextProvider>
+          <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
+          <CircularTherm
+            wiperAngle={fetchWiperAngleFromBackend}
+            position={[0, 8, 0]}
+            />
+        </FrontFaceContextProvider>
 
         {/* Lights */}
         <ambientLight intensity={1.2} />
@@ -86,12 +115,9 @@ const GraphPaperComponent: React.FC = () => {
           }}
         />
 
-        {/* Thermometer and Regulator Components */}
-        <CircularTherm
-          wiperAngle={fetchWiperAngleFromBackend}
-          position={[0, 8, 0]}
-        />
-        <VVR position={[10, 8, 0]} />
+        {/* Regulator Components */}
+
+          <VVR position={[10, 8, 0]} />
 
         {/* Digital Voltmeters */}
         <DVM
