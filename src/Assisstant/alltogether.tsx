@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
-import CircleButton from './assiantIcon';
-import ChatBox from './chatbox';
+import React, { useState } from "react"
+import CircleButton from "./assiantIcon"
+import ChatBox from "./chatbox"
 
 interface ChatComponentProps {
-  onMessageClicked: () => void; // Function to call on button click
+  onMessageClicked: () => void // Function to call on button click
 }
 
 const ChatComponent: React.FC<ChatComponentProps> = ({ onMessageClicked }) => {
-  const [chatBoxOpen, setChatBoxOpen] = useState(false);
+  const [chatBoxOpen, setChatBoxOpen] = useState(false)
 
   const toggleChatBox = () => {
     console.log("AAA")
-    setChatBoxOpen((prev) => !prev);
-  };
+    setChatBoxOpen((prev) => !prev)
+  }
 
   return (
     <div>
       {/* CircleButton can be used to open or close the chatbox */}
       <CircleButton onClick={toggleChatBox} />
-      
+
       {/* The ChatBox component receives the `isOpen` state */}
       <ChatBox
         color="#F5F5DC"
-        t_height = "500px"
+        t_height="500px"
         t_width="500px"
         isOpen={chatBoxOpen}
         toggleChatBox={toggleChatBox}
         onMessageClick={onMessageClicked}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ChatComponent;
+export default ChatComponent
