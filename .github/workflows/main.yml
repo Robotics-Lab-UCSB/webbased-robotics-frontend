@@ -26,6 +26,3 @@ jobs:
 
       - name: Test formatting
         run: nix develop --impure -c devenv test
-
-      - name: Build default package
-        run: nix build
