@@ -24,30 +24,33 @@ interface CameraProps {
 }
 
 const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
-  const frameCounter = useRef(0); // Counter for frames
-  const interval = 60; // Check visibility every 60 frames (~1 second at 60 FPS)
+  const frameCounter = useRef(0) // Counter for frames
+  const interval = 60 // Check visibility every 60 frames (~1 second at 60 FPS)
 
   // Access context for front face visibility
-  const { isFrontFaceVisible, setFrontFaceVisibility } = useFrontFaceContext();
+  const { isFrontFaceVisible, setFrontFaceVisibility } = useFrontFaceContext()
 
   useFrame(({ camera }) => {
-    frameCounter.current += 1;
+    frameCounter.current += 1
 
     if (frameCounter.current >= interval) {
       // Determine if the front face should be visible
-      const isCameraBehind = camera.position.z < 0;
+      const isCameraBehind = camera.position.z < 0
 
       if (isCameraBehind && !isFrontFaceVisible) {
-        setFrontFaceVisibility(true); // Set front face as visible
-        console.log("Camera is behind: Dial is updating", isFrontFaceVisible);
+        setFrontFaceVisibility(true) // Set front face as visible
+        console.log("Camera is behind: Dial is updating", isFrontFaceVisible)
       } else if (!isCameraBehind && isFrontFaceVisible) {
-        setFrontFaceVisibility(false); // Set front face as not visible
-        console.log("Camera is in front: Dial is not updating", isFrontFaceVisible);
+        setFrontFaceVisibility(false) // Set front face as not visible
+        console.log(
+          "Camera is in front: Dial is not updating",
+          isFrontFaceVisible,
+        )
       }
 
-      frameCounter.current = 0; // Reset the frame counter after 1 second
+      frameCounter.current = 0 // Reset the frame counter after 1 second
     }
-  });
+  })
 
   return (
     <PerspectiveCamera
@@ -58,9 +61,8 @@ const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
       near={0.1}
       far={1000}
     />
-  );
-};
-
+  )
+}
 
 const GraphPaperComponent: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 50, z: 80 })
@@ -98,7 +100,7 @@ const GraphPaperComponent: React.FC = () => {
           <CircularTherm
             wiperAngle={fetchWiperAngleFromBackend}
             position={[0, 8, 0]}
-            />
+          />
         </FrontFaceContextProvider>
 
         {/* Lights */}
@@ -122,7 +124,7 @@ const GraphPaperComponent: React.FC = () => {
 
         {/* Regulator Components */}
 
-          <VVR position={[10, 8, 0]} />
+        <VVR position={[10, 8, 0]} />
 
         {/* Digital Voltmeters */}
         <DVM

@@ -10,7 +10,7 @@ interface RadioDialProps {
 }
 
 const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
-  const {isFrontFaceVisible} = useFrontFaceContext();
+  const { isFrontFaceVisible } = useFrontFaceContext()
   const needleRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group>(null!) // Using a ref for the group
 
