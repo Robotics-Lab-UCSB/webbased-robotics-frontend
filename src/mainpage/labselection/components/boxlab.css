@@ -1,0 +1,44 @@
+.labContainer {
+    width:100vw;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.labTitle {
+    font-size: 2em;
+}
+
+.boxLabBorder img {
+    width: 50%;
+    height: auto;
+}
+
+.boxLabBorder {
+    border: 2px solid black;
+    border-radius: 0.5em;
+    padding: 1%;
+    margin: 1%;
+    flex: 1 1 calc(33.333% - 2em); /* 3 boxes per row, adjust as needed */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkContainer, .labTitle, .boxLabBorder img{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.links{
+    display: inline;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+}
+
+.linkBorder {
+    border-right: 2px solid black;
+}
