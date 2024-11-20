@@ -22,9 +22,7 @@
   outputs =
     inputs@{ flake-parts, devenv-root, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.devenv.flakeModule
-      ];
+      imports = [ inputs.devenv.flakeModule ];
       systems = [
         "x86_64-linux"
         "i686-linux"
@@ -34,11 +32,7 @@
       ];
 
       perSystem =
-        {
-          config,
-          pkgs,
-          ...
-        }:
+        { config, pkgs, ... }:
         {
           devenv.shells.default = {
             devenv.root =
@@ -62,7 +56,16 @@
 
             processes = {
               dev.exec = "npm run dev";
-              fmt.exec = "npm run format";
+            };
+
+            scripts = {
+              format.exec = "npm run format";
+            };
+
+            git-hooks.hooks = {
+              shellcheck.enable = true;
+              nixfmt-rfc-style.enable = true;
+              prettier.enable = true;
             };
 
             languages = {
