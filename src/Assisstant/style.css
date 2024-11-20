@@ -57,8 +57,8 @@
 .chat-input {
   flex-grow: 2;
   padding: 12px;
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   border: none;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;

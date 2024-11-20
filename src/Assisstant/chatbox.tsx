@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp, faCircleXmark, } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 import MessageBubble from './messageBubble';
 
@@ -22,13 +22,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
   const contentRef = useRef<HTMLDivElement>(null);
   const theInput = useRef<HTMLInputElement>(null);
   const chatBoxRef = useRef<HTMLDivElement>(null);
+  const ws = useRef<WebSocket | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   
   // Store previous position as a ref so it persists without re-rendering
   const previousPosition = useRef({ x: 0, y: 0 });
   const objectcenterPosition = useRef({ x: 0, y: 0 });
-  // const [position, setPosition] = useState(previousPosition.current);
 
   const sendMessage = (event: React.FormEvent) => {
     event.preventDefault();
@@ -40,13 +40,54 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
   };
 
   useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].isUser) {
-      const timer = setTimeout(() => {
-        setMessages((prevMessages) => [...prevMessages, { text: "Response", isUser: false }]);
-      }, 500);
-      return () => clearTimeout(timer);
+    // Open the WebSocket connection
+    ws.current = new WebSocket('ws://localhost:8080');
+
+    // Optional: Handle WebSocket events
+    ws.current.onopen = () => console.log("WebSocket connected");
+    ws.current.onclose = () => console.log("WebSocket disconnected");
+
+    // Cleanup on unmount
+    return () => {
+        if (ws.current) {
+            ws.current.close();
+        }
+    };
+  }, []); 
+
+  useEffect(()=>{
+    if (contentRef.current) {
+      contentRef.current.scrollTop = contentRef.current.scrollHeight; // Scroll to bottom
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].isUser) {
+      const ms = messages[messages.length-1];
+
+      if (ws.current && ws.current.readyState === WebSocket.OPEN){
+        ws.current.send(ms.text);
+        console.log("Sent to server:", ms.text);
+      }
+      else{
+        console.log("Websocket Error");
+      }
+    }
+  }, [messages]);
+
+  useEffect(() =>{
+    if (ws.current) {
+      ws.current.onmessage = (event) => {
+          console.log("Message received from Websocket:", event.data);
+          setMessages(prevMessages => [...prevMessages, {text: event.data, isUser: false}]);
+      };
+  }
+  return () =>{
+    if(ws.current){
+      ws.current.onmessage = null;
+    }
+  }
+  },[ws])
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
@@ -62,7 +103,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
       x: e.clientX,
       y: e.clientY,
     };
-
   };
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -80,9 +120,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
 
     // Update the position state and set previousPosition to the new mouse coordinates
     previousPosition.current = { x: e.clientX, y: e.clientY };
-};
+  };
 
-  
   const handleMouseUp = () => {
     setIsDragging(false);
   };
@@ -92,9 +131,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-    } else {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
     }
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);

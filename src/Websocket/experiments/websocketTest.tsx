@@ -17,7 +17,7 @@ const WebSocketComponent: React.FC = () => {
 
         // Event handler for when a message is received from the server
         websocket.onmessage = (event) => {
-            console.log('Message from server:', event.data);
+            console.log('Message from server: ', event.data);
             setMessage(event.data); // Update state with the server message
         };
 
@@ -25,6 +25,10 @@ const WebSocketComponent: React.FC = () => {
         websocket.onerror = (error) => {
             console.error('WebSocket error:', error);
         };
+
+        websocket.onclose = () =>{
+            console.log("Closed Server Connection");
+        }
 
         // Cleanup on component unmount
         return () => {
