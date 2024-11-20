@@ -65,7 +65,14 @@
             git-hooks.hooks = {
               shellcheck.enable = true;
               nixfmt-rfc-style.enable = true;
-              prettier.enable = true;
+              prettier = {
+                enable = true;
+                excludes = [
+                  "flake.lock"
+                  "package-lock.json"
+                  "README.md"
+                ];
+              };
             };
 
             languages = {
