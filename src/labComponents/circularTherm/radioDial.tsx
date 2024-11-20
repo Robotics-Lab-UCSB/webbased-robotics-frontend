@@ -1,32 +1,36 @@
-import React, { useRef, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
-import { PLYLoader } from 'three-stdlib';
+import React, { useRef, useEffect, useContext } from "react"
+import { useFrame } from "@react-three/fiber"
+import * as THREE from "three"
+import { PLYLoader } from "three-stdlib"
+import { useFrontFaceContext } from "../../hooks/useFrontFaceContext"
 
 interface RadioDialProps {
-  wiperAngle: () => number;
-  position: [number, number, number]; // Position prop
+  wiperAngle: () => number
+  position: [number, number, number] // Position prop
 }
 
 const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
-  const needleRef = useRef<THREE.Mesh>(null!); // Using a ref for the needle
-  const groupRef = useRef<THREE.Group>(null!); // Using a ref for the group
+  const { isFrontFaceVisible } = useFrontFaceContext()
+  const needleRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
+  const groupRef = useRef<THREE.Group>(null!) // Using a ref for the group
 
   useEffect(() => {
-    const loader = new PLYLoader();
-    loader.load('/stanfordOne.ply', (geometry) => {
-      geometry.computeVertexNormals();
+    const loader = new PLYLoader()
+    loader.load("/stanfordOne.ply", (geometry) => {
+      geometry.computeVertexNormals()
       if (needleRef.current) {
-        needleRef.current.geometry = geometry; // Set the loaded geometry for the needle
+        needleRef.current.geometry = geometry // Set the loaded geometry for the needle
       }
-    });
-  }, []);
+    })
+  }, [])
 
   useFrame(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.z = wiperAngle(); // Rotate the group based on wiperAngle
+      if (isFrontFaceVisible) {
+        groupRef.current.rotation.z = wiperAngle() // Rotate the group based on wiperAngle
+      }
     }
-  });
+  })
 
   return (
     <group ref={groupRef} position={position}>
@@ -41,7 +45,7 @@ const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
         <meshStandardMaterial color={0xff3333} />
       </mesh>
     </group>
-  );
-};
+  )
+}
 
-export default RadioDial;
+export default RadioDial
