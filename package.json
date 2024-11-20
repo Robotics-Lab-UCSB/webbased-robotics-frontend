@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier --loglevel warn --write \"./**/*.{jsx,js,tsx,ts,html}\""
+    "format": "prettier --log-level warn --write \"./**/*.{jsx,js,tsx,ts,html,css,cjs,md}\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
