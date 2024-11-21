@@ -1,11 +1,11 @@
-.navbar{
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    background: #fff; 
-    padding: 15px 7%;
-    transition: 0.5s; 
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 15px 7%;
+  transition: 0.5s;
 }
 
 /* 
@@ -17,97 +17,97 @@ if we decide to have like a website logo? bro idk
     color: black;
 } */
 
-.navbar-left{
-    display: flex;
-    flex-grow: 1;
-    justify-content: flex-start;
-    gap: 20px;
-    flex-wrap: wrap;
+.navbar-left {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.navbar-left ul{
-    display: flex;
-    margin: 0;
-    padding: 0; 
-    gap: 20px; 
-    list-style: none;
+.navbar-left ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  list-style: none;
 }
 
-.navbar-left ul li{ 
-    font-size: 18px; 
-    cursor: pointer;
-    flex-shrink: 0; 
+.navbar-left ul li {
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-ul{
-    display: flex;
-    gap: 20px;
-    justify-content: flex-start ;
-    margin: 0; 
-    padding: 0;
+ul {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
 }
 
 ul li {
-    display: inline-block;
-    margin: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    color: #000; 
-    transition: color 0.3s ease;
+  display: inline-block;
+  margin: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #000;
+  transition: color 0.3s ease;
 }
 
 /* Dark mode */
 .dark ul li {
-    color: #fff; /* Update text color for dark mode */
+  color: #fff; /* Update text color for dark mode */
 }
 
-.toggle-icon{
-    width: 50px;
-    cursor: pointer;
-    margin-left: 40px; 
+.toggle-icon {
+  width: 50px;
+  cursor: pointer;
+  margin-left: 40px;
 }
 
-.search-box{
-    display: flex;
-    align-items: center;
-    background: #242424;
-    padding: 10px 20px;
-    border-radius: 50px;
-    margin-left: auto;
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #242424;
+  padding: 10px 20px;
+  border-radius: 50px;
+  margin-left: auto;
 }
 
-.search-box input{
-    padding: 6px;
-    background: transparent;
-    border: 0; 
-    outline: 0; 
-    color: #fff; 
-    font-size: 18px;
-    max-width: 200px;
+.search-box input {
+  padding: 6px;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  font-size: 18px;
+  max-width: 200px;
 }
 
-.search-box input::placeholder{
-    color: #fff;
+.search-box input::placeholder {
+  color: #fff;
 }
 
-.search-box img{
-    width: 20px;
-    cursor: pointer; 
+.search-box img {
+  width: 20px;
+  cursor: pointer;
 }
 
-.dark .navbar { 
-    background: #000; 
-    color: #fff; 
+.dark .navbar {
+  background: #000;
+  color: #fff;
 }
 
-.dark .search-box{
-    background: #fff; 
+.dark .search-box {
+  background: #fff;
 }
 
-.dark .search-box input{
-    color: #222; 
+.dark .search-box input {
+  color: #222;
 }
 
-.dark .search-box input::placeholder{
-    color: #222; 
+.dark .search-box input::placeholder {
+  color: #222;
 }
