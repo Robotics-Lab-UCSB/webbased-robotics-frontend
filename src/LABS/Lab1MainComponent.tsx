@@ -16,6 +16,7 @@ import DVM from "../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx"
 import TriangleButton from "../labComponents/Buttons/triangleButton.tsx"
 import { FrontFaceContextProvider } from "../contexts/frontFaceContext.tsx"
 import { useFrontFaceContext } from "../hooks/useFrontFaceContext.tsx"
+import BoxWithHole from "../mainComponent/hertzMain.tsx"
 
 interface CameraProps {
   xN: number
@@ -159,6 +160,11 @@ const GraphPaperComponent: React.FC = () => {
 
         <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
         <TriangleButton position={[-20, 20, 0]}></TriangleButton>
+        <BoxWithHole 
+          position = {[-20, 0, 0]} 
+          rotation = {[3*Math.PI/2,0,0]}
+          scale = {[0.1,0.1,0.1]}
+        ></BoxWithHole>
       </Canvas>
     </div>
   )
