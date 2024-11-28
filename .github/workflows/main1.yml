@@ -14,17 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Print a message indicating the workflow has started
+      - name: Start Workflow
+        run: echo "🚀 CI Workflow has been triggered for a push or pull request to the main branch!"
+
+      # Step 2: Checkout the code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
+      # Step 3: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18' # Use the Node.js version you're targeting
 
-      # Step 3: Install dependencies
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: npm install
         

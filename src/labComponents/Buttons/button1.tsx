@@ -31,7 +31,7 @@ const Button1: React.FC<buttonProps> = ({
         dialRef.current.userData.unique_id = unique_id
         dialRef.current.userData.handleIntersect = handleIntersect
       }
-    })
+    }) 
   }, [])
 
   const handleIntersect = () => {
