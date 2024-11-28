@@ -155,7 +155,7 @@ const GraphPaperComponent: React.FC = () => {
           onClick={() => console.log("i am clicked")}
         ></BigKnob>
 
-        <Box position={[-35, 10, 0]} rotation={[Math.PI / 2, 0, 0]}></Box>
+        <Box position={[-35, 10, 0]} rotation={[Math.PI, 0, 0]}></Box>
 
         <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
         <TriangleButton position={[-20, 20, 0]}></TriangleButton>
