@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react"
 import * as THREE from "three"
-import { useLoader } from "@react-three/fiber"
 import { PLYLoader } from "three-stdlib"
 import { ThreeEvent } from "@react-three/fiber"
 

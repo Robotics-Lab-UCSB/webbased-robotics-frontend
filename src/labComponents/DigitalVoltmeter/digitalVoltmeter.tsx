@@ -14,7 +14,6 @@ interface DVMProps {
 }
 
 const DVM: React.FC<DVMProps> = ({
-  voltage,
   position,
   scale,
   rotationX = 0,

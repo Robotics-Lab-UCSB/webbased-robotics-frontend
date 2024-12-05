@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react"
 import * as THREE from "three"
-import { useLoader, useFrame } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber"
 import { PLYLoader } from "three-stdlib"
 
 interface ButtonProps {
@@ -10,17 +10,9 @@ interface ButtonProps {
   unique_id: string
 }
 
-const Button1: React.FC<ButtonProps> = ({
-  position,
-  rotation,
-  onClick,
-  unique_id,
-}) => {
+const Button1: React.FC<ButtonProps> = ({ position, rotation, unique_id }) => {
   const dialRef = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group | null>(null)
-  const buttonMaterial = new THREE.MeshStandardMaterial({
-    side: THREE.DoubleSide,
-  })
 
   const [movementState, setMovementState] = useState<
     "idle" | "forward" | "back"

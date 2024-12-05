@@ -1,7 +1,4 @@
-import React, { useRef, useState, useEffect } from "react"
-import * as THREE from "three"
-import { useLoader } from "@react-three/fiber"
-import { PLYLoader } from "three-stdlib"
+import React from "react"
 import Button1 from "../Buttons/button1"
 import Button2 from "./button2"
 import TriangleButton from "./triangleButton"

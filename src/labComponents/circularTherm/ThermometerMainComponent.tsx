@@ -27,7 +27,6 @@ const CircularTherm: React.FC<CircularThermProps> = ({
     THREE.TextureLoader,
     "/waybetterdial-modified.png",
   )
-  const sideTexture = useLoader(THREE.TextureLoader, "/metal2.jpg")
 
   return (
     <group ref={groupRef} position={position}>

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react"
 import * as THREE from "three"
-import { useLoader, useFrame } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber"
 import { PLYLoader } from "three-stdlib"
 
 interface buttonProps {
@@ -10,12 +10,7 @@ interface buttonProps {
   unique_id: string
 }
 
-const Button1: React.FC<buttonProps> = ({
-  position,
-  rotation,
-  onClick,
-  unique_id,
-}) => {
+const Button1: React.FC<buttonProps> = ({ position, rotation, unique_id }) => {
   const dialRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group | null>(null)
   const [currentPosition] = useState<[number, number, number]>(position)
@@ -31,7 +26,7 @@ const Button1: React.FC<buttonProps> = ({
         dialRef.current.userData.unique_id = unique_id
         dialRef.current.userData.handleIntersect = handleIntersect
       }
-    }) 
+    })
   }, [])
 
   const handleIntersect = () => {
