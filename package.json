@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "format": "prettier --log-level warn --write \"./**/*.{jsx,js,tsx,ts,html,css,cjs,md}\""
+    "prettier": "prettier --check .",
+    "lint": "eslint . --max-warnings=1000",
+    "format": "prettier --log-level warn --write \"./**/*.{jsx,js,tsx,ts,html,css,cjs,md}\"",
+    "lint:fix": "eslint \"./src/**/*.{js,jsx,tsx,ts,html,cjs,md}\" --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
