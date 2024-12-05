@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react"
+import React, { useState, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
 import * as THREE from "three"
@@ -67,7 +67,7 @@ const Camera: React.FC<CameraProps> = ({ xN, yN, zN }) => {
 const GraphPaperComponent: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 50, z: 80 })
   const [key, setKey] = useState(0)
-  const [reversedString, setReversedString] = useState<string | null>(null)
+  const [reversedString] = useState<string | null>(null)
 
   const handleStubMessageClick = () => {
     setPosition({ x: 10, y: 10, z: 10 })
