@@ -70,8 +70,8 @@ const RaycastingComponent: React.FC = () => {
           angle = Math.atan2(localPoint.x, localPoint.y)
         } else if (intersectedObject.userData.type === "lab1smallknob") {
           angle = Math.atan2(localPoint.x, localPoint.z)
-        } else if (intersectedObject.userData.type === "topKnob") {
-          angle = Math.atan2(localPoint.x, localPoint.y)
+        } else if (intersectedObject.userData.unique_id === "topKnob") {
+          angle = Math.atan2(localPoint.x, localPoint.z)
         }
 
         let deltaAngle
@@ -101,9 +101,9 @@ const RaycastingComponent: React.FC = () => {
           if (intersectedObject) {
             intersectedObject.rotation.z += deltaAngle * 0.4
           }
-        } else if (intersectedObject.userData.type === "topKnob") {
+        } else if (intersectedObject.userData.unique_id === "topKnob") {
           if (intersectedObject) {
-            intersectedObject.rotation.z += deltaAngle * 0.34
+            intersectedObject.rotation.y -= deltaAngle * 0.34
           }
         } else {
           previousSpinning.current = null

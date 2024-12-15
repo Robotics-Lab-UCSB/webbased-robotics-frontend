@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { useLoader } from "@react-three/fiber"
-import { STLLoader } from "three-stdlib"
+import { GLTFLoader } from "three-stdlib"
 import * as THREE from "three"
 
 interface BigKnobProps {
@@ -10,23 +10,26 @@ interface BigKnobProps {
 }
 
 const BigKnob: React.FC<BigKnobProps> = ({ position, rotation }) => {
-  const geometry = useLoader(STLLoader, "/bigKnob1.stl")
   const groupRef = useRef<THREE.Group | null>(null)
-  const bodyTexture = useLoader(THREE.TextureLoader, "/aquametal.jpg")
+
+  // Load GLTF
+  const gltf = useLoader(GLTFLoader, "/topKnob/nice.glb")
 
   useEffect(() => {
-    geometry.center()
-  }, [geometry])
+    // Traverse the GLTF scene to set userData for raycasting
+    gltf.scene.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh
+        mesh.userData.unique_id = "topKnob" // Add your unique ID here
+        mesh.userData.handleIntersect = () => {
+        }
+      }
+    })
+  }, [gltf])
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh
-        geometry={geometry}
-        scale={[0.3, 0.3, 0.3]}
-        userData={{ type: "topKnob" }} // Add userData with type
-      >
-        <meshStandardMaterial map={bodyTexture} />
-      </mesh>
+      <primitive object={gltf.scene} scale={[0.3, 0.3, 0.3]} />
     </group>
   )
 }

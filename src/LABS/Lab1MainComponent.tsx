@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react"
+import React, { useState, useRef, useContext, Suspense } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
 import * as THREE from "three"
@@ -16,6 +16,7 @@ import DVM from "../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx"
 import TriangleButton from "../labComponents/Buttons/triangleButton.tsx"
 import { FrontFaceContextProvider } from "../contexts/frontFaceContext.tsx"
 import { useFrontFaceContext } from "../hooks/useFrontFaceContext.tsx"
+import TestObjectGLTF from "../labComponents/gltf_models_test/gltf_test.tsx"
 
 interface CameraProps {
   xN: number
@@ -79,88 +80,91 @@ const GraphPaperComponent: React.FC = () => {
   }
 
   return (
-    <div style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
-      <CornerText position="top-left" text="Photoelectric Effects" />
-      <ChatComponent onMessageClicked={handleStubMessageClick} />
-      {reversedString && (
-        <div
-          style={{ position: "absolute", top: 0, left: 0, color: "white" }}
-        >{`Reversed: ${reversedString}`}</div>
-      )}
-      <Canvas
-        gl={{ antialias: true }}
-        style={{ background: "#004225" }} // Setting background color here
-      >
-        {/* Raycasting Component */}
-        <RaycastingComponent />
+    <Suspense fallback={<CornerText position="top-left" text="Loading Project"/>}>
+      <div style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
+        <CornerText position="top-left" text="Photoelectric Effects" />
+        <ChatComponent onMessageClicked={handleStubMessageClick} />
+        {reversedString && (
+          <div
+            style={{ position: "absolute", top: 0, left: 0, color: "white" }}
+          >{`Reversed: ${reversedString}`}</div>
+        )}
+        
+        <Canvas
+          gl={{ antialias: true }}
+          style={{ background: "#004225" }} // Setting background color here
+        >
+          {/* Raycasting Component */}
+          <RaycastingComponent />
+          {/* Camera Component and Therm */}
+          <FrontFaceContextProvider>
+            <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
+            <CircularTherm
+              wiperAngle={fetchWiperAngleFromBackend}
+              position={[0, 8, 0]}
+            />
+          </FrontFaceContextProvider>
 
-        {/* Camera Component and Therm */}
-        <FrontFaceContextProvider>
-          <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
-          <CircularTherm
-            wiperAngle={fetchWiperAngleFromBackend}
-            position={[0, 8, 0]}
+          {/* Lights */}
+          <ambientLight intensity={4} />
+          <directionalLight position={[0, 10, 0]} intensity={1} />
+
+          {/* Grid and Ground */}
+          <Grid />
+
+          {/* Controls */}
+          <OrbitControls
+            enableDamping
+            dampingFactor={0.1}
+            rotateSpeed={0.4}
+            zoomSpeed={0.5}
+            mouseButtons={{
+              MIDDLE: THREE.MOUSE.DOLLY,
+              RIGHT: THREE.MOUSE.ROTATE,
+            }}
           />
-        </FrontFaceContextProvider>
 
-        {/* Lights */}
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[0, 10, 0]} intensity={1} />
+          {/* <TestObjectGLTF position={[0,10,10]} /> */}
 
-        {/* Grid and Ground */}
-        <Grid />
+          {/* Regulator Components */}
 
-        {/* Controls */}
-        <OrbitControls
-          enableDamping
-          dampingFactor={0.1}
-          rotateSpeed={0.4}
-          zoomSpeed={0.5}
-          mouseButtons={{
-            MIDDLE: THREE.MOUSE.DOLLY,
-            RIGHT: THREE.MOUSE.ROTATE,
-          }}
-        />
+          <VVR position={[10, 8, 0]} />
 
-        {/* Regulator Components */}
+          {/* Digital Voltmeters */}
+          <DVM
+            scale={2}
+            rotationY={Math.PI}
+            voltage={() => 0}
+            position={[10, 25, 0]}
+          />
 
-        <VVR position={[10, 8, 0]} />
+          {/* Small Knob Component */}
+          <SmallKnob
+            type="lab1smallknob"
+            name="smallKnob"
+            position={[-10, 5, 0]}
+            rotation={[Math.PI, 0, 0]}
+          />
+          <SmallKnob
+            type="lab1smallknob"
+            name="smallKnob"
+            position={[-22, 5, 0]}
+            rotation={[Math.PI / 2, 0, 0]}
+          />
 
-        {/* Digital Voltmeters */}
-        <DVM
-          scale={2}
-          rotationY={Math.PI}
-          voltage={() => 0}
-          position={[10, 25, 0]}
-        />
+          {/* Big Knob Component*/}
+          <BigKnob
+            position={[-35, 5, 0]}
+            rotation={[0, 0, 0]}
+          ></BigKnob>
 
-        {/* Small Knob Component */}
-        <SmallKnob
-          type="lab1smallknob"
-          name="smallKnob"
-          position={[-10, 5, 0]}
-          rotation={[Math.PI, 0, 0]}
-        />
-        <SmallKnob
-          type="lab1smallknob"
-          name="smallKnob"
-          position={[-22, 5, 0]}
-          rotation={[Math.PI / 2, 0, 0]}
-        />
+          <Box position={[-35, 10, 0]} rotation={[Math.PI, 0, 0]}></Box>
 
-        {/* Big Knob Component*/}
-        <BigKnob
-          position={[-35, 5, 0]}
-          rotation={[Math.PI, 0, 0]}
-          onClick={() => console.log("i am clicked")}
-        ></BigKnob>
-
-        <Box position={[-35, 10, 0]} rotation={[Math.PI, 0, 0]}></Box>
-
-        <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
-        <TriangleButton position={[-20, 20, 0]}></TriangleButton>
-      </Canvas>
-    </div>
+          <LightSwitch position={[-20, 20, 0]} scale={[0.5, 0.5, 0.5]} />
+          <TriangleButton position={[-20, 20, 0]}></TriangleButton>
+        </Canvas>
+      </div>
+    </Suspense>
   )
 }
 
