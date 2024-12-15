@@ -31,7 +31,7 @@ const KnobOven: React.FC<KnobOvenProps> = ({ position, type }) => {
           material={dialMaterial}
           scale={[4.2, 4.2, 4.2]}
           rotation={[-Math.PI / 2, 0, 0]}
-          userData={{ type }} // Add the type to userData for raycasting
+          userData={{ type: "voltage_regulator_knob" }} // Add the type to userData for raycasting
         />
       )}
     </group>

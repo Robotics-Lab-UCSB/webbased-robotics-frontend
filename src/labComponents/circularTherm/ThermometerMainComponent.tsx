@@ -34,7 +34,7 @@ const CircularTherm: React.FC<CircularThermProps> = ({
         <cylinderGeometry args={[2.5, 4.5, 2, 64]} />
         <meshBasicMaterial map={sideTexture} />
       </mesh> */}
-      <mesh position={[-0.1, 0, -1.01]} rotation={[Math.PI, 0, 2.38]}>
+      <mesh position={[-0.1, 0, -1.01]} rotation={[Math.PI, 0, 2.38]} userData={{ type: "thermometer" }}>
         <circleGeometry args={[4.5, 64]} />
         <meshBasicMaterial map={topTexture} />
       </mesh>

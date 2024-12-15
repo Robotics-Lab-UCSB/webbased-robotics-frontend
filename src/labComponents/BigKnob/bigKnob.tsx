@@ -23,7 +23,7 @@ const BigKnob: React.FC<BigKnobProps> = ({ position, rotation }) => {
       <mesh
         geometry={geometry}
         scale={[0.3, 0.3, 0.3]}
-        userData={{ type: "topKnob" }} // Add userData with type
+        userData={{ type: "top_knob" }} // Add userData with type
       >
         <meshStandardMaterial map={bodyTexture} />
       </mesh>

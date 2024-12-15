@@ -48,7 +48,7 @@ const SmallKnob: React.FC<SmallKnobProps> = ({
     <group ref={groupRef} position={position} rotation={rotation}>
       <mesh
         name={name}
-        userData={{ type, backendUpdate }}
+        userData={{ type: "grey_knob", backendUpdate }}
         ref={dialRef}
         scale={[0.1, 0.1, 0.1]}
         onPointerDown={onPointerDown}

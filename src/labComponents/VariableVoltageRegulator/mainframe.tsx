@@ -55,6 +55,7 @@ const VVR: React.FC<VVRProps> = ({ position }) => {
           position={[2.5, 0, 0]}
           rotation={[Math.PI / 2, 0, 0]}
           scale={[4, 4, 4]}
+          userData={{ type: "voltage_regulator" }}
         />
       )}
 
