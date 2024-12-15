@@ -6,7 +6,6 @@ interface Button {
   unique_id: string
   position: [number, number, number]
   rotation: [number, number, number]
-  scale: [number, number, number]
   type: string
 }
 
@@ -32,7 +31,7 @@ const ParentComponent: React.FC<ParentComponentProps> = ({
   useEffect(() => {
     // Create small buttons
     const smallButtons = Array.from({ length: 8 }, (_, i) => ({
-      unique_id: `eletrometer_smallButton_${i + 1}`,
+      unique_id: `eletrometer_circlebutton_${i + 1}`,
       id: `smallButton${i + 1}`,
       position: [
         position[0] + distanceBetweenSmallButton * (i + 1) + 1,
@@ -40,7 +39,6 @@ const ParentComponent: React.FC<ParentComponentProps> = ({
         position[2],
       ] as [number, number, number],
       rotation: rot,
-      scale: [0.07, 0.07, 0.07] as [number, number, number],
       type: "type1",
     }))
 
@@ -54,7 +52,6 @@ const ParentComponent: React.FC<ParentComponentProps> = ({
         position[2],
       ] as [number, number, number],
       rotation: rot,
-      scale: [0.07, 0.07, 0.07] as [number, number, number],
       type: "type2",
     }))
 
@@ -67,55 +64,13 @@ const ParentComponent: React.FC<ParentComponentProps> = ({
         position[2],
       ] as [number, number, number],
       rotation: rot,
-      scale: [0.07, 0.07, 0.07] as [number, number, number],
       type: "type2",
     }))
 
-    // Small buttons column
-    const smallButtonCol = Array.from({ length: 3 }, (_, i) => ({
-      unique_id: `eletrometer_smallButton_${i + 9}`,
-      id: `smallButton${i + 9}`,
-      position: [
-        position[0] + 0.9,
-        position[1] + 1.6 - i * 1.5,
-        position[2],
-      ] as [number, number, number],
-      rotation: rot,
-      scale: [0.05, 0.05, 0.05] as [number, number, number],
-      type: "type1",
-    }))
-
-    // triangle and big button column
-    const triangleAndBigButtonCol = Array.from({ length: 3 }, (_, i) => {
-      const types = ["type3", "type2", "type3"]
-      const scales = [
-        [0.2, 0.2, 0.2],
-        [0.05, 0.05, 0.05],
-        [0.2, 0.2, 0.2],
-      ]
-      const rotations = [[-Math.PI / 2, 0, 0], rot, [Math.PI / 2, 0, 0]]
-      return {
-        unique_id: `columnButton_${types[i]}_${i + 1}`,
-        id: `columnButton${i + 1}`,
-        position: [
-          position[0] + 17.3,
-          position[1] + 1.5 - i * 1.2,
-          position[2] - 0.2,
-        ] as [number, number, number],
-        rotation: rotations[i] as [number, number, number],
-        scale: scales[i] as [number, number, number],
-        type: types[i],
-      }
-    })
+    // Add triangle buttons here
 
     // Combine all buttons
-    setButtons([
-      ...smallButtons,
-      ...bigButtonsRow1,
-      ...bigButtonsRow2,
-      ...smallButtonCol,
-      ...triangleAndBigButtonCol,
-    ])
+    setButtons([...smallButtons, ...bigButtonsRow1, ...bigButtonsRow2])
   }, [])
 
   return (

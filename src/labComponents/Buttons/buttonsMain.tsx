@@ -8,7 +8,6 @@ interface Button {
   unique_id: string
   position: [number, number, number]
   rotation: [number, number, number]
-  scale: [number, number, number]
   type: string
 }
 
@@ -28,7 +27,6 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               key={button.id}
               position={button.position}
               rotation={button.rotation}
-              scale={button.scale}
             />
           )
         } else if (button.type === "type2") {
@@ -38,7 +36,6 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               key={button.id}
               position={button.position}
               rotation={button.rotation}
-              scale={button.scale}
             />
           )
         } else if (button.type === "type3") {
@@ -47,7 +44,6 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               key={button.id}
               position={button.position}
               rotation={button.rotation}
-              scale={button.scale}
             />
           )
         }

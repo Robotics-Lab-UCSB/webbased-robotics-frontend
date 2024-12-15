@@ -6,17 +6,11 @@ import { PLYLoader } from "three-stdlib"
 interface buttonProps {
   position: [number, number, number] // Position prop for placement in the scene
   rotation: [number, number, number]
-  scale?: [number, number, number]
   onClick?: () => void
   unique_id: string
 }
 
-const Button1: React.FC<buttonProps> = ({
-  position,
-  rotation,
-  unique_id,
-  scale = [1, 1, 1],
-}) => {
+const Button1: React.FC<buttonProps> = ({ position, rotation, unique_id }) => {
   const dialRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group | null>(null)
   const [currentPosition] = useState<[number, number, number]>(position)
@@ -90,7 +84,7 @@ const Button1: React.FC<buttonProps> = ({
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh ref={dialRef} scale={scale}>
+      <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]}>
         <meshPhongMaterial
           color={0xff3333}
           shininess={100}
