@@ -11,7 +11,12 @@ interface ButtonProps {
   unique_id: string
 }
 
-const Button2: React.FC<ButtonProps> = ({ position, rotation, unique_id, scale = [1, 1, 1]}) => {
+const Button2: React.FC<ButtonProps> = ({
+  position,
+  rotation,
+  unique_id,
+  scale = [1, 1, 1],
+}) => {
   const dialRef = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group | null>(null)
 
