@@ -6,11 +6,12 @@ import { PLYLoader } from "three-stdlib"
 interface ButtonProps {
   position: [number, number, number] // Position prop for placement in the scene
   rotation: [number, number, number]
+  scale?: [number, number, number]
   onClick?: () => void
   unique_id: string
 }
 
-const Button1: React.FC<ButtonProps> = ({ position, rotation, unique_id }) => {
+const Button2: React.FC<ButtonProps> = ({ position, rotation, unique_id, scale = [1, 1, 1]}) => {
   const dialRef = useRef<THREE.Mesh>(null!)
   const groupRef = useRef<THREE.Group | null>(null)
 
@@ -64,7 +65,7 @@ const Button1: React.FC<ButtonProps> = ({ position, rotation, unique_id }) => {
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh ref={dialRef} scale={[0.07, 0.07, 0.07]}>
+      <mesh ref={dialRef} scale={scale}>
         <meshPhongMaterial
           color={0xff3333}
           shininess={100}
@@ -76,4 +77,4 @@ const Button1: React.FC<ButtonProps> = ({ position, rotation, unique_id }) => {
   )
 }
 
-export default Button1
+export default Button2
