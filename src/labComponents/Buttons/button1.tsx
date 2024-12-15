@@ -11,7 +11,12 @@ interface buttonProps {
   unique_id: string
 }
 
-const Button1: React.FC<buttonProps> = ({ position, rotation, unique_id, scale = [1, 1, 1]}) => {
+const Button1: React.FC<buttonProps> = ({
+  position,
+  rotation,
+  unique_id,
+  scale = [1, 1, 1],
+}) => {
   const dialRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group | null>(null)
   const [currentPosition] = useState<[number, number, number]>(position)

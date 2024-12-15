@@ -85,11 +85,15 @@ const ParentComponent: React.FC<ParentComponentProps> = ({
       type: "type1",
     }))
 
-    // triangle and big button column 
+    // triangle and big button column
     const triangleAndBigButtonCol = Array.from({ length: 3 }, (_, i) => {
       const types = ["type3", "type2", "type3"]
-      const scales = [[0.2, 0.2, 0.2], [0.05, 0.05, 0.05], [0.2, 0.2, 0.2]]
-      const rotations = [[-Math.PI/2, 0, 0], rot, [Math.PI/2, 0, 0]]
+      const scales = [
+        [0.2, 0.2, 0.2],
+        [0.05, 0.05, 0.05],
+        [0.2, 0.2, 0.2],
+      ]
+      const rotations = [[-Math.PI / 2, 0, 0], rot, [Math.PI / 2, 0, 0]]
       return {
         unique_id: `columnButton_${types[i]}_${i + 1}`,
         id: `columnButton${i + 1}`,
@@ -105,7 +109,13 @@ const ParentComponent: React.FC<ParentComponentProps> = ({
     })
 
     // Combine all buttons
-    setButtons([...smallButtons, ...bigButtonsRow1, ...bigButtonsRow2, ...smallButtonCol, ...triangleAndBigButtonCol])
+    setButtons([
+      ...smallButtons,
+      ...bigButtonsRow1,
+      ...bigButtonsRow2,
+      ...smallButtonCol,
+      ...triangleAndBigButtonCol,
+    ])
   }, [])
 
   return (
