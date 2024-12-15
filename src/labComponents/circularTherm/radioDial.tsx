@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from "react"
+import React, { useRef, useEffect } from "react"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from "three"
 import { PLYLoader } from "three-stdlib"

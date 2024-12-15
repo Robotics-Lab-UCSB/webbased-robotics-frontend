@@ -1,7 +1,4 @@
-import React, { useRef, useState, useEffect } from "react"
-import * as THREE from "three"
-import { useLoader } from "@react-three/fiber"
-import { PLYLoader } from "three-stdlib"
+import React from "react"
 import Button1 from "../Buttons/button1"
 import Button2 from "./button2"
 import TriangleButton from "./triangleButton"
@@ -11,6 +8,7 @@ interface Button {
   unique_id: string
   position: [number, number, number]
   rotation: [number, number, number]
+  scale: [number, number, number]
   type: string
 }
 
@@ -30,6 +28,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               key={button.id}
               position={button.position}
               rotation={button.rotation}
+              scale={button.scale}
             />
           )
         } else if (button.type === "type2") {
@@ -39,6 +38,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               key={button.id}
               position={button.position}
               rotation={button.rotation}
+              scale={button.scale}
             />
           )
         } else if (button.type === "type3") {
@@ -47,6 +47,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               key={button.id}
               position={button.position}
               rotation={button.rotation}
+              scale={button.scale}
             />
           )
         }

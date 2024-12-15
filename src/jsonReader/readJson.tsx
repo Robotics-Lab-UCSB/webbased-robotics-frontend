@@ -22,11 +22,23 @@ interface Position {
   y: number
 }
 
+interface ButtonAttributes {
+  text: string
+  color: string
+}
+
+interface ImageAttributes {
+  src: string
+  alt?: string
+}
+
+type ComponentAttributes = ButtonAttributes | ImageAttributes
+
 interface ComponentData {
   id: string
   type: string
   position: Position
-  attributes: Record<string, any>
+  attributes: ComponentAttributes
 }
 
 // Main React Component
@@ -44,9 +56,12 @@ const DynamicRenderer: React.FC = () => {
         return (
           <button
             key={id}
-            style={{ ...style, backgroundColor: attributes.color }}
+            style={{
+              ...style,
+              backgroundColor: (attributes as ButtonAttributes).color,
+            }}
           >
-            {attributes.text}
+            {(attributes as ButtonAttributes).text}
           </button>
         )
       case "Image":
@@ -54,8 +69,8 @@ const DynamicRenderer: React.FC = () => {
           <img
             key={id}
             style={style}
-            src={attributes.src}
-            alt={attributes.alt || ""}
+            src={(attributes as ImageAttributes).src}
+            alt={(attributes as ImageAttributes).alt || ""}
           />
         )
       default:
