@@ -1,6 +1,6 @@
 import React from "react"
-import Button1 from "../Buttons/button1"
 import Button2 from "./button2"
+import Button1 from "./circle_button"
 import TriangleButton from "./triangleButton"
 
 interface Button {
@@ -17,7 +17,6 @@ interface ButtonComponentProps {
 }
 
 const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
-  console.log(buttons)
   return (
     <>
       {buttons.map((button) => {
@@ -27,7 +26,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               unique_id={button.unique_id}
               key={button.id}
               position={button.position}
-              rotation={button.rotation}
+              rotation={[Math.PI / 2, Math.PI / 2, 0]} // Force a 90-degree rotation for testing
               scale={button.scale}
             />
           )

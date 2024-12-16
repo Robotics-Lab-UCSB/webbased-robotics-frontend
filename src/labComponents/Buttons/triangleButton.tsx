@@ -29,12 +29,12 @@ const TriangleButton: React.FC<TriangleButtonProps> = ({
       if (isMovingBack) {
         const newPosZ = THREE.MathUtils.lerp(
           groupRef.current.position.z,
-          position[2] + 0.5,
+          position[2] - 0.5,
           0.1,
         )
         groupRef.current.position.set(position[0], position[1], newPosZ)
 
-        if (Math.abs(newPosZ - (position[2] + 0.5)) < 0.01) {
+        if (Math.abs(newPosZ - (position[2] - 0.5)) < 0.01) {
           setIsMovingBack(false)
           setIsMovingForward(true)
         }

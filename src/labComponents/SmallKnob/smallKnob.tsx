@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import React, { useRef } from "react";
 import * as THREE from "three";
 import { useLoader } from "@react-three/fiber";
 import { PLYLoader } from "three-stdlib";
-=======
-import React, { useRef, useEffect } from "react"
-import * as THREE from "three"
-import { PLYLoader } from "three-stdlib"
-import { ThreeEvent } from "@react-three/fiber"
->>>>>>> d0a0f758fed86bf0be948de2b0faeeea4bc348bf
 
 interface SmallKnobProps {
   position: [number, number, number]; // Position prop for placement in the scene
