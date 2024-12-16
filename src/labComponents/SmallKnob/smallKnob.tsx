@@ -25,7 +25,7 @@ const SmallKnob: React.FC<SmallKnobProps> = ({ position, rotation, name, type })
     <group ref={groupRef} position={position} rotation={rotation}>
       <mesh
         name={name}
-        userData={{ type, backendUpdate }}
+        userData={{ type: "grey_knob", backendUpdate }}
         ref={dialRef}
         geometry={geometry} // Assign the loaded geometry
         scale={[0.1, 0.1, 0.1]}

@@ -31,6 +31,7 @@ const Box: React.FC<BoxProp> = ({ position, rotation, onClick }) => {
         scale={[0.1, 0.1, 0.1]}
         onClick={onClick}
         geometry={geometry}
+        userData={{ type: "big_box" }}
       >
         {/* Standard material with texture map */}
         <meshStandardMaterial map={texture} />

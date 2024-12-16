@@ -47,6 +47,7 @@ const DVM: React.FC<DVMProps> = ({
           geometry={dvmGeometry}
           material={dvmMaterial}
           scale={[scale, scale, scale]}
+          userData={{ type: "voltmeter" }}
         />
       )}
     </group>

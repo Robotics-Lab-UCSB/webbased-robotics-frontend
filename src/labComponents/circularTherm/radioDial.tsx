@@ -35,12 +35,12 @@ const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
   return (
     <group ref={groupRef} position={position}>
       {/* Needle */}
-      <mesh ref={needleRef} scale={[0.3, 0.3, 0.3]}>
+      <mesh ref={needleRef} scale={[0.3, 0.3, 0.3]} userData={{ type: "needle" }}>
         <meshStandardMaterial color={0xff3333} />
       </mesh>
 
       {/* Dot */}
-      <mesh>
+      <mesh userData={{ type: "needle_dot" }}>
         <sphereGeometry args={[0.3, 32, 32]} />
         <meshStandardMaterial color={0xff3333} />
       </mesh>

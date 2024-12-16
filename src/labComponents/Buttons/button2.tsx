@@ -76,6 +76,7 @@ const Button2: React.FC<ButtonProps> = ({
           shininess={100}
           specular={0xffffff}
           side={THREE.DoubleSide}
+          userData={{ type: "long_button" }}
         />
       </mesh>
     </group>
