@@ -102,7 +102,7 @@ const GraphPaperComponent: React.FC = () => {
 
           {/* Ambient Light */}
           <ambientLight intensity={1} color={"#ffffff"} />
-          <Environment files="/environment/rogland_clear_night_8k.hdr" background />
+          <Environment files="/environment/studio_small_09_4k.exr" background />
 
           {/* Grid */}
           <Grid />
