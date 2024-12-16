@@ -31,7 +31,11 @@
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
     "styled-components": "^6.1.9",
+<<<<<<< HEAD
     "three": "^0.171.0",
+=======
+    "three": "^0.164.1",
+>>>>>>> 408ebf366f2cde72cc05dd39578b41d6e877e577
     "three-obj-loader": "^1.1.3",
     "three-stdlib": "^2.29.11"
   },
@@ -41,7 +45,11 @@
     "@types/jest": "^29.5.14",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+<<<<<<< HEAD
     "@types/three": "^0.171.0",
+=======
+    "@types/three": "^0.164.1",
+>>>>>>> 408ebf366f2cde72cc05dd39578b41d6e877e577
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
@@ -50,10 +58,16 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "grpc_tools_node_protoc_ts": "^5.3.3",
     "prettier": "^3.3.3",
+<<<<<<< HEAD
     "ts-jest": "^29.2.5",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-node-polyfills": "^0.22.0",
     "vitest": "^2.1.6"
+=======
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vite-plugin-node-polyfills": "^0.22.0"
+>>>>>>> 408ebf366f2cde72cc05dd39578b41d6e877e577
   }
 }
