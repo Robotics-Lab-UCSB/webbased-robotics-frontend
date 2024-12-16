@@ -86,9 +86,11 @@ const GraphPaperComponent: React.FC = () => {
         )}
 
         <Canvas
-          gl={{ antialias: true, toneMapping: THREE.ACESFilmicToneMapping }}
-          onCreated={({ gl }) => {
-            gl.toneMappingExposure = 1.2;
+          gl={{ antialias: true }}
+          onCreated={({ gl, scene }) => {
+            gl.toneMapping = THREE.ACESFilmicToneMapping;
+            gl.toneMappingExposure = 0.7; // Reduce exposure for less intensity
+            scene.environmentIntensity = 0.5; // Reduce environment lighting
           }}
         >
           {/* Raycasting Component */}
@@ -101,8 +103,9 @@ const GraphPaperComponent: React.FC = () => {
           </FrontFaceContextProvider>
 
           {/* Ambient Light */}
-          <ambientLight intensity={1} color={"#ffffff"} />
-          <Environment files="/environment/studio_small_09_4k.exr" background />
+          <ambientLight intensity={1} />
+          <Environment files="/environments/neon_photostudio_2k.hdr" background />
+          
 
           {/* Grid */}
           <Grid />
