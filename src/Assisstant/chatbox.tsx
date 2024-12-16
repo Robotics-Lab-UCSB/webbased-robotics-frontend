@@ -42,13 +42,15 @@ const ChatBox: React.FC<ChatBoxProps> = ({ color, t_width, t_height, isOpen, tog
   useEffect(() => {
     // Open the WebSocket connection
     ws.current = new WebSocket('ws://localhost:8080');
+    console.log("Attempting WebSocket connection");
 
     // Optional: Handle WebSocket events
     ws.current.onopen = () => console.log("WebSocket connected");
     ws.current.onclose = () => console.log("WebSocket disconnected");
 
     // Cleanup on unmount
-    return () => {
+    return () => {  
+      console.log("Cleaning up WebSocket");
         if (ws.current) {
             ws.current.close();
         }
