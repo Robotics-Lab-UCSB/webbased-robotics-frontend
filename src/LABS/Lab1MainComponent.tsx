@@ -17,6 +17,9 @@ import { FrontFaceContextProvider } from "../contexts/frontFaceContext.tsx";
 import { useFrontFaceContext } from "../hooks/useFrontFaceContext.tsx";
 import TripleOutput from "../labComponents/tripleOutPutPowerSupply/mainComponent.tsx";
 import CurrentInstrument from "../labComponents/Box/box.tsx";
+import OakPlank from "../planks/lightOak.tsx";
+import FrankHertzMain from "../labComponents/FrankhertzChasis/frankHertz.tsx";
+import CurrentRegulator from "../labComponents/FrankhertzChasis/currentRegulator.tsx";
 
 interface CameraProps {
   xN: number;
@@ -99,17 +102,11 @@ const GraphPaperComponent: React.FC = () => {
           {/* Camera and Thermometer */}
           <FrontFaceContextProvider>
             <Camera key={key} xN={position.x} yN={position.y} zN={position.z} />
-            <CircularTherm wiperAngle={fetchWiperAngleFromBackend} position={[0, 8, 0]} />
           </FrontFaceContextProvider>
 
           {/* Ambient Light */}
-          <ambientLight intensity={1} />
           <Environment files="/environment/neon_photostudio_2k.hdr" background />
           
-
-          {/* Grid */}
-          <Grid />
-
           {/* Controls */}
           <OrbitControls
             enableDamping
@@ -118,10 +115,14 @@ const GraphPaperComponent: React.FC = () => {
             zoomSpeed={0.5}
             mouseButtons={{ MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE }}
           />
-
-          {/* Components */}
+          <ambientLight intensity={1}/>
+          {/* Components: From Bottom to Top*/}
+          <Grid />
           <TripleOutput position={[-20, -0.4, 0]} />
           <CurrentInstrument position={[27, 0.5, 0]} />
+          <OakPlank />
+          <FrankHertzMain position={[5, 16, 0]}/>
+          <CurrentRegulator position={[40, 26, 5]}/>
         </Canvas>
       </div>
     </Suspense>

@@ -5,12 +5,12 @@ import { PLYLoader } from "three-stdlib"
 import { useFrontFaceContext } from "../../hooks/useFrontFaceContext"
 
 interface RadioDialProps {
-  wiperAngle: () => number
+  wiperAngle: number,
+  rotation?: [number, number, number]; // Optional rotation prop
   position: [number, number, number] // Position prop
 }
 
-const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
-  const { isFrontFaceVisible } = useFrontFaceContext()
+const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position, rotation = [0, 0, 0] }) => {
   const needleRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group>(null!) // Using a ref for the group
 
@@ -26,20 +26,16 @@ const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position }) => {
 
   useFrame(() => {
     if (groupRef.current) {
-      if (isFrontFaceVisible) {
-        groupRef.current.rotation.z = wiperAngle() // Rotate the group based on wiperAngle
-      }
+      groupRef.current.rotation.z = wiperAngle // Rotate the group based on wiperAngle
     }
   })
 
   return (
-    <group ref={groupRef} position={position}>
-      {/* Needle */}
+    <group ref={groupRef} position={position} rotation={rotation}>
       <mesh ref={needleRef} scale={[0.3, 0.3, 0.3]} userData={{ type: "needle" }}>
         <meshStandardMaterial color={0xff3333} />
       </mesh>
 
-      {/* Dot */}
       <mesh userData={{ type: "needle_dot" }}>
         <sphereGeometry args={[0.3, 32, 32]} />
         <meshStandardMaterial color={0xff3333} />
