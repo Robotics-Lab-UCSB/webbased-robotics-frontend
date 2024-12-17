@@ -1,6 +1,6 @@
 import React from "react"
-import Button2 from "./button2"
-import Button1 from "./circle_button"
+import Button2 from "./longButton"
+import Button1 from "./circleAndTriangleButton"
 import TriangleButton from "./triangleButton"
 
 interface Button {
@@ -10,6 +10,7 @@ interface Button {
   rotation: [number, number, number]
   scale: [number, number, number]
   type: string
+  typeGen: string
 }
 
 interface ButtonComponentProps {
@@ -26,23 +27,15 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               unique_id={button.unique_id}
               key={button.id}
               position={button.position}
-              rotation={[Math.PI / 2, Math.PI / 2, 0]} // Force a 90-degree rotation for testing
+              rotation={button.rotation}
               scale={button.scale}
+              typeGen={button.typeGen}
             />
           )
         } else if (button.type === "type2") {
           return (
             <Button2
               unique_id={button.unique_id}
-              key={button.id}
-              position={button.position}
-              rotation={button.rotation}
-              scale={button.scale}
-            />
-          )
-        } else if (button.type === "type3") {
-          return (
-            <TriangleButton
               key={button.id}
               position={button.position}
               rotation={button.rotation}

@@ -2,7 +2,7 @@ import React from "react"
 import { render } from "@testing-library/react"
 import { Canvas } from "@react-three/fiber"
 import { expect, describe, it } from "vitest"
-import LightSwitch from '../../src/miscellaneous/switchAndCasing';
+import LightSwitch from "../../src/miscellaneous/switchAndCasing"
 
 // Mock the loaders to prevent actual file loading during tests
 jest.mock("three/examples/jsm/loaders/STLLoader", () => ({
@@ -23,7 +23,7 @@ describe("LightSwitch Component", () => {
     const { container } = render(
       <Canvas>
         <LightSwitch position={[0, 0, 0]} scale={[1, 1, 1]} />
-      </Canvas>
+      </Canvas>,
     )
 
     // Check if the canvas is rendered
