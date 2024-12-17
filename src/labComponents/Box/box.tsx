@@ -10,35 +10,39 @@ interface CurrentInstrumentProps {
   unique_id?: string
 }
 
-const CurrentInstrument: React.FC<CurrentInstrumentProps> = ({ position, rotation, unique_id = "current_instrument" }) => {
+const CurrentInstrument: React.FC<CurrentInstrumentProps> = ({
+  position,
+  rotation,
+  unique_id = "current_instrument",
+}) => {
   const groupRef = useRef<THREE.Group | null>(null)
 
   // Load the STL geometry and texture
-  const gltf = useLoader(GLTFLoader, "/current_instrument/ci3.glb");
-  const [model, setModel] = useState<THREE.Object3D | null>(null);
+  const gltf = useLoader(GLTFLoader, "/current_instrument/ci3.glb")
+  const [model, setModel] = useState<THREE.Object3D | null>(null)
 
   useEffect(() => {
     if (gltf.scene) {
       // Clone the GLTF scene to avoid conflicts
-      const clonedScene = gltf.scene.clone();
+      const clonedScene = gltf.scene.clone()
 
       // Add unique ID and interaction behavior to the clone
       clonedScene.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
-          const mesh = child as THREE.Mesh;
-          mesh.userData.unique_id = unique_id;
+          const mesh = child as THREE.Mesh
+          mesh.userData.unique_id = unique_id
           // mesh.userData.handleIntersect = handleClick;
         }
-      });
+      })
 
-      setModel(clonedScene); // Store the cloned model in state
+      setModel(clonedScene) // Store the cloned model in state
     }
-  }, [gltf, unique_id]);
-  
+  }, [gltf, unique_id])
+
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-    {model && <primitive object={model} scale={[0.25, 0.25, 0.25]} />}
-    <ParentComponent />
+      {model && <primitive object={model} scale={[0.25, 0.25, 0.25]} />}
+      <ParentComponent position={position} />
     </group>
   )
 }

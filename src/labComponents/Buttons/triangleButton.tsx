@@ -66,7 +66,11 @@ const TriangleButton: React.FC<TriangleButtonProps> = ({
       rotation={rotation}
       onClick={handleClick}
     >
-      <mesh geometry={geometry} scale={scale} userData={{ type: "triangle_button" }}>
+      <mesh
+        geometry={geometry}
+        scale={scale}
+        userData={{ type: "triangle_button" }}
+      >
         <meshStandardMaterial map={bodyTexture} />
       </mesh>
     </group>

@@ -5,12 +5,16 @@ import { PLYLoader } from "three-stdlib"
 import { useFrontFaceContext } from "../../hooks/useFrontFaceContext"
 
 interface RadioDialProps {
-  wiperAngle: number,
-  rotation?: [number, number, number]; // Optional rotation prop
+  wiperAngle: number
+  rotation?: [number, number, number] // Optional rotation prop
   position: [number, number, number] // Position prop
 }
 
-const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position, rotation = [0, 0, 0] }) => {
+const RadioDial: React.FC<RadioDialProps> = ({
+  wiperAngle,
+  position,
+  rotation = [0, 0, 0],
+}) => {
   const needleRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
   const groupRef = useRef<THREE.Group>(null!) // Using a ref for the group
 
@@ -32,7 +36,11 @@ const RadioDial: React.FC<RadioDialProps> = ({ wiperAngle, position, rotation = 
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh ref={needleRef} scale={[0.3, 0.3, 0.3]} userData={{ type: "needle" }}>
+      <mesh
+        ref={needleRef}
+        scale={[0.3, 0.3, 0.3]}
+        userData={{ type: "needle" }}
+      >
         <meshStandardMaterial color={0xff3333} />
       </mesh>
 
