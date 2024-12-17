@@ -98,7 +98,6 @@ const Button1: React.FC<buttonProps> = ({
           side={THREE.DoubleSide}
           userData={{ type: "circle_button" }}
         />
-        
       </mesh>
     </group>
   )

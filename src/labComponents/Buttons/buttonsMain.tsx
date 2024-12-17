@@ -26,7 +26,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               unique_id={button.unique_id}
               key={button.id}
               position={button.position}
-              rotation={[Math.PI / 2, Math.PI / 2, 0]} // Force a 90-degree rotation for testing
+              rotation={button.rotation}
               scale={button.scale}
             />
           )

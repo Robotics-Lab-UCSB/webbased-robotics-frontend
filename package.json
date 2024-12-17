@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "prettier": "prettier --check .",
     "lint": "eslint . --max-warnings=1000",
-    "format": "prettier --log-level warn --write \"./**/*.{jsx,js,tsx,ts,html,css,cjs,md,yml,lock}\"",
+    "format": "prettier --log-level warn --write \"./**/*.{jsx,js,tsx,ts,html,css,cjs,md,yml,lock,json,gltf}\"",
     "lint:fix": "eslint \"./src/**/*.{js,jsx,tsx,ts,html,cjs,md}\" --fix"
   },
   "dependencies": {
