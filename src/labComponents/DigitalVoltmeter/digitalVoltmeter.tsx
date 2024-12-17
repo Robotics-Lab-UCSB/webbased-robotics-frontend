@@ -7,18 +7,16 @@ import { PLYLoader } from "three-stdlib"
 interface DVMProps {
   voltage?: () => number // Function to get the angle value from the backend
   position: [number, number, number] // Position prop
-  scale: number // Scale parameter
-  rotationX?: number
-  rotationZ?: number
-  rotationY?: number
+  scale?: [number, number, number]
+  rotation?: [number, number, number]
+  unique_id: string;
 }
 
 const DVM: React.FC<DVMProps> = ({
   position,
-  scale,
-  rotationX = 0,
-  rotationZ = 0,
-  rotationY = 0,
+  scale = [1, 1, 1],
+  rotation = [0, 0, 0],
+  unique_id
 }) => {
   const [dvmGeometry, setDVMGeometry] = useState<THREE.BufferGeometry | null>(
     null,
@@ -40,14 +38,14 @@ const DVM: React.FC<DVMProps> = ({
     <group
       ref={groupRef}
       position={position}
-      rotation={[rotationX, rotationY, rotationZ]}
+      rotation={rotation}
     >
       {dvmGeometry && (
         <mesh
           geometry={dvmGeometry}
           material={dvmMaterial}
-          scale={[scale, scale, scale]}
-          userData={{ type: "voltmeter" }}
+          scale={scale}
+          userData={{ type: "voltmeter", unique_id: unique_id}}
         />
       )}
     </group>

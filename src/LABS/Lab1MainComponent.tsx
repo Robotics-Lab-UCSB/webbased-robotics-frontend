@@ -20,6 +20,7 @@ import CurrentInstrument from "../labComponents/Box/box.tsx";
 import OakPlank from "../planks/lightOak.tsx";
 import FrankHertzMain from "../labComponents/FrankhertzChasis/frankHertz.tsx";
 import CurrentRegulator from "../labComponents/FrankhertzChasis/currentRegulator.tsx";
+import ControlsComponent from "../miscellaneous/cameracontrol.tsx";
 
 interface CameraProps {
   xN: number;
@@ -67,15 +68,11 @@ const GraphPaperComponent: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 50, z: 80 });
   const [key, setKey] = useState(0);
   const [reversedString, setReversedString] = useState<string | null>(null);
-
-  const lightRef = useRef<THREE.DirectionalLight | null>(null);
   
   const handleStubMessageClick = () => {
     setPosition({ x: 10, y: 10, z: 10 });
     setKey((prev) => prev + 1);
   };
-
-  const fetchWiperAngleFromBackend = () => Math.random() * 2 * Math.PI;
 
   return (
     <Suspense fallback={<CornerText position="top-left" text="Loading Project" />}>
@@ -106,16 +103,11 @@ const GraphPaperComponent: React.FC = () => {
 
           {/* Ambient Light */}
           <Environment files="/environment/neon_photostudio_2k.hdr" background />
-          
-          {/* Controls */}
-          <OrbitControls
-            enableDamping
-            dampingFactor={0.1}
-            rotateSpeed={0.4}
-            zoomSpeed={0.5}
-            mouseButtons={{ MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE }}
-          />
           <ambientLight intensity={1}/>
+
+          {/* Controls */}
+         <ControlsComponent />
+
           {/* Components: From Bottom to Top*/}
           <Grid />
           <TripleOutput position={[-20, -0.4, 0]} />
@@ -123,6 +115,7 @@ const GraphPaperComponent: React.FC = () => {
           <OakPlank />
           <FrankHertzMain position={[5, 16, 0]}/>
           <CurrentRegulator position={[40, 26, 5]}/>
+          <DVM position={[25, 28, 23]} scale={[4.4, 4.8, 4.4]} unique_id="DVM_2"/>
         </Canvas>
       </div>
     </Suspense>

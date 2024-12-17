@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 // Grid component with cube
 const Grid: React.FC = () => {
-  const gltf = useLoader(GLTFLoader, "/wood_planks/oak2.glb");
+  const gltf = useLoader(GLTFLoader, "/wood_planks/oak_plank2.glb");
   const [model, setModel] = useState<THREE.Object3D | null>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Grid: React.FC = () => {
       /> */}
 
       {/* Ground Box */}
-      {model && <primitive object={model} scale={[3, 2.5, 2.5]} position={[0, -3.5, 0]}/>}
+      {model && <primitive object={model} scale={[2, 3, 2.5]} position={[0, -3.5, 0]}/>}
     </>
   )
 }
