@@ -42,6 +42,7 @@ const Button1: React.FC<ButtonProps> = ({
           const mesh = child as THREE.Mesh;
           mesh.userData.unique_id = unique_id;
           mesh.userData.handleIntersect = handleClick;
+          mesh.userData.type = "triangle_circle_button";
         }
       });
 
@@ -56,17 +57,17 @@ const Button1: React.FC<ButtonProps> = ({
 
       if (isMovingForward) {
         const targetY = position[1] - 0.5;
-        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.1);
+        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.6);
 
         if (Math.abs(posY - targetY) < 0.01) {
           setIsMovingForward(false);
-          setTimeout(() => setIsMovingBack(true), 300);
+          setTimeout(() => setIsMovingBack(true), 50);
         }
       }
 
       if (isMovingBack) {
         const targetY = position[1];
-        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.1);
+        groupRef.current.position.y = THREE.MathUtils.lerp(posY, targetY, 0.4);
 
         if (Math.abs(posY - targetY) < 0.01) {
           setIsMovingBack(false);

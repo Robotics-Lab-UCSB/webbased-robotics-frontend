@@ -2,24 +2,24 @@ import React, { useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera, Environment } from "@react-three/drei";
 import * as THREE from "three";
-import CornerText from "../shared/2dText";
+import CornerText from "../miscellaneous/2DTexts/2dText.tsx";
 import ChatComponent from "../Assisstant/alltogether";
-import CircularTherm from "../labComponents/circularTherm/ThermometerMainComponent";
-import SmallKnob from "../labComponents/SmallKnob/smallKnob";
-import VVR from "../labComponents/VariableVoltageRegulator/mainframe";
-import BigKnob from "../labComponents/BigKnob/bigKnob";
-import Grid from "./grid";
-import RaycastingComponent from "../raycaster/lab1Raycaster";
-import LightSwitch from "../miscellaneous/switchAndCasing";
-import DVM from "../labComponents/DigitalVoltmeter/digitalVoltmeter.tsx";
+import CircularTherm from "../labComponents/SmallInstruments/circularTherm/ThermometerMainComponent.tsx";
+import SmallKnob from "../labComponents/knobs/smallKnob.tsx";
+import BigKnob from "../labComponents/knobs/currentKnob.tsx";
+import Grid from "../miscellaneous/planks/grid.tsx";
+import RaycastingComponent from "../raycasters/lab1Raycaster.tsx";
+import LightSwitch from "../clickables/VVR_switch/switchAndCasing.tsx";
+import DVM from "../labComponents/FrankHertzMainComp/digitalVoltmeter.tsx";
 import { FrontFaceContextProvider } from "../contexts/frontFaceContext.tsx";
 import { useFrontFaceContext } from "../hooks/useFrontFaceContext.tsx";
-import TripleOutput from "../labComponents/tripleOutPutPowerSupply/mainComponent.tsx";
-import CurrentInstrument from "../labComponents/Box/box.tsx";
-import OakPlank from "../planks/lightOak.tsx";
-import FrankHertzMain from "../labComponents/FrankhertzChasis/frankHertz.tsx";
-import CurrentRegulator from "../labComponents/FrankhertzChasis/currentRegulator.tsx";
-import ControlsComponent from "../miscellaneous/cameracontrol.tsx";
+import TripleOutput from "../labComponents/FrankHertzMainComp/tripleOutPutPowerSupply/mainComponent.tsx";
+import CurrentInstrument from "../labComponents/FrankHertzMainComp/currentInstrument.tsx";
+import OakPlank from "../miscellaneous/planks/lightOak.tsx";
+import FrankHertzMain from "../labComponents/FrankHertzMainComp/frankHertz.tsx";
+import CurrentRegulator from "../labComponents/FrankHertzMainComp/currentRegulator.tsx";
+import ControlsComponent from "../miscellaneous/controls/cameracontrol.tsx";
+import VVR from "../labComponents/FrankHertzMainComp/VariableVoltageRegulator/mainframe.tsx";
 
 interface CameraProps {
   xN: number
@@ -116,12 +116,14 @@ const GraphPaperComponent: React.FC = () => {
 
           {/* Components: From Bottom to Top*/}
           <Grid />
-          <TripleOutput position={[-20, -0.4, 0]} />
+          <TripleOutput position={[-22, -0.3, 22]} />
           <CurrentInstrument position={[27, 0.5, 0]} />
           <OakPlank />
-          <FrankHertzMain position={[5, 16, 0]}/>
+          <FrankHertzMain position={[5, 12, 0]}/>
           <CurrentRegulator position={[40, 26, 5]}/>
-          <DVM position={[25, 28, 23]} scale={[4.4, 4.8, 4.4]} unique_id="DVM_2"/>
+          <DVM position={[20, 30, 23]} scale={[1.7, 1.7, 1.85]} unique_id="DVM_2"/>
+          <VVR position={[-30, 24, 2]} />
+          <DVM position={[30, 80, 8]} scale={[1.7, 1.7, 1.85]} rotation={[0, Math.PI, 0]} unique_id="DVM_1"/>
         </Canvas>
       </div>
     </Suspense>

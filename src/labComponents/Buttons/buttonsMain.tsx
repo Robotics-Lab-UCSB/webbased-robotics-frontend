@@ -1,7 +1,6 @@
 import React from "react"
 import Button2 from "./longButton"
 import Button1 from "./circleAndTriangleButton"
-import TriangleButton from "./triangleButton"
 
 interface Button {
   id: string
@@ -10,7 +9,8 @@ interface Button {
   rotation: [number, number, number]
   scale: [number, number, number]
   type: string
-  typeGen: string
+  key: string
+  typeGen?: string | null;
 }
 
 interface ButtonComponentProps {
@@ -29,7 +29,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({ buttons }) => {
               position={button.position}
               rotation={button.rotation}
               scale={button.scale}
-              typeGen={button.typeGen}
+              typeGen={button.typeGen ?? "circleButton"} 
             />
           )
         } else if (button.type === "type2") {
