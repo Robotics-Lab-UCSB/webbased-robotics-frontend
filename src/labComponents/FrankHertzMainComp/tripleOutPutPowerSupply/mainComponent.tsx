@@ -41,7 +41,7 @@ const TripleOutput: React.FC<TripleOutputProps> = ({
     <group ref={groupRef} position={position} scale={scale}>
       {model && <primitive object={model} scale={[1.25, 1.25, 1.25]} />}{" "}
       <LightSwitch position={[20, 17, 0.6]} unique_id = "triple_output_switch1" />
-      <LightSwitch position={[-22, 17, 0.6]} unique_id = "triple_output_switch1" />
+      <LightSwitch position={[-22, 17, 0.6]} unique_id = "triple_output_switch2" />
     </group>
   )
 }

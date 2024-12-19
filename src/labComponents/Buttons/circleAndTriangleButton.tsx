@@ -42,7 +42,11 @@ const Button1: React.FC<ButtonProps> = ({
           const mesh = child as THREE.Mesh;
           mesh.userData.unique_id = unique_id;
           mesh.userData.handleIntersect = handleClick;
-          mesh.userData.type = "triangle_circle_button";
+          if (typeGen === "triangleButton"){
+            mesh.userData.type = "triangle_button";
+          } else {
+            mesh.userData.type = "circle_button";
+          }
         }
       });
 
