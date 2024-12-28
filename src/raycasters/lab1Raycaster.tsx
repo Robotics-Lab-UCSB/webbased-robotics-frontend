@@ -20,7 +20,7 @@ const RaycastingComponent: React.FC = () => {
       mouseRef.current.x = ((event.clientX - rect.left) / rect.width) * 2 - 1
       mouseRef.current.y = -((event.clientY - rect.top) / rect.height) * 2 + 1
     }
-
+    
     const handleMouseDown = (event: MouseEvent) => {
       if (event.button === 0) {
         setIsMouseDown(true)

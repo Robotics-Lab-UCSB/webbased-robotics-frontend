@@ -1,6 +1,6 @@
 import React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUserTie } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import "./style.css" // Import the external CSS file
 
 interface CircleButtonProps {
@@ -26,20 +26,16 @@ const CircleButton: React.FC<CircleButtonProps> = ({
     }
   }
 
-  const assistantIcon = (
-    <FontAwesomeIcon
-      icon={faUserTie}
-      style={{ fontSize: "2em", color: "rgba(0, 0, 0, 0.5)" }} // Customize icon style here
-    />
-  )
-
   return (
     <div
       className="circle-button"
       onClick={onClick}
       style={getPositionStyles()}
     >
-      {assistantIcon}
+      <FontAwesomeIcon
+        icon={faUserTie}
+        style={{ fontSize: "2em", color: "rgba(0, 0, 0, 0.5)" }} // Customize icon style here
+      />
     </div>
   )
 }

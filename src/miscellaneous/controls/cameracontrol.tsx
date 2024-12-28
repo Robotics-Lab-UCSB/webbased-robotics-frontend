@@ -1,20 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import { useThree } from '@react-three/fiber';
+import { useCameraState } from '../../contexts/cameraPositionContext';
 
-const ControlsComponent = () => {
-//   const controlsRef = useRef<THREE.OrbitControls>(null);
-
-//   useEffect(() => {
-//     if (controlsRef.current) {
-//       // Update the controls' target
-//       controlsRef.current.target.set(1, 2, 3); // Example: set to position (1, 2, 3)
-//       controlsRef.current.update(); // Update the controls to reflect the new target
-//     }
-//   }, []);
+const ControlsComponent: React.FC = () => {
+  const controlsRef = useRef(null);
 
   return (
     <OrbitControls
+      ref={controlsRef}
       enableDamping
       dampingFactor={0.1}
       rotateSpeed={0.4}

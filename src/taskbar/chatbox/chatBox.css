@@ -1,0 +1,55 @@
+.scrollable-block {
+  overflow-y: auto; /* Adds vertical scrollbar if content overflows */
+  overflow-x: hidden; /* Prevents horizontal scrollbar */
+  position: absolute;
+  width: 100%;
+  height: 88%;
+  border-radius: 0 0 12px 12px; /* Only bottom corners are rounded */
+  z-index: 10002;
+  background-color: transparent; /* Light semi-transparent background */
+  min-width: 600px; /* Minimum width for the floating square */
+  min-height: 400px; /* Minimum height for the floating square */
+  z-index: 10005;
+  display: flex;
+  flex-direction: column; /* Ensure children stack vertically */
+}
+
+.resizable-rectangle {
+  width: 90%; /* Reduced width to allow spacing on left and right */
+  margin: 10px auto; /* Spacing between elements and center alignment */
+  padding: 10px; /* Optional padding for better spacing */
+  border-radius: 5px; /* Slightly rounded corners */
+  box-sizing: border-box; /* Include padding in width/height calculations */
+  font-family: Arial, sans-serif; /* Optional font style */
+}
+
+.resizable-rectangle.bot {
+  text-align: left; /* Align text to the left */
+  margin-left: 20px; /* Add spacing on the left */
+  color: #d0d0d0; /* Bright gray text color */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.resizable-rectangle.user {
+  text-align: right; /* Align text to the right */
+  margin-right: 20px; /* Add spacing on the right */
+  color: #ffffff; /* Darker green text color for contrast */
+}
+
+.bottom-padding {
+  height: 15%; /* Padding at the bottom */
+  flex-shrink: 0; /* Prevent shrinking during scrolling */
+  background: transparent; /* Ensures padding is not visible */
+}
+
+.ai-helper-footer {
+  position: absolute; /* Position it relative to the viewport */
+  bottom: 10px; /* Push it slightly above the bottom of the screen */
+  width: 100%; /* Ensure it's centered within the page */
+  text-align: center; /* Center-align the text */
+  font-family: Arial, sans-serif; /* Modern, clean font */
+  font-size: 12px; /* Small text size */
+  color: lightgray; /* Light gray color for modern look */
+  z-index: 1000; /* Ensure it stays on top of other elements */
+  margin: 0; /* Reset default margin */
+}
