@@ -26,7 +26,6 @@ const GraphPaperComponent: React.FC = () => {
 
       <div style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
         <CornerText position="top-left" text="Frank-Hertz Lab" />
-        <FloatingSquare />
         <Canvas
           gl={{ antialias: true }}
           onCreated={({ gl, scene }) => {

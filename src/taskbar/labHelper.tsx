@@ -31,7 +31,7 @@ const LabHelperMain: React.FC<LabHelperMainProps> = () => {
   
     // Call the Django API
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/predict_intentions/", {
+      const response = await fetch("http://127.0.0.1:8000/chat/predict_intentions/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
