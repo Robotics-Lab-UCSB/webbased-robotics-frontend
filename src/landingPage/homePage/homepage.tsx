@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="dashboard-container">
-      <Box className="tabs-container">
+      <Box className="tabsContainerSticky">
         <Tabs value={activeTab} onChange={handleTabChange} aria-label="lab tabs">
           <Tab label="Your Active Labs" />
           <Tab label="Available Labs" />

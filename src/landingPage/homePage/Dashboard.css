@@ -9,11 +9,14 @@
   }
   
   /* Tabs styling */
-  .tabs-container {
-    border-bottom: 1px solid #000; /* Black border for a sleek look */
+  .tabsContainerSticky {
+    position: sticky; /* Ensures tabs stick to the top */
+    z-index: 1000; /* Place it above other content */
+    border-bottom: 1px solid #000;
+    padding: 20px;
     background-color: white;
-    width: 100%; /* Ensure tabs span the full container width */
-  }
+    width: 100%;
+}
   
   /* Content container styling */
   .content-container {
@@ -73,13 +76,7 @@
     color: #333; /* Slightly lighter text for description */
     text-align: center;
   }
-  
-  /* Tabs styling */
-.tabs-container {
-    border-bottom: 1px solid #000; /* Black border for a sleek look */
-    padding: 16px;
-    background-color: white;
-  }
+
   
   .MuiTabs-indicator {
     background-color: #000; /* Black indicator under the active tab */
