@@ -3,11 +3,16 @@ import GraphPaperComponent from "../LABS/Lab1MainComponent"
 import WebSocketComponent from "../Websocket/experiments/websocketTest"
 import RegisterPage from "../landingPage/loginPage/loginPage"
 import Dashboard from "../landingPage/homePage/homepage"
+import ProtectedLabRoute from "../landingPage/protectedLabroute"
 
 const routers = createBrowserRouter([
   {
-    path: "/",
-    element: <GraphPaperComponent />, // Changed element to display "Test Test Test"
+    path: "/lab/:labId",
+    element: (
+      <ProtectedLabRoute>
+        <GraphPaperComponent />
+      </ProtectedLabRoute>
+    ),
   },
   {
     path: "/websocketTest",

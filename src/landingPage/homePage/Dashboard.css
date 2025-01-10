@@ -19,64 +19,143 @@
 }
   
   /* Content container styling */
-  .content-container {
-    flex-grow: 1; /* Take up remaining space */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-  }  
-  
-  /* Grid container for cards */
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
-    gap: 16px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  /* Card container */
-  .card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Custom card styling */
-  .custom-card {
-    width: 100%;
-    height: 150px;
-    border: 1px solid #000; /* Black border for sleek design */
-    background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Hover effect for cards */
-  .custom-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Card text styling */
-  .card-title {
-    font-size: 1.2rem;
-    color: #000; /* Black text */
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .card-description {
-    font-size: 0.9rem;
-    color: #333; /* Slightly lighter text for description */
-    text-align: center;
-  }
+ /* Content container for the grid layout */
+.content-container {
+  flex-grow: 1; /* Take up remaining space */
+  display: flex;
+  height:80vh;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  width: 100vw;
+  overflow-y: auto; /* Allow scrolling when content overflows */
+}
 
+/* Grid container for cards */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+  gap: 16px; /* Space between cards */
+  padding: 16px;
+  overflow-y: auto; /* Vertical scrolling for grid overflow */
+  width: 100vw;
+  max-height: 100%; /* Prevent grid from overflowing the container */
+  box-sizing: border-box;
+  padding-right: 3.5%;
+}
+
+/* Card container */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Custom card styling */
+.custom-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; /* Ensure visible background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+/* Card content */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space out content */
+  height: 100%;
+  padding: 16px;
+}
+
+/* Card image container */
+.card-image-container {
+  height: 50%; /* Take up 50% of the card height */
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Make the image cover the container */
+}
+
+/* Card title */
+.card-title {
+  text-align: center;
+  margin: 8px 0; /* Space around the title */
+  white-space: nowrap; /* Prevent title from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Add ellipsis to truncated text */
+  font-size: 18px; /* Adjust font size */
+}
+
+/* Card description */
+.card-description {
+  text-align: center;
+  margin: 8px 16px; /* Add spacing around description */
+  overflow-wrap: break-word; /* Allow text to wrap */
+  word-break: break-word; /* Break long words */
+}
+
+.card-sharedByDescription {
+  text-align: center;
+  margin: 8px 16px; /* Add spacing around description */
+  overflow-wrap: break-word; /* Allow text to wrap */
+  word-break: break-word; /* Break long words */
+  color:#0056b3;
+}
+
+/* Card button container */
+.card-button-container {
+  margin-top: auto; /* Push the button to the bottom */
+  text-align: center;
+  width: 100%;
+}
+
+/* Start and return lab buttons */
+.start-lab-button, .return-lab-button {
+  width: 100%; /* Make the button take the whole line */
+  padding: 12px 0; /* Adjust padding for better appearance */
+}
+
+/* Fixing overflow of text inside buttons or cards */
+.start-lab-button:hover, .return-lab-button:hover {
+  background-color: #0056b3; /* Adjust hover color */
+  transition: background-color 0.3s ease;
+}
+
+/* Scroll behavior for mobile and small devices */
+@media (max-width: 768px) {
+  .grid-container {
+    padding: 8px;
+    gap: 8px;
+  }
+  .card-title {
+    font-size: 14px; /* Adjust title font size */
+  }
+  .card-description {
+    font-size: 12px; /* Adjust description font size */
+  }
+}
+
+/* Add smooth scrolling to the content container */
+.content-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+  background-color: #cccccc; /* Scrollbar color */
+  border-radius: 5px;
+}
+
+.content-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Scrollbar track color */
+}
   
   .MuiTabs-indicator {
     background-color: #000; /* Black indicator under the active tab */
@@ -101,3 +180,6 @@
     color: #000; /* Keep selected tab text black */
   }
   
+  .shared-lab-effect {
+    background-color: #FFE5CC !important; /* Ensure background color is applied */
+  }

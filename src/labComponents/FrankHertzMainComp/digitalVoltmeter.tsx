@@ -17,7 +17,7 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
   unique_id,
   scale = [0.5, 0.5, 0.5],
 }) => {
-  const gltf = useLoader(GLTFLoader, "/dcv/dcv4.glb")
+  const gltf = useLoader(GLTFLoader, "/dcv/dcv23.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
   const groupRef = useRef<THREE.Group | null>(null)
 

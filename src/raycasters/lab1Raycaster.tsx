@@ -1,18 +1,24 @@
 import React, { useRef, useEffect, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
+import { useWebSocket } from "../contexts/websocketContext"
 
 const RaycastingComponent: React.FC = () => {
   const raycasterRef = useRef(new THREE.Raycaster())
   const mouseRef = useRef(new THREE.Vector2())
   const { camera, scene, gl } = useThree()
   const [isMouseDown, setIsMouseDown] = useState(false)
+  const savedIntersectedObjectRef = useRef<THREE.Object3D | null>(null); // To store intersectedObject
 
   const currentAngleRef = useRef<number>(0)
   const previousAngleRef = useRef<number>(-1)
   const previousSpinning = useRef<THREE.Object3D | null>(null)
   const intersectsRef = useRef<THREE.Intersection[]>([])
   // const lastIntersectedObjectUpdateTimeRef = useRef<number>(0);
+
+  const { sendMessage, registerHandler } = useWebSocket(); // Use WebSocket context
+  const frameCountRef = useRef<number>(0); // Count frames
+  const vvrKnobAngleRef = useRef<number>(0);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -100,6 +106,18 @@ const RaycastingComponent: React.FC = () => {
         } else if (intersectedObject.userData.type === "VVR_knob") {
           if (intersectedObject) {
             intersectedObject.rotation.y -= deltaAngle * 0.4
+            console.log((deltaAngle * 0.4) * (180 / Math.PI))
+            vvrKnobAngleRef.current = intersectedObject.rotation.y; 
+            sendMessage({
+              type: 'dial_vvr_1_angle',
+              payload: {
+                get: false,
+                angle: (deltaAngle * 0.4) * (180 / Math.PI),
+              }
+            });
+            if (!savedIntersectedObjectRef.current) {
+              savedIntersectedObjectRef.current = intersectedObject;
+            }
           }
         } else if (
           intersectedObject.userData.type === "current_knob"
@@ -112,9 +130,23 @@ const RaycastingComponent: React.FC = () => {
         }
       }
     } else {
+      sendMessage({ type: "dial_vvr_1_angle", payload: { get: true } });
       previousSpinning.current = null
     }
   })
+
+  useEffect(() => {
+    registerHandler("dial_vvr_1_angle", (payload) => {
+      console.log("received payload", payload);
+      
+      // Check if savedIntersectedObjectRef is not null and has a current value
+      if (savedIntersectedObjectRef?.current) {
+        savedIntersectedObjectRef.current.rotation.y = (payload.angle * (Math.PI / 180));
+      } else {
+        console.warn("No intersected object is currently saved.");
+      }
+    });
+  }, [registerHandler]);  
 
   return null
 }

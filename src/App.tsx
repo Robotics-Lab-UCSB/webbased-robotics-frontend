@@ -1,7 +1,20 @@
-import React from "react"
-import { RouterProvider } from "react-router-dom"
-import routers from "./routes"
+import React from "react";
+import { RouterProvider } from "react-router-dom";
+import routers from "./routes";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
-const App: React.FC = () => <RouterProvider router={routers} />
+const theme = createTheme({
+  palette: {
+    mode: "light", // Set default theme to light
+  },
+});
 
-export default App
+const App: React.FC = () => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <RouterProvider router={routers} />
+  </ThemeProvider>
+);
+
+export default App;

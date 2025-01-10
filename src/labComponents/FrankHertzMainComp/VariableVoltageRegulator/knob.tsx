@@ -19,7 +19,7 @@ const OvenKnob: React.FC<OvenKnobProps> = ({
   const groupRef = useRef<THREE.Group | null>(null)
 
   // Load GLTF
-  const gltf = useLoader(GLTFLoader, "/knobs/oven_knob1.glb")
+  const gltf = useLoader(GLTFLoader, "/knobs/vvrKnob22.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const OvenKnob: React.FC<OvenKnobProps> = ({
 
       clonedScene.traverse((child) => {
         if ((child as THREE.Mesh).isMesh) {
+          console.log(child)
           const mesh = child as THREE.Mesh
           mesh.userData.unique_id = unique_id
           mesh.userData.type = "VVR_knob"

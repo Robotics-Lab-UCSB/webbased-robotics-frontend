@@ -16,6 +16,7 @@ import VVR from "../labComponents/FrankHertzMainComp/VariableVoltageRegulator/ma
 import FloatingSquare from "../taskbar/mainBlock.tsx";
 import { CameraProvider } from "../contexts/cameraPositionContext.tsx";
 import Lab1Camera from "./cameras/lab1Camera.tsx";
+import { WebSocketProvider } from '../contexts/websocketContext';
 
 const GraphPaperComponent: React.FC = () => {
   return (
@@ -23,7 +24,7 @@ const GraphPaperComponent: React.FC = () => {
       fallback={<CornerText position="top-left" text="Loading your Lab..." />}
     >
       <CameraProvider>
-
+      {/* <WebSocketProvider url="ws://localhost:8080/" labID="frankhertz1">  */}
       <div style={{ width: "100vw", height: "100vh", overflow: "hidden" }}>
         <CornerText position="top-left" text="Frank-Hertz Lab" />
         <FloatingSquare />
@@ -36,8 +37,6 @@ const GraphPaperComponent: React.FC = () => {
           }}
         >
           {/* Raycasting Component */}
-          <RaycastingComponent />
-
           {/* Camera and Thermometer */}
           <Lab1Camera/>
 
@@ -49,16 +48,21 @@ const GraphPaperComponent: React.FC = () => {
          {/* <ControlsComponent /> */}
 
           {/* Components: From Bottom to Top*/}
-          <Grid />
-          <TripleOutput position={[-22, -0.3, 22]} />
-          <CurrentInstrument position={[27, 0.5, 0]} />
-          <OakPlank />
-          <FrankHertzMain position={[5, 12, 0]}/>
-          <CurrentRegulator position={[40, 26, 5]}/>
-          <DVM position={[20, 30, 23]} scale={[1.7, 1.7, 1.85]} unique_id="DVM_2"/>
-          <VVR position={[-30, 24, 2]} />
-          <DVM position={[30, 80, 8]} scale={[1.7, 1.7, 1.85]} rotation={[0, Math.PI, 0]} unique_id="DVM_1"/>        </Canvas>
+          <WebSocketProvider url="ws://localhost:8080/" labID="frankhertz1">
+            <RaycastingComponent />
+            <Grid />
+            <TripleOutput position={[-22, -0.3, 22]} />
+            <CurrentInstrument position={[27, 0.5, 0]} />
+            <OakPlank />
+            <FrankHertzMain position={[5, 12, 0]}/>
+            <CurrentRegulator position={[40, 26, 5]}/>
+            <DVM position={[20, 30, 23]} scale={[1.7, 1.7, 1.85]} unique_id="DVM_2"/>
+            <VVR position={[-30, 24, 2]} />
+            <DVM position={[30, 80, 8]} scale={[1.7, 1.7, 1.85]} rotation={[0, Math.PI, 0]} unique_id="DVM_1"/>
+          </WebSocketProvider> 
+        </Canvas>
       </div>
+      {/* </WebSocketProvider> */}
       </CameraProvider>
     </Suspense>
   )

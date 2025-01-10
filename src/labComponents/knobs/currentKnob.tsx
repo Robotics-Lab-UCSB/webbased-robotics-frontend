@@ -19,7 +19,7 @@ const CurrentKnob: React.FC<CurrentKnobProps> = ({
   const groupRef = useRef<THREE.Group | null>(null)
 
   // Load GLTF
-  const gltf = useLoader(GLTFLoader, "/knobs/current_knob3.glb")
+  const gltf = useLoader(GLTFLoader, "/knobs/currentKnob.glb")
   const [model, setModel] = useState<THREE.Object3D | null>(null)
 
   useEffect(() => {

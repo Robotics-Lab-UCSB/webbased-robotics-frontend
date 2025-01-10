@@ -41,7 +41,7 @@ const FrankHertzMain: React.FC<FrankHertzMainProps> = ({
   return (
     <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
       {model && <primitive object={model} scale={[0.65, 0.65, 0.65]} />}
-      <CircularTherm position={[2, 53.5, -15]} />
+      <CircularTherm position={[4, 49.2, -13.5]} />
     </group>
   )
 }

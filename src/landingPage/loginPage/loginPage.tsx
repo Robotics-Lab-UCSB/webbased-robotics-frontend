@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Container, Switch } from '@mui/material';
 import './loginPage.css';
+import { is } from '@react-three/fiber/dist/declarations/src/core/utils';
 
 const AuthPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -8,7 +9,7 @@ const AuthPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [isRegister, setIsRegister] = useState<boolean>(true); // Toggle state for Register/Login
-
+  const [isRegisterSuccess, setIsRegisterSuccess] = useState<boolean>(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -37,11 +38,17 @@ const AuthPage: React.FC = () => {
       }
 
       setSuccess(true);
-
+      
+      console.log(isRegister);
       if (!isRegister) {
+        console.log("should not happen")
+        setIsRegisterSuccess(false);
         setTimeout(() => {
           window.location.href = '/home'; // Redirect to home on successful login
         }, 1000);
+      } else {
+        setIsRegisterSuccess(true);
+        setIsRegister(false);
       }
     } catch (err: any) {
       setError(err.message);
@@ -132,9 +139,12 @@ const AuthPage: React.FC = () => {
                 variant="body2"
                 sx={{ fontFamily: 'Roboto, sans-serif' }}
               >
-                {isRegister
-                  ? 'Registration successful! You can now log in.'
-                  : 'Login successful! Redirecting...'}
+                {!isRegister
+                  ? isRegisterSuccess
+                    ? 'Registration successful! You can now log in.'
+                    : 'Login successful! Redirecting...'
+                  : null}
+
               </Typography>
             )}
 

@@ -4,6 +4,7 @@ import { useLoader } from "@react-three/fiber"
 import { useState, useEffect } from "react"
 import { GLTFLoader } from "three-stdlib"
 import LightSwitch from "../../../clickables/VVR_switch/switchAndCasing"
+import RadioDial from "../../SmallInstruments/circularTherm/radioDial"
 
 interface TripleOutputProps {
   position: [number, number, number] // Position prop
@@ -42,6 +43,8 @@ const TripleOutput: React.FC<TripleOutputProps> = ({
       {model && <primitive object={model} scale={[1.25, 1.25, 1.25]} />}{" "}
       <LightSwitch position={[20, 17, 0.6]} unique_id = "triple_output_switch1" />
       <LightSwitch position={[-22, 17, 0.6]} unique_id = "triple_output_switch2" />
+      <RadioDial position={[11.69, 11.5, 0.01]} unique_id="tops_dial2" scale={[0.3, 0.3, 0.42]} rotation={[Math.PI / 2, 0.75, 0]}/>
+      <RadioDial position={[-11.46, 11.5, 0.01]} unique_id="tops_dial1" scale={[0.3, 0.3, 0.42]} rotation={[Math.PI / 2, 0.75, 0]}/>
     </group>
   )
 }

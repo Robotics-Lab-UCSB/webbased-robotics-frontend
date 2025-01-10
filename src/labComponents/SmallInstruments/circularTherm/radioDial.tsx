@@ -1,55 +1,53 @@
-import React, { useRef, useEffect } from "react"
-import { useFrame } from "@react-three/fiber"
-import * as THREE from "three"
-import { PLYLoader } from "three-stdlib"
-import { useFrontFaceContext } from "../../../hooks/useFrontFaceContext"
+import React, { useRef, useState, useEffect } from "react";
+import * as THREE from "three";
+import { useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three-stdlib";
 
 interface RadioDialProps {
-  wiperAngle: number
-  rotation?: [number, number, number] // Optional rotation prop
-  position: [number, number, number] // Position prop
+  position: [number, number, number];
+  unique_id: string;
+  scale?: [number, number, number];
+  rotation?: [number, number, number];
+  updateRotation?: (degrees: number) => void; // Optional function for external rotation control
 }
 
 const RadioDial: React.FC<RadioDialProps> = ({
-  wiperAngle,
   position,
-  rotation = [0, 0, 0],
+  unique_id,
+  scale = [1, 1, 1],
+  rotation = [0, 0, 0], // Default rotation
+  updateRotation,
 }) => {
-  const needleRef = useRef<THREE.Mesh>(null!) // Using a ref for the needle
-  const groupRef = useRef<THREE.Group>(null!) // Using a ref for the group
+  const gltf = useLoader(GLTFLoader, "/dials/dial_thermometer5.glb");
+  const [model, setModel] = useState<THREE.Object3D | null>(null);
+  const groupRef = useRef<THREE.Group | null>(null);
 
   useEffect(() => {
-    const loader = new PLYLoader()
-    loader.load("/stanfordOne.ply", (geometry) => {
-      geometry.computeVertexNormals()
-      if (needleRef.current) {
-        needleRef.current.geometry = geometry // Set the loaded geometry for the needle
-      }
-    })
-  }, [])
+    if (gltf.scene) {
+      const clonedScene = gltf.scene.clone();
 
-  useFrame(() => {
-    if (groupRef.current) {
-      groupRef.current.rotation.z = wiperAngle // Rotate the group based on wiperAngle
+      clonedScene.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          mesh.userData.unique_id = unique_id;
+          mesh.userData.type = "thermometer_dial";
+        }
+      });
+
+      setModel(clonedScene);
     }
-  })
+  }, [gltf, unique_id]);
 
   return (
-    <group ref={groupRef} position={position} rotation={rotation}>
-      <mesh
-        ref={needleRef}
-        scale={[0.3, 0.3, 0.3]}
-        userData={{ type: "needle" }}
-      >
-        <meshStandardMaterial color={0xff3333} />
-      </mesh>
-
-      <mesh userData={{ type: "needle_dot" }}>
-        <sphereGeometry args={[0.3, 32, 32]} />
-        <meshStandardMaterial color={0xff3333} />
-      </mesh>
+    <group
+      ref={groupRef}
+      position={position}
+      scale={scale}
+      rotation={rotation} // Apply rotation prop directly
+    >
+      {model && <primitive object={model} />}
     </group>
-  )
-}
+  );
+};
 
-export default RadioDial
+export default RadioDial;

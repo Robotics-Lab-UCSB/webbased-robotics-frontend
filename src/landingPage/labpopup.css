@@ -1,0 +1,37 @@
+
+  /* Scrollable List Styling */
+  .scrollable-list {
+    max-height: 200px; /* Fixed max height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional border */
+    padding: 0; /* Remove default padding */
+    margin: 8px 0; /* Add some space around the list */
+  }
+
+  .block-wrapper {
+    max-height: 200px; /* Set a maximum height */
+    min-height: 50px;
+    display: flex; /* Use flex layout for alignment */
+    flex-wrap: wrap; /* Allow email boxes to wrap to the next line */
+    padding: 8px; /* Padding inside the block */
+    margin: 8px 0; /* Spacing between blocks */
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ddd; /* Subtle border */
+    width: 100%; /* Default to full width */
+    overflow-y: auto; /* Scroll only when necessary */
+  }
+  
+  .block-wrapper::-webkit-scrollbar {
+    width: 0px; /* Set scrollbar width to 0 */
+    height: 0px; /* Set scrollbar height to 0 */
+  }
+
+  .block-wrapper {
+    scrollbar-width: none; /* Firefox-specific property to hide scrollbar */
+  }
+  
+  /* Optional: Hide scrollbar for Internet Explorer/Edge */
+  .block-wrapper {
+    -ms-overflow-style: none; /* IE and Edge-specific property */
+  }
