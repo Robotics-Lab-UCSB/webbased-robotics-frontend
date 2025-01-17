@@ -8,6 +8,8 @@ through realistic 3D models. The system provides real-time updates, reflecting
 changes in the physical lab environment, making it a fully immersive and
 accessible learning experience in quantum robotics.
 
+The source code is licensed under a permissive Berkeley-style license.
+
 Check out this graph of our systems:
 
 ```mermaid
